@@ -1,0 +1,7 @@
+{
+  "name": "equipment-rental-client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
