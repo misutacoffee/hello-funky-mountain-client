@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -23,6 +24,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { addOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage.service';
 
 @Component({
@@ -30,17 +33,19 @@ import { StorageService } from '../../services/storage.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
-    IonCardContent, IonButton, IonIcon, IonInput, IonLabel, IonItem, 
+    IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, 
+    IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
+    IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
     IonSelect, IonSelectOption, IonTextarea
   ]
 })
 export class HomePage implements OnInit {
   private storageServ = inject(StorageService);
-  constructor() { }
-
-  ngOnInit() {
-    console.log('HomePage initialized');
+  equipment = signal<any>(null);
+  constructor() { 
+    addIcons({addOutline})
   }
 
+  ngOnInit() { }
+  
 }
