@@ -27,6 +27,7 @@ import {
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,7 @@ import { StorageService } from '../../services/storage.service';
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, 
     IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
-    IonSelect, IonSelectOption, IonTextarea
+    IonSelect, IonSelectOption, IonTextarea, RouterLink, 
   ]
 })
 export class HomePage implements OnInit {
