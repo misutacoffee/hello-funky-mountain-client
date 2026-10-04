@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -24,6 +25,7 @@ import {
   IonSelectOption,
   IonTextarea,
 } from '@ionic/angular';
+import { EquipmentService } from '../../../services/equipment.service';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -33,14 +35,21 @@ import {
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
     IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, IonSelect,
-    IonSelectOption, IonTextarea, IonList, 
+    IonSelectOption, IonTextarea, IonList, ReactiveFormsModule, 
   ]
 })
 export class EquipmentCreateEditPage implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private equipmentService = inject(EquipmentService);
   uuid:any;
+  equipment = signal<any>(null);
+  form = computed<FormGroup>(() => this.equipmentService.buildForm(this.equipment()));
   constructor() { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
+    const equipment:any = this.uuid ? await this.equipmentService.getByUuid(this.uuid) : this.equipmentService.createNew();
+    this.equipment.set(equipment);
   }
 
 }

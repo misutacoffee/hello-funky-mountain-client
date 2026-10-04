@@ -1,13 +1,16 @@
 <ion-content [fullscreen]="true">
     <ion-row>
       <ion-col>
-        <ion-list>
+        <ion-list [formGroup]="form()">
           <ion-item>
             <ion-label>
               <ion-title class="title-medium">
                 Equipment {{uuid ? 'Edit' : 'Create'}}
               </ion-title>
             </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Name" formControlName="name"></ion-input>
           </ion-item>
         </ion-list>
       </ion-col>
