@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -23,6 +23,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -35,10 +36,11 @@ import {
   ]
 })
 export class HomePage implements OnInit {
-
+  private storageServ = inject(StorageService);
   constructor() { }
 
   ngOnInit() {
+    console.log('HomePage initialized');
   }
 
 }
