@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   IonButtons,
+  IonButton,
   IonContent,
   IonIcon,
   IonItem,
@@ -11,23 +13,41 @@ import {
   IonMenuButton,
   IonRouterOutlet,
   IonTitle,
-  IonToolbar, 
+  IonToolbar,
   IonApp,
-  IonHeader, 
+  IonHeader,
 } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { homeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
   imports: [
-    IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonContent, CommonModule, 
-    IonMenu, IonList, IonItem, IonLabel, IonIcon, IonRouterOutlet
+    IonApp,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonMenuButton,
+    IonContent,
+    CommonModule,
+    IonMenu,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonIcon,
+    IonRouterOutlet,
+    RouterLink,
+    IonButton, 
   ],
 })
-export class MainLayoutComponent  implements OnInit {
+export class MainLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    addIcons({homeOutline});
+  }
 
   ngOnInit() {}
 
