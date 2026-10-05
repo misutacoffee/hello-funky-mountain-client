@@ -42,11 +42,18 @@ import { RouterLink } from '@angular/router';
 })
 export class HomePage implements OnInit {
   private storageServ = inject(StorageService);
+  
   equipment = signal<any>(null);
+  manufacturers = signal<any>(null);
+  models = signal<any>(null);
   constructor() { 
     addIcons({addOutline})
   }
 
   ngOnInit() { }
+
+  async ionViewWillEnter() {
+
+  }
   
 }

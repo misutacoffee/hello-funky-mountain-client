@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { IonBreadcrumbs } from '@ionic/angular';
+import { Component, OnInit, input } from '@angular/core';
+import { IonBreadcrumbs, IonBreadcrumb } from '@ionic/angular';
 
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
   imports: [
-    IonBreadcrumbs, 
+    IonBreadcrumbs, IonBreadcrumb
   ],
 })
 export class BreadcrumbsComponent  implements OnInit {
-
+  breadcrumbs = input<any[]>(['']);
   constructor() { }
 
   ngOnInit() {}
