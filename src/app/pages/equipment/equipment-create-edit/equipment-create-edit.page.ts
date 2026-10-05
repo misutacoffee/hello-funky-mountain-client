@@ -52,4 +52,11 @@ export class EquipmentCreateEditPage implements OnInit {
     this.equipment.set(equipment);
   }
 
+  async onSubmit() {
+    if (this.form().valid) {
+      const equipment = this.equipmentService.trimObject(this.form().value);
+      const results = await this.equipmentService.save(equipment);
+    }
+  }
+
 }
