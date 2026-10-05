@@ -17,7 +17,29 @@
                 Equipment
               </ion-title>
             </ion-label>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['/equipment', 'create']" color="primary">
+                New
+                <ion-icon name="add-outline" slot="end"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-item>
+          @if(!equipment() || equipment()?.length === 0){
+            <ion-item>
+              <ion-label>
+                No equipment available
+              </ion-label>
+            </ion-item>
+          }@else{
+            @for (item of equipment(); track item.uuid){
+              <ion-item [routerLink]="['equipment', item.uuid]">
+                <ion-label>
+                  <h2>{{ item?.name }}</h2>
+                  <p>{{ item?.description }}</p>
+                </ion-label>
+              </ion-item>
+            }
+          }
         </ion-list>
       </ion-col>
     </ion-row>

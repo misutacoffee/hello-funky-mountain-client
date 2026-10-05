@@ -5,6 +5,11 @@ import { v4 as uuid } from 'uuid';
 @Service()
 export class EquipmentService {
 
+  async getAll() {
+    // Implement the logic to retrieve all equipment from your data source
+    return []
+  }
+
   async getByUuid(uuid: string) {
     // Implement the logic to retrieve equipment by UUID from your data source
   }
