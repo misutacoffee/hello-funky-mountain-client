@@ -28,6 +28,10 @@ import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { StorageService } from '../../services/storage.service';
 import { RouterLink } from '@angular/router';
+import { ManufacturerService } from '../../services/manufacturer.service';
+import { ManufacturerModelService } from '../../services/manufacturer-model.service';
+import { EquipmentService } from '../../services/equipment.service';
+import { HomeService } from '../../services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -42,7 +46,11 @@ import { RouterLink } from '@angular/router';
 })
 export class HomePage implements OnInit {
   private storageServ = inject(StorageService);
-  
+  private manufacturerServ = inject(ManufacturerService);
+  private manuModelServ = inject(ManufacturerModelService);
+  private equipmentServ = inject(EquipmentService);
+  private homeServ = inject(HomeService);
+  homeData = signal<any>(null);
   equipment = signal<any>(null);
   manufacturers = signal<any>(null);
   models = signal<any>(null);
@@ -53,7 +61,9 @@ export class HomePage implements OnInit {
   ngOnInit() { }
 
   async ionViewWillEnter() {
-
+    const homeData = await this.homeServ.getHomeData();
+    this.homeData.set(homeData);
+    console.log('homeData', this.homeData());
   }
   
 }

@@ -1,13 +1,17 @@
-import { Service } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
+import { ApiService } from './api.service';
 
 @Service()
 export class EquipmentService {
+  private apiServ = inject(ApiService);
 
   async getAll() {
-    // Implement the logic to retrieve all equipment from your data source
-    return []
+    this.apiServ.get('equipment').subscribe((data:any) => {
+      console.log('equipment data', data);
+      return data
+    });
   }
 
   async getByUuid(uuid: string) {
