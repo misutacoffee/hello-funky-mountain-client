@@ -8,10 +8,7 @@ export class EquipmentService {
   private apiServ = inject(ApiService);
 
   async getAll() {
-    this.apiServ.get('equipment').subscribe((data:any) => {
-      console.log('equipment data', data);
-      return data
-    });
+    const results = await this.apiServ.get('equipment');
   }
 
   async getByUuid(uuid: string) {

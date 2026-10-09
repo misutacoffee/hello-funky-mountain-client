@@ -1,6 +1,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
+      <!-- EQUIPMENT -->
       <ion-col>
         <ion-list>
           <ion-item>
@@ -27,6 +28,78 @@
           </ion-item>
         }@else{
           @for (item of equipment(); track item.uuid){
+            <ion-item>
+              <ion-label>
+                <h2>{{ item?.name }}</h2>
+                <p>{{ item?.description }}</p>
+              </ion-label>
+            </ion-item>
+          }
+        }
+      </ion-col>
+      <!-- MANUFACTURERS -->
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-title class="title-medium">
+                <a [routerLink]="['manufacturers']">
+                  Manufacturers
+                </a>
+              </ion-title>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['equipment', 'create']" color="primary">
+                New
+                <ion-icon name="add-outline" slot="end"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+        @if(!manufacturers()){
+          <ion-item>
+            <ion-label>
+              No manufacturers available
+            </ion-label>
+          </ion-item>
+        }@else{
+          @for (item of manufacturers(); track item.uuid){
+            <ion-item>
+              <ion-label>
+                <h2>{{ item?.name }}</h2>
+                <p>{{ item?.description }}</p>
+              </ion-label>
+            </ion-item>
+          }
+        }
+      </ion-col>
+      <!-- MODELS -->
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-title class="title-medium">
+                <a [routerLink]="['models']">
+                  Models
+                </a>
+              </ion-title>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['models', 'create']" color="primary">
+                New
+                <ion-icon name="add-outline" slot="end"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+        @if(!models()){
+          <ion-item>
+            <ion-label>
+              No models available
+            </ion-label>
+          </ion-item>
+        }@else{
+          @for (item of models(); track item.uuid){
             <ion-item>
               <ion-label>
                 <h2>{{ item?.name }}</h2>

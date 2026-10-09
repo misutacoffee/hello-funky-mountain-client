@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -45,15 +45,14 @@ import { HomeService } from '../../services/home.service';
   ]
 })
 export class HomePage implements OnInit {
-  private storageServ = inject(StorageService);
-  private manufacturerServ = inject(ManufacturerService);
-  private manuModelServ = inject(ManufacturerModelService);
-  private equipmentServ = inject(EquipmentService);
   private homeServ = inject(HomeService);
   homeData = signal<any>(null);
-  equipment = signal<any>(null);
-  manufacturers = signal<any>(null);
-  models = signal<any>(null);
+  equipment = computed(() => this.homeData()?.equipment || []);
+  invoices = computed(() => this.homeData()?.invoices || []);
+  manufacturers = computed(() => this.homeData()?.manufacturers || []);
+  models = computed(() => this.homeData()?.manufacturerModels || []);
+  rentals = computed(() => this.homeData()?.rentals || []);
+  users = computed(() => this.homeData()?.users || []);
   constructor() { 
     addIcons({addOutline})
   }
