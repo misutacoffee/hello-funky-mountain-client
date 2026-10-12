@@ -9,10 +9,12 @@ export class EquipmentService {
 
   async getAll() {
     const results = await this.apiServ.get('equipment');
+    return results
   }
 
   async getByUuid(uuid: string) {
-    // Implement the logic to retrieve equipment by UUID from your data source
+    const results = await this.apiServ.get(`equipment/${uuid}`);
+    return results
   }
 
   trimObject(obj: any) {

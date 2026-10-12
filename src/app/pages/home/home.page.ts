@@ -18,6 +18,7 @@ import {
   IonItem,
   IonList, 
   IonLabel,
+  IonNote, 
   IonRow,
   IonSelect,
   IonSelectOption,
@@ -42,7 +43,7 @@ import { HomeService } from '../../services/home.service';
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, 
     IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
-    IonSelect, IonSelectOption, IonTextarea, RouterLink, 
+    IonSelect, IonSelectOption, IonTextarea, RouterLink, IonNote
   ]
 })
 export class HomePage implements OnInit {

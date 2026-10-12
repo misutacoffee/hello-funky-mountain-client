@@ -73,7 +73,6 @@ export class StorageService {
 
   async getKeys(): Promise<KeyValueKey[]> {
     const db = await dbInstance;
-    console.log('Getting keys from collection:', this.collection);
     return new Promise((resolve) => {
       const dataObjectStore = db.transaction(this.collection, 'readonly').objectStore(this.collection);
       const req = dataObjectStore.getAllKeys();

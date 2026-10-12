@@ -53,7 +53,6 @@ export class ApiService {
   }
 
   private url(endpoint: string): string {
-    console.log(`${this.baseUrl}/${endpoint.replace(/^\/+/, '')}`);
     return `${this.baseUrl}/${endpoint.replace(/^\/+/, '')}`;
   }
   

@@ -9,16 +9,25 @@
                 <ion-label>
                   Equipment
                 </ion-label>
+                <ion-note slot="end">
+                  {{equipment()?.length || 0}}
+                </ion-note>
               </ion-item>
               <ion-item [routerLink]="['contracts']">
                 <ion-label>
                   Contracts
                 </ion-label>
+                <ion-note slot="end">
+                  {{contracts()?.length || 0}}
+                </ion-note>
               </ion-item>
               <ion-item [routerLink]="['invoices']">
                 <ion-label>
                   Invoices
                 </ion-label>
+                <ion-note slot="end">
+                  {{invoices()?.length || 0}}
+                </ion-note>
               </ion-item>
             </ion-list>
           </ion-card-content>
