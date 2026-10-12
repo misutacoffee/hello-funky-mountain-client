@@ -1,113 +1,110 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <!-- EQUIPMENT -->
-      <ion-col>
-        <ion-list>
-          <ion-item>
-            <ion-label>
-              <ion-title class="title-medium">
-                <a [routerLink]="['equipment']">
+      <ion-col size="0" size-xs="3">
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item [routerLink]="['equipment']">
+                <ion-label>
                   Equipment
-                </a>
-              </ion-title>
-            </ion-label>
-            <ion-buttons slot="end">
-              <ion-button [routerLink]="['equipment', 'create']" color="primary">
-                New
-                <ion-icon name="add-outline" slot="end"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </ion-item>
-        </ion-list>
-        @if(!equipment()){
-          <ion-item>
-            <ion-label>
-              No equipment available
-            </ion-label>
-          </ion-item>
-        }@else{
-          @for (item of equipment(); track item.uuid){
-            <ion-item>
-              <ion-label>
-                <h2>{{ item?.name }}</h2>
-                <p>{{ item?.description }}</p>
-              </ion-label>
-            </ion-item>
-          }
-        }
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['contracts']">
+                <ion-label>
+                  Contracts
+                </ion-label>
+              </ion-item>
+              <ion-item [routerLink]="['invoices']">
+                <ion-label>
+                  Invoices
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
-      <!-- MANUFACTURERS -->
-      <ion-col>
-        <ion-list>
-          <ion-item>
-            <ion-label>
-              <ion-title class="title-medium">
-                <a [routerLink]="['manufacturers']">
-                  Manufacturers
-                </a>
-              </ion-title>
-            </ion-label>
-            <ion-buttons slot="end">
-              <ion-button [routerLink]="['equipment', 'create']" color="primary">
-                New
-                <ion-icon name="add-outline" slot="end"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </ion-item>
-        </ion-list>
-        @if(!manufacturers()){
-          <ion-item>
-            <ion-label>
-              No manufacturers available
-            </ion-label>
-          </ion-item>
-        }@else{
-          @for (item of manufacturers(); track item.uuid){
-            <ion-item>
-              <ion-label>
-                <h2>{{ item?.name }}</h2>
-                <p>{{ item?.description }}</p>
-              </ion-label>
-            </ion-item>
-          }
-        }
-      </ion-col>
-      <!-- MODELS -->
-      <ion-col>
-        <ion-list>
-          <ion-item>
-            <ion-label>
-              <ion-title class="title-medium">
-                <a [routerLink]="['models']">
-                  Models
-                </a>
-              </ion-title>
-            </ion-label>
-            <ion-buttons slot="end">
-              <ion-button [routerLink]="['models', 'create']" color="primary">
-                New
-                <ion-icon name="add-outline" slot="end"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </ion-item>
-        </ion-list>
-        @if(!models()){
-          <ion-item>
-            <ion-label>
-              No models available
-            </ion-label>
-          </ion-item>
-        }@else{
-          @for (item of models(); track item.uuid){
-            <ion-item>
-              <ion-label>
-                <h2>{{ item?.name }}</h2>
-                <p>{{ item?.description }}</p>
-              </ion-label>
-            </ion-item>
-          }
-        }
+      <ion-col size="12" size-xs="9">
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <ion-title>
+                    Welcome to Equipment Rental
+                  </ion-title>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Manage your equipment, contracts, and invoices with ease.
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-row>
+          <ion-col size="12" size-xs="6">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  Equipment
+                </ion-card-title>
+                <ion-card-subtitle>
+                  {{equipment().length}} item{{equipment().length === 1 ? '' : 's'}}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="12" size-xs="6">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  Rentals
+                </ion-card-title>
+                <ion-card-subtitle>
+                  {{rentals().length}} rental{{rentals().length === 1 ? '' : 's'}}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="12" size-xs="6">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  Contracts
+                </ion-card-title>
+                <ion-card-subtitle>
+                  {{contracts().length}} contract{{contracts().length === 1 ? '' : 's'}}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="12" size-xs="6">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  Invoices
+                </ion-card-title>
+                <ion-card-subtitle>
+                  {{invoices().length}} invoice{{invoices().length === 1 ? '' : 's'}}
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                Here's a small text description for the card content. Nothing more, nothing less.
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

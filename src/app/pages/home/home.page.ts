@@ -5,6 +5,7 @@ import {
   IonButton,
   IonButtons,
   IonCard,
+  IonCardSubtitle,
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
@@ -40,13 +41,14 @@ import { HomeService } from '../../services/home.service';
   imports: [
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, 
     IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
-    IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
+    IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
     IonSelect, IonSelectOption, IonTextarea, RouterLink, 
   ]
 })
 export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
   homeData = signal<any>(null);
+  contracts = computed(() => this.homeData()?.contracts || []);
   equipment = computed(() => this.homeData()?.equipment || []);
   invoices = computed(() => this.homeData()?.invoices || []);
   manufacturers = computed(() => this.homeData()?.manufacturers || []);
@@ -62,7 +64,6 @@ export class HomePage implements OnInit {
   async ionViewWillEnter() {
     const homeData = await this.homeServ.getHomeData();
     this.homeData.set(homeData);
-    console.log('homeData', this.homeData());
   }
   
 }
