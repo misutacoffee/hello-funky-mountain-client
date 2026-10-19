@@ -2,6 +2,15 @@
   <ion-grid>
     <ion-row>
       <ion-col>
+        <app-breadcrumbs>
+          <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+          <ion-breadcrumb [routerLink]="['../']">Equipment</ion-breadcrumb>
+          <ion-breadcrumb>{{equipment()?.name || 'Unknown Equipment'}}</ion-breadcrumb>
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <ion-card>
           <ion-card-content>
             <ion-list>
@@ -16,6 +25,33 @@
                     Edit
                   </ion-button>
                 </ion-buttons>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Serial Number
+                </ion-label>
+                <ion-text slot="end">
+                  {{equipment()?.serial_number || 'Unknown Serial Number'}}
+                </ion-text>
+              </ion-item>
+              @if(equipment()?.description && equipment()?.description != ''){
+                <ion-item>
+                  <ion-label>
+                    {{equipment()?.description}}
+                  </ion-label>
+                </ion-item>
+              }
+              @if(equipment()?.note && equipment()?.note != ''){
+                <ion-item>
+                  <ion-label>
+                    {{equipment()?.note}}
+                  </ion-label>
+                </ion-item>
+              }
+              <ion-item>
+                <ion-label>
+                  {{equipment() | json}}
+                </ion-label>
               </ion-item>
             </ion-list>
           </ion-card-content>

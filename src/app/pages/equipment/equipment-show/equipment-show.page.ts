@@ -2,8 +2,9 @@ import { Component, OnInit, inject, signal, effect, computed } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonLabel, IonCardTitle, IonList, IonItem, IonButtons, IonIcon, IonButton, IonNote } from '@ionic/angular';
+import { IonContent, IonText, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonLabel, IonCardTitle, IonList, IonItem, IonButtons, IonIcon, IonButton, IonNote } from '@ionic/angular';
 import { EquipmentService } from '../../../services/equipment.service';
+import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 
 @Component({
   selector: 'app-equipment-show',
@@ -11,8 +12,8 @@ import { EquipmentService } from '../../../services/equipment.service';
   styleUrls: ['./equipment-show.page.scss'],
   imports: [
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, 
-    IonRow, IonCol, IonCard, IonCardContent, IonLabel, IonCardTitle, IonList, IonItem, 
-    IonButtons, IonIcon, IonButton, IonNote, RouterLink, 
+    IonRow, IonText, IonCol, IonCard, IonCardContent, IonLabel, IonCardTitle, IonList, IonItem, 
+    IonButtons, IonIcon, IonButton, IonNote, RouterLink, IonBreadcrumb, BreadcrumbsComponent, 
   ]
 })
 export class EquipmentShowPage implements OnInit {

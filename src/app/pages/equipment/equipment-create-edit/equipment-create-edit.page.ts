@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -24,8 +24,11 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
+  IonBreadcrumb
 } from '@ionic/angular';
 import { EquipmentService } from '../../../services/equipment.service';
+import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -34,13 +37,14 @@ import { EquipmentService } from '../../../services/equipment.service';
   imports: [
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-    IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, IonSelect,
-    IonSelectOption, IonTextarea, IonList, ReactiveFormsModule, 
+    IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, IonSelect, RouterLink, 
+    IonSelectOption, IonTextarea, IonList, ReactiveFormsModule, BreadcrumbsComponent, IonBreadcrumb, 
   ]
 })
 export class EquipmentCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private equipmentService = inject(EquipmentService);
+  private toast = inject(ToastService);
   uuid:any;
   equipment = signal<any>(null);
   form = computed<FormGroup>(() => this.equipmentService.buildForm(this.equipment()));
@@ -53,9 +57,13 @@ export class EquipmentCreateEditPage implements OnInit {
   }
 
   async onSubmit() {
+    console.log('onSubmit');
     if (this.form().valid) {
       const equipment = this.equipmentService.trimObject(this.form().value);
       const results = await this.equipmentService.save(equipment);
+      console.log(results);
+    }else{
+      this.toast.present('middle', "Please complete the form to proceed.");
     }
   }
 

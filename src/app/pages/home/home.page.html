@@ -29,6 +29,22 @@
                   {{invoices()?.length || 0}}
                 </ion-note>
               </ion-item>
+              <ion-item [routerLink]="['manufacturers']">
+                <ion-label>
+                  Manufacturers
+                </ion-label>
+                <ion-note slot="end">
+                  {{manufacturers()?.length || 0}}
+                </ion-note>
+              </ion-item>
+              <ion-item [routerLink]="['models']">
+                <ion-label>
+                  Models
+                </ion-label>
+                <ion-note slot="end">
+                  {{models()?.length || 0}}
+                </ion-note>
+              </ion-item>
             </ion-list>
           </ion-card-content>
         </ion-card>

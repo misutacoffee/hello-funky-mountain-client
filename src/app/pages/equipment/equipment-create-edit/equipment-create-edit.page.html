@@ -2,45 +2,67 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-list [formGroup]="form()">
-          <ion-item>
-            <ion-label>
-              <ion-title class="title-medium">
-                Equipment {{uuid ? 'Edit' : 'Create'}}
-              </ion-title>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Name" formControlName="name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Serial Number" formControlName="serial_number"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Type" formControlName="type"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-textarea label="Description" formControlName="description"></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-textarea label="Note" formControlName="note"></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-select label="Type" formControlName="type">
-              <ion-select-option value="Type1">Type 1</ion-select-option>
-              <ion-select-option value="Type2">Type 2</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-select label="Status" formControlName="status">  
-              <ion-select-option value="Available">Available</ion-select-option>
-              <ion-select-option value="Unavailable">Unavailable</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>       
-            <ion-button expand="block" (click)="onSubmit()">Submit</ion-button>
-          </ion-item>
-        </ion-list>
+        <app-breadcrumbs>
+          @if(uuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Equipment</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{equipment()?.name || 'Unknown Equipment'}}</ion-breadcrumb>
+            <ion-breadcrumb>Edit</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Equipment</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
+          }
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <ion-list [formGroup]="form()">
+              <ion-item>
+                <ion-label>
+                  <ion-title class="title-medium">
+                    Equipment {{uuid ? 'Edit' : 'Create'}}
+                  </ion-title>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Name" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Serial Number" formControlName="serial_number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Type" formControlName="type"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-textarea label="Description" formControlName="description"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea label="Note" formControlName="note"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-select label="Type" formControlName="type">
+                  <ion-select-option value="Type1">Type 1</ion-select-option>
+                  <ion-select-option value="Type2">Type 2</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-select label="Status" formControlName="status">  
+                  <ion-select-option value="Available">Available</ion-select-option>
+                  <ion-select-option value="Unavailable">Unavailable</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-buttons class="ion-padding-horizontal">
+          <ion-button (click)="onSubmit()" fill="solid" [disabled]="form()?.invalid">
+            {{uuid ? 'Update' : 'Create'}}
+          </ion-button>
+        </ion-buttons>    
       </ion-col>
     </ion-row>
   </ion-grid>
