@@ -37,6 +37,48 @@ export const routes: Routes = [
           },
         ]
       }, 
+      {
+        path: 'manufacturers', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/manufacturer/manufacturer-index/manufacturer-index.page').then( m => m.ManufacturerIndexPage)
+          }, 
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/manufacturer/manufacturer-create-edit/manufacturer-create-edit.page').then( m => m.ManufacturerCreateEditPage)
+          }, 
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/manufacturer/manufacturer-show/manufacturer-show.page').then( m => m.ManufacturerShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/manufacturer/manufacturer-create-edit/manufacturer-create-edit.page').then( m => m.ManufacturerCreateEditPage)
+          },
+        ]
+      }, 
+      {
+        path: 'models', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/model/model-index/model-index.page').then( m => m.ModelIndexPage)
+          }, 
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          }, 
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          },
+        ]
+      }, 
     ]
-  }, 
+  },
 ];
