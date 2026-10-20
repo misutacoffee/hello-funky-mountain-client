@@ -52,7 +52,7 @@
         </ion-card>
         <ion-buttons class="ion-padding-horizontal">
           <ion-button (click)="save()" fill="solid" [disabled]="form()?.invalid">
-            Save
+            {{uuid ? 'Update' : 'Create'}}
           </ion-button>
           <ion-button>
             Cancel

@@ -1,0 +1,12 @@
+<ion-button [id]="trigger">
+  <ion-icon name="caret-down-outline"></ion-icon>
+</ion-button>
+<ion-popover [trigger]="trigger" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ng-content></ng-content>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

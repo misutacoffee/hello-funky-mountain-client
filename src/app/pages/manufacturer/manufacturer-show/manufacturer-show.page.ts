@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, 
   IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonButtons, IonButton, 
-  IonIcon, IonList, IonItem, IonNote, IonBreadcrumb, IonLabel, 
+  IonIcon, IonList, IonItem, IonNote, IonBreadcrumb, IonLabel,
+  IonText, 
  } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ManufacturerService } from '../../../services/manufacturer.service';
+import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 
 @Component({
   selector: 'app-manufacturer-show',
@@ -16,9 +18,9 @@ import { ManufacturerService } from '../../../services/manufacturer.service';
   styleUrls: ['./manufacturer-show.page.scss'],
   imports: [
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, 
-    IonContent, IonHeader, IonTitle, IonToolbar, 
+    IonContent, IonHeader, IonTitle, IonToolbar, CaretDownPopoverComponent, 
     IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonButtons, IonButton, 
-    IonIcon, IonList, IonItem, IonNote, IonBreadcrumb, IonLabel, 
+    IonIcon, IonList, IonItem, IonNote, IonBreadcrumb, IonLabel, IonText, 
   ]
 })
 export class ManufacturerShowPage implements OnInit {
@@ -36,6 +38,10 @@ export class ManufacturerShowPage implements OnInit {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
     const manufacturer = await this.manufacturerServ.getByUuid(this.uuid);
     this.manufacturer.set(manufacturer);
+  }
+
+  async delete(uuid:string){
+    console.log(uuid);
   }
 
 }
