@@ -1,0 +1,26 @@
+<ion-button [id]="trigger">
+  <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+</ion-button>
+<ion-popover [trigger]="trigger" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ng-content></ng-content>
+      </ion-list>
+      <ion-list class="ion-display-none">
+        <ion-item [button]="true" [detail]="false">Option 1</ion-item>
+        <ion-item [button]="true" [detail]="false">Option 2</ion-item>
+        <ion-item [button]="true" [id]="nestedTrigger">More options...</ion-item>
+        <ion-popover [trigger]="nestedTrigger" [dismissOnSelect]="true" side="end">
+          <ng-template>
+            <ion-content>
+              <ion-list>
+                <ion-item [button]="true" [detail]="false">Nested option</ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

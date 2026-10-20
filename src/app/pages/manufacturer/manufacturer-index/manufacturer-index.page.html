@@ -28,15 +28,32 @@
               </ion-item>
               @if(manufacturers() && manufacturers()?.length !== 0){
                 @for(manufacturer of manufacturers(); track manufacturer.uuid){
-                  <ion-item [routerLink]="['/manufacturers', manufacturer?.uuid]">
+                  <ion-item>
                     <ion-label>
                       <h2>
-                        {{manufacturer?.name ?? 'Unknown Manufacturer'}}
+                        <a [routerLink]="['/manufacturers', manufacturer?.uuid]">
+                          {{manufacturer?.name ?? 'Unknown Manufacturer'}}
+                        </a>
                       </h2>
                       <p>
                         {{manufacturer?.description}}
                       </p>
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/manufacturers', manufacturer?.uuid]" button>
+                          View 
+                        </ion-item>
+                        <ion-item [routerLink]="['/manufacturers', manufacturer?.uuid, 'edit']" button>
+                          Edit 
+                        </ion-item>
+                        <ion-item (click)="delete(manufacturer?.uuid)" button>
+                          <ion-text color="danger">
+                            Delete
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }@else{
