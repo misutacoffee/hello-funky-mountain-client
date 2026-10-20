@@ -1,13 +1,64 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>manufacturer-create-edit</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">manufacturer-create-edit</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-breadcrumbs>
+          @if(uuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Manufacturers</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{manufacturer()?.name ?? 'Unknown Manufacturer'}}</ion-breadcrumb>
+            <ion-breadcrumb>Edit</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Manufacturers</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
+          }
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-title>
+          {{uuid ? 'Edit' : 'Create'}} Manufacturer
+        </ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="9" size-lg="6">
+        <ion-card>
+          <ion-card-content>
+            <ion-list [formGroup]="form()">
+              <ion-item class="ion-display-none">
+                <ion-label>
+                  <ion-title class="title-medium">
+                    {{uuid ? 'Edit' : 'Create'}} Manufacturer
+                  </ion-title>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Name" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-textarea label="Description" formControlName="description"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea label="Note" formControlName="note"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-checkbox formControlName="is_active">Is Active</ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-buttons class="ion-padding-horizontal">
+          <ion-button (click)="save()" fill="solid" [disabled]="form()?.invalid">
+            Save
+          </ion-button>
+          <ion-button>
+            Cancel
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,13 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>manufacturer-index</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">manufacturer-index</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-breadcrumbs>
+          <ion-breadcrumb [routerLink]="['../']">Home</ion-breadcrumb>
+          <ion-breadcrumb>Manufacturers</ion-breadcrumb>
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  <ion-title class="title-medium">
+                    Manufacturers
+                  </ion-title>
+                </ion-label>
+                <ion-buttons slot="end">
+                  <ion-button [routerLink]="['/manufacturers', 'create']">
+                    New
+                    <ion-icon name="add-outline" slot="end"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+              @if(manufacturers() && manufacturers()?.length !== 0){
+                @for(manufacturer of manufacturers(); track manufacturer.uuid){
+                  <ion-item>
+                    <ion-label>
+                      <h2>
+                        {{manufacturer?.name ?? 'Unknown Manufacturer'}}
+                      </h2>
+                      <p>
+                        {{manufacturer?.description}}
+                      </p>
+                    </ion-label>
+                  </ion-item>
+                }
+              }@else{
+                <ion-item>
+                  <ion-label>
+                    No Manufacturers Available
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
