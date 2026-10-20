@@ -25,6 +25,7 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
+  IonText,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
@@ -43,7 +44,7 @@ import { HomeService } from '../../services/home.service';
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, IonList, IonItem, 
     IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
-    IonSelect, IonSelectOption, IonTextarea, RouterLink, IonNote
+    IonSelect, IonSelectOption, IonTextarea, RouterLink, IonNote, IonText, 
   ]
 })
 export class HomePage implements OnInit {

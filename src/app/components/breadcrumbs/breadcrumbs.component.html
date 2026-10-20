@@ -1,3 +1,11 @@
-<ion-breadcrumbs>
-  <ng-content></ng-content>
-</ion-breadcrumbs>
+<ion-item lines="none" color="transparent">
+  <ion-buttons slot="start">
+    <ion-button (click)="back()">
+      <ion-icon name="caret-back-outline" slot="start"></ion-icon>
+      Back
+    </ion-button>
+  </ion-buttons>
+  <ion-breadcrumbs>
+    <ng-content></ng-content>
+  </ion-breadcrumbs>
+</ion-item>
