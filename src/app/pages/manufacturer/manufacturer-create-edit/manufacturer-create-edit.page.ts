@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, 
   IonGrid, IonRow, IonCol, IonList, IonInput, IonItem, IonNote, IonLabel, IonCheckbox, IonIcon, 
-  IonBreadcrumb, IonCard, IonCardContent, IonButtons, IonButton, IonTextarea, 
+  IonBreadcrumb, IonCard, IonCardContent, IonButtons, IonButton, IonTextarea,
+  NavController, 
  } from '@ionic/angular';
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-manufacturer-create-edit',
@@ -23,6 +25,8 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 export class ManufacturerCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private manufacturerServ = inject(ManufacturerService);
+  private toast = inject(ToastService);
+  private navCtl = inject(NavController);
   uuid:any;
   manufacturer = signal<any>(null);
   form = computed<any>(() => this.manufacturerServ.buildForm(this.manufacturer()));
@@ -40,9 +44,15 @@ export class ManufacturerCreateEditPage implements OnInit {
   async save(){
     if(this.form()?.valid){
       const manufacturer:any = this.form()?.value;
-      console.log(manufacturer);
+      const results:any = await this.manufacturerServ.save(manufacturer);
+      if(results?.success){
+        this.toast.present('bottom', results?.message ?? "Manufacturer successfully saved to the database.");
+        this.navCtl.back();
+      }else{
+        this.toast.present('middle', results?.message ?? "An error has occurred.");
+      }
     }else{
-      // toast
+        this.toast.present('middle', "Please complete the form to continue.");
     }
   }
 

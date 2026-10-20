@@ -40,8 +40,15 @@ export class ApiService {
     return this.http.post<T>(this.url(endpoint), body);
   }
 
-  put<T>(endpoint: string, body: unknown): Observable<T> {
-    return this.http.put<T>(this.url(endpoint), body);
+  put<T>(endpoint: string, body: unknown){
+    return new Promise((resolve, reject) => {
+      this.http.put(this.url(endpoint), body).subscribe((data:any) => {
+        resolve(data);
+      }, (error) => {
+        reject(error);
+      });
+    });
+    // return this.http.put<T>(this.url(endpoint), body);
   }
 
   patch<T>(endpoint: string, body: unknown): Observable<T> {

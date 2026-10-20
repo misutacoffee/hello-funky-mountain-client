@@ -49,6 +49,8 @@ export class ManufacturerService {
 
   async save(manufacturer:any){
     // Implement the logic to save manufacturer to your data source
+    const results = await this.apiServ.put(`manufacturers/${manufacturer.uuid}`, manufacturer);
+    return results
   }
 
   async delete(uuid:string){
