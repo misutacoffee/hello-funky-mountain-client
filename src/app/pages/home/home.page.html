@@ -5,7 +5,7 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-              <ion-item [routerLink]="['equipment']">
+              <ion-item [routerLink]="['/equipment']">
                 <ion-label class="text-ellipsis">
                   Equipment
                 </ion-label>
@@ -13,7 +13,7 @@
                   {{equipment()?.length || 0}}
                 </ion-note>
               </ion-item>
-              <ion-item [routerLink]="['contracts']">
+              <ion-item [routerLink]="['/contracts']">
                 <ion-label class="text-ellipsis">
                   Contracts
                 </ion-label>
@@ -21,7 +21,7 @@
                   {{contracts()?.length || 0}}
                 </ion-note>
               </ion-item>
-              <ion-item [routerLink]="['invoices']">
+              <ion-item [routerLink]="['/invoices']">
                 <ion-label class="text-ellipsis">
                   Invoices
                 </ion-label>
@@ -29,7 +29,7 @@
                   {{invoices()?.length || 0}}
                 </ion-note>
               </ion-item>
-              <ion-item [routerLink]="['manufacturers']">
+              <ion-item [routerLink]="['/manufacturers']">
                 <ion-label class="text-ellipsis">
                   Manufacturers
                 </ion-label>
@@ -37,13 +37,18 @@
                   {{manufacturers()?.length || 0}}
                 </ion-note>
               </ion-item>
-              <ion-item [routerLink]="['models']">
+              <ion-item [routerLink]="['/models']">
                 <ion-label class="text-ellipsis">
                   Models
                 </ion-label>
                 <ion-note slot="end">
                   {{models()?.length || 0}}
                 </ion-note>
+              </ion-item>
+              <ion-item [routerLink]="['/settings']">
+                <ion-label class="text-ellipsis">
+                  Settings
+                </ion-label>
               </ion-item>
             </ion-list>
           </ion-card-content>
@@ -62,7 +67,9 @@
               </ion-item>
               <ion-item>
                 <ion-label>
-                  Manage your equipment, contracts, and invoices with ease.
+                  <ion-note>
+                    Manage your equipment, contracts, and invoices with ease.
+                  </ion-note>
                 </ion-label>
               </ion-item>
             </ion-list>
@@ -73,7 +80,9 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  Equipment
+                  <a [routerLink]="['/equipment']">
+                    Equipment
+                  </a>
                 </ion-card-title>
                 <ion-card-subtitle>
                   {{equipment().length}} item{{equipment().length === 1 ? '' : 's'}}
@@ -88,7 +97,9 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  Rentals
+                  <a [routerLink]="['/rentals']">
+                    Rentals
+                  </a>
                 </ion-card-title>
                 <ion-card-subtitle>
                   {{rentals().length}} rental{{rentals().length === 1 ? '' : 's'}}
@@ -103,7 +114,9 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  Contracts
+                  <a [routerLink]="['/contracts']">
+                    Contracts
+                  </a>
                 </ion-card-title>
                 <ion-card-subtitle>
                   {{contracts().length}} contract{{contracts().length === 1 ? '' : 's'}}
@@ -118,7 +131,9 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  Invoices
+                  <a [routerLink]="['/invoices']">
+                    Invoices
+                  </a>
                 </ion-card-title>
                 <ion-card-subtitle>
                   {{invoices().length}} invoice{{invoices().length === 1 ? '' : 's'}}
