@@ -2,6 +2,23 @@
   <ion-grid>
     <ion-row>
       <ion-col size="0" size-xs="3">
+        <div class="ion-padding ion-display-none">
+          <ion-item color="transparent">
+            <ion-label>
+              Profile
+            </ion-label>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label>
+              Notifications
+            </ion-label>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label>
+              Messages
+            </ion-label>
+          </ion-item>
+        </div>
         <ion-card>
           <ion-card-content>
             <ion-list>
@@ -55,26 +72,78 @@
         </ion-card>
       </ion-col>
       <ion-col size="12" size-xs="9">
-        <ion-card>
-          <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-label>
-                  <ion-title>
-                    Welcome to Equipment Rental
-                  </ion-title>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-note>
-                    Manage your equipment, contracts, and invoices with ease.
-                  </ion-note>
-                </ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+        <ion-row>
+          <ion-col size="12" size-md="9">
+            <ion-card>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item>
+                    <ion-label>
+                      <ion-title>
+                        Welcome to Equipment Rental
+                      </ion-title>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>
+                      <ion-note>
+                        Manage your equipment, contracts, and invoices with ease.
+                      </ion-note>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="12" size-md="3">
+            <ion-item color="transparent" lines="none" class="ion-padding-top">
+              <ion-note slot="start">
+                0
+              </ion-note>
+              <ion-label>
+                <ion-note>
+                  Notifications
+                </ion-note>
+              </ion-label>
+            </ion-item>
+            <ion-item color="transparent" lines="none">
+              <ion-note slot="start">
+                0
+              </ion-note>
+              <ion-label>
+                <ion-note>
+                  Messages
+                </ion-note>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-display-none">
+          <ion-col size="12" size-sm="6">
+            <ion-item color="transparent" lines="none">
+              <ion-note slot="start">
+                0
+              </ion-note>
+              <ion-label>
+                <ion-note>
+                  Notifications
+                </ion-note>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-item color="transparent" lines="none">
+              <ion-note slot="start">
+                0
+              </ion-note>
+              <ion-label>
+                <ion-note>
+                  Messages
+                </ion-note>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col size="12" size-xs="6">
             <ion-card>

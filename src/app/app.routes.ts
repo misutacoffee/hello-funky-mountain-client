@@ -85,4 +85,24 @@ export const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'notification-index',
+    loadComponent: () => import('./pages/notification/notification-index/notification-index.page').then( m => m.NotificationIndexPage)
+  },
+  {
+    path: 'notification-show',
+    loadComponent: () => import('./pages/notification/notification-show/notification-show.page').then( m => m.NotificationShowPage)
+  },
+  {
+    path: 'message-index',
+    loadComponent: () => import('./pages/message/message-index/message-index.page').then( m => m.MessageIndexPage)
+  },
+  {
+    path: 'message-show',
+    loadComponent: () => import('./pages/message/message-show/message-show.page').then( m => m.MessageShowPage)
+  },
+  {
+    path: 'message-create-edit',
+    loadComponent: () => import('./pages/message/message-create-edit/message-create-edit.page').then( m => m.MessageCreateEditPage)
+  },
 ];
