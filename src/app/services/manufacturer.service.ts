@@ -22,7 +22,7 @@ export class ManufacturerService {
       name: obj?.name?.trim() || '',
       description: obj?.description?.trim() || '',
       note: obj?.note?.trim() || '',
-      is_active: obj?.is_active?.trim() || '',
+      is_active: obj?.is_active || true,
       uuid: obj?.uuid || uuid(),
     }
   }

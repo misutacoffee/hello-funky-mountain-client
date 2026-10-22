@@ -1,13 +1,71 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>model-show</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">model-show</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-breadcrumbs>
+          @if(manufacturerUuid){
+            <ion-breadcrumb [routerLink]="['../../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../']">Manufacturers</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">{{manufacturer()?.name ?? 'Unknown Manufacturer'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Models</ion-breadcrumb>
+            <ion-breadcrumb>{{model()?.name ?? 'Unknown Model'}}</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Models</ion-breadcrumb>
+            <ion-breadcrumb>{{model()?.name ?? 'Unknown Model'}}</ion-breadcrumb>
+          }
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="9" size-xl="6">
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              {{model()?.name ?? 'Unknown Model'}}
+            </ion-title>
+          </ion-label>
+          <ion-buttons>
+            <ion-button [routerLink]="['/manufacturers', model()?.manufacturer_uuid, 'models', model()?.uuid, 'edit']">
+              Edit
+            </ion-button>
+            <app-caret-down-popover>
+              <ion-item (click)="delete(model()?.uuid)" button>
+                <ion-text color="danger">
+                  Delete
+                </ion-text>
+              </ion-item>
+            </app-caret-down-popover>
+          </ion-buttons>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  {{model()?.name}}
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <a [routerLink]="['/manufacturers', manufacturer()?.uuid]">
+                    {{manufacturer()?.name ?? 'Unknown Manufacturer'}}
+                  </a>
+                </ion-label>
+              </ion-item>
+              @if(model()?.description && model()?.description !== ''){
+                <ion-item>
+                  <ion-label>
+                    <ion-note>
+                      {{model()?.description}}
+                    </ion-note>
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

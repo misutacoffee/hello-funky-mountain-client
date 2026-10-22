@@ -13,6 +13,7 @@ import { v4 as uuid } from 'uuid';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
+import { ManufacturerService } from '../../../services/manufacturer.service';
 
 @Component({
   selector: 'app-model-index',
@@ -28,6 +29,7 @@ import { addOutline } from 'ionicons/icons';
 export class ModelIndexPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private modelServ = inject(ManufacturerModelService);
+  private manufacturerServ = inject(ManufacturerService);
   manufacturerUuid:any;
   models = signal<any>(null);
   manufacturer = signal<any>(null);
@@ -40,8 +42,17 @@ export class ModelIndexPage implements OnInit {
 
   async ionViewWillEnter(){
     this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
-    const models:any = await this.modelServ.getAll();
-    this.models.set(models);
+    if(this.manufacturerUuid){
+      const manufacturerData:any = await this.modelServ.getAllByManufacturerUuid(this.manufacturerUuid);
+      const manufacturer = this.manufacturerServ.trimObject(manufacturerData);
+      const models:any = manufacturerData?.manufacturer_models;
+      this.manufacturer.set(manufacturer);
+      this.models.set(models);
+    }else{
+      const models:any = await this.modelServ.getAll();
+      this.manufacturer.set(null);
+      this.models.set(models);
+    }
   }
 
   async delete(modelUuid:string){

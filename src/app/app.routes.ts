@@ -57,7 +57,7 @@ export const routes: Routes = [
             loadComponent: () => import('./pages/manufacturer/manufacturer-create-edit/manufacturer-create-edit.page').then( m => m.ManufacturerCreateEditPage)
           },
           {
-            path: ':uuid/models',
+            path: ':manufacturer_uuid/models',
             loadComponent: () => import('./pages/model/model-index/model-index.page').then( m => m.ModelIndexPage)
           },
           {

@@ -1,19 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
+import { 
+  IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonCol, IonRow, IonBreadcrumb, 
+  IonCard, IonCardContent, IonText, IonList, IonItem, IonLabel, IonNote, IonButtons, IonButton, 
+  IonIcon, 
+ } from '@ionic/angular';
+import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ManufacturerService } from '../../../services/manufacturer.service';
+import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
+import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 
 @Component({
   selector: 'app-model-show',
   templateUrl: './model-show.page.html',
   styleUrls: ['./model-show.page.scss'],
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
+    IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonCol, IonRow, IonBreadcrumb, 
+    IonCard, IonCardContent, IonText, IonList, IonItem, IonLabel, IonNote, IonButtons, IonButton, 
+    IonIcon, 
+  ]
 })
 export class ModelShowPage implements OnInit {
-
+  private activatedRoute = inject(ActivatedRoute);
+  private modelServ = inject(ManufacturerModelService);
+  uuid:any;
+  manufacturerUuid:any;
+  modelData = signal<any>(null);
+  model = computed<any>(() => this.modelServ.trimObject(this.modelData()));
+  manufacturer = computed(() => this.modelData()?.manufacturer);
   constructor() { }
 
   ngOnInit() {
+  }
+
+  async ionViewWillEnter(){
+    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
+    this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
+    const modelData:any = await this.modelServ.getByUuid(this.uuid);
+    this.modelData.set(modelData);
+  }
+
+  async delete(uuid:string){
+    console.log(uuid);
   }
 
 }

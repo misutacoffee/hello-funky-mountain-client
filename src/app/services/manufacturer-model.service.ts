@@ -11,10 +11,23 @@ export class ManufacturerModelService {
   }
 
   async getAllByManufacturerUuid(manufacturerUuid:string){
-
+    const manufacturer = await this.apiServ.get(`/manufacturers/${manufacturerUuid}/models`);
+    return manufacturer
   }
 
   async getByUuid(uuid:string){
+    const model:any = await this.apiServ.get(`/models/${uuid}`);
+    return model
+  }
 
+  trimObject(obj:any){
+    return {
+      name: obj?.name, 
+      description: obj?.description, 
+      note: obj?.note, 
+      is_active: obj?.is_active, 
+      manufacturer_uuid: obj?.manufacturer_uuid, 
+      uuid: obj?.uuid, 
+    }
   }
 }
