@@ -57,11 +57,9 @@ export class EquipmentCreateEditPage implements OnInit {
   }
 
   async onSubmit() {
-    console.log('onSubmit');
     if (this.form().valid) {
       const equipment = this.equipmentService.trimObject(this.form().value);
       const results = await this.equipmentService.save(equipment);
-      console.log(results);
     }else{
       this.toast.present('middle', "Please complete the form to proceed.");
     }

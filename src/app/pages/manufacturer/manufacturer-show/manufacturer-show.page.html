@@ -10,47 +10,43 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="12" size-md="9" size-lg="6">
+      <ion-col size="12" size-md="9" size-xl="6">
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              Manufacturer
+              {{manufacturer()?.name ?? 'Unknown Manufacturer'}}
             </ion-title>
           </ion-label>
+          <ion-buttons slot="end">
+            <ion-button [routerLink]="['/manufacturers', manufacturer()?.uuid, 'edit']">
+              Edit
+            </ion-button>
+            <app-caret-down-popover>
+              <ion-item (click)="delete(manufacturer()?.uuid)" button>
+                <ion-text color="danger">
+                  Delete
+                </ion-text>
+              </ion-item>
+            </app-caret-down-popover>
+          </ion-buttons>
         </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12" size-md="9" size-lg="6">
         <ion-card>
           <ion-card-content>
             <ion-list>
               <ion-item>
                 <ion-label>
-                  <ion-title class="title-medium">
-                    {{manufacturer()?.name ?? 'Unknown Manufacturer'}}
-                  </ion-title>
-                </ion-label>
-                <ion-buttons>
-                  <ion-button [routerLink]="['/manufacturers', manufacturer()?.uuid, 'edit']">
-                    Edit
-                  </ion-button>
-                  <app-caret-down-popover>
-                    <ion-item (click)="delete(manufacturer()?.uuid)" button>
-                      <ion-text color="danger">
-                        Delete
-                      </ion-text>
-                    </ion-item>
-                  </app-caret-down-popover>
-                </ion-buttons>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <p>
-                    {{manufacturer()?.uuid}}
-                  </p>
+                  {{manufacturer()?.name ?? 'Unknown Manufacturer'}}
                 </ion-label>
               </ion-item>
+              @if(manufacturer()?.description && manufacturer()?.description !== ''){
+                <ion-item>
+                  <ion-label>
+                    <ion-note>
+                      {{manufacturer()?.description}}
+                    </ion-note>
+                  </ion-label>
+                </ion-item>
+              }
             </ion-list>
           </ion-card-content>
         </ion-card>
@@ -66,7 +62,8 @@
           </ion-label>
           <ion-buttons slot="end">
             <ion-button [routerLink]="['/manufacturers', manufacturer()?.uuid, 'models', 'create']">
-              Create
+              New 
+              <ion-icon name="add-outline" slot="end"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-item>
