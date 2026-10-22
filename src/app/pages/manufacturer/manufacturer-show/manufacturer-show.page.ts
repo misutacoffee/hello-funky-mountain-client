@@ -11,6 +11,8 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
+import { addIcons } from 'ionicons';
+import { addOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-manufacturer-show',
@@ -29,7 +31,9 @@ export class ManufacturerShowPage implements OnInit {
   uuid:any;
   manufacturer = signal<any>(null);
   models = computed<any>(() => this.manufacturer()?.manufacturer_models);
-  constructor() { }
+  constructor() { 
+    addIcons({addOutline});
+  }
 
   ngOnInit() {
   }
