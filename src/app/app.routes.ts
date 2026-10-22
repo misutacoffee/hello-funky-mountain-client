@@ -56,6 +56,22 @@ export const routes: Routes = [
             path: ':uuid/edit',
             loadComponent: () => import('./pages/manufacturer/manufacturer-create-edit/manufacturer-create-edit.page').then( m => m.ManufacturerCreateEditPage)
           },
+          {
+            path: ':uuid/models',
+            loadComponent: () => import('./pages/model/model-index/model-index.page').then( m => m.ModelIndexPage)
+          },
+          {
+            path: ':manufacturer_uuid/models/create',
+            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          },
+          {
+            path: ':manufacturer_uuid/models/:uuid',
+            loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
+          },
+          {
+            path: ':manufacturer_uuid/models/:uuid/edit',
+            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          },
         ]
       }, 
       {
@@ -69,14 +85,14 @@ export const routes: Routes = [
             path: 'create',
             loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
           }, 
-          {
-            path: ':uuid',
-            loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
-          }, 
-          {
-            path: ':uuid/edit',
-            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
-          },
+          // {
+          //   path: ':uuid',
+          //   loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
+          // }, 
+          // {
+          //   path: ':uuid/edit',
+          //   loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          // },
         ]
       }, 
       {
