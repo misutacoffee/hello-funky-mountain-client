@@ -121,4 +121,20 @@ export const routes: Routes = [
     path: 'message-create-edit',
     loadComponent: () => import('./pages/message/message-create-edit/message-create-edit.page').then( m => m.MessageCreateEditPage)
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./pages/forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
+  },
+  {
+    path: 'password-reset',
+    loadComponent: () => import('./pages/password-reset/password-reset.page').then( m => m.PasswordResetPage)
+  },
 ];
