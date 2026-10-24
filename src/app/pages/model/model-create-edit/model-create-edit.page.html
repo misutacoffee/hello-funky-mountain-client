@@ -41,11 +41,19 @@
                 <ion-input label="Name" formControlName="name"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-select label="Manufacturer" formControlName="manufacturer_uuid" placeholder="Select a Manufacturer">
+                <ion-select (ionChange)="updateManufacturer($event)" label="Manufacturer" formControlName="manufacturer_uuid" placeholder="Select a Manufacturer">
                   @for(manufacturer of manufacturers(); track manufacturer.uuid){
                     <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name ?? 'Unknown Manufacturer'}}</ion-select-option>
                   }
                 </ion-select>
+                <ion-buttons slot="end">
+                  <ion-button>
+                    <ion-icon name="add-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Type" formControlName="type"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-textarea label="Description" formControlName="description" autoGrow></ion-textarea>

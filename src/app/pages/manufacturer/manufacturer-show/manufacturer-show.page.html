@@ -82,6 +82,21 @@
                         {{model?.name ?? 'Unknown Model'}}
                       </a>
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]" button>
+                          View
+                        </ion-item>
+                        <ion-item [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid, 'edit']" button>
+                          Edit
+                        </ion-item>
+                        <ion-item (click)="deleteModel(model?.uuid)" button>
+                          <ion-text color="danger">
+                            Delete
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                   @if(model?.description && model?.description !== ""){
                     <ion-item>

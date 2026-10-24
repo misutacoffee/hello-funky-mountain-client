@@ -12,6 +12,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { ToastService } from '../../../services/toast.service';
+import { addIcons } from 'ionicons';
+import { addOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-model-create-edit',
@@ -35,7 +37,9 @@ export class ModelCreateEditPage implements OnInit {
   manufacturers = signal<any>(null);
   model = signal<any>(null);
   form = computed<FormGroup>(() => this.modelServ.buildForm(this.model()));
-  constructor() { }
+  constructor() { 
+    addIcons({addOutline});
+  }
 
   ngOnInit() {
   }
@@ -62,6 +66,11 @@ export class ModelCreateEditPage implements OnInit {
       this.manufacturers.set(manufacturers);
       this.model.set(model);
     }
+  }
+
+  updateManufacturer(event:any){
+    const manufacturerUuid:any = event?.detail?.value;
+    console.log(manufacturerUuid);
   }
 
   async save(){

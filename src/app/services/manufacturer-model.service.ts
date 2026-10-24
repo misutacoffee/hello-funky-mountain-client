@@ -35,6 +35,7 @@ export class ManufacturerModelService {
   trimObject(obj:any){
     return {
       name: obj?.name, 
+      type: obj?.type, 
       description: obj?.description, 
       note: obj?.note, 
       is_active: obj?.is_active, 
@@ -46,6 +47,7 @@ export class ManufacturerModelService {
   buildForm(model:any){
     return new FormGroup({
       name: new FormControl(model?.name, Validators.required), 
+      type: new FormControl(model?.type),
       description: new FormControl(model?.description),
       note: new FormControl(model?.note), 
       is_active: new FormControl(model?.is_active, Validators.required), 
@@ -57,6 +59,7 @@ export class ManufacturerModelService {
   createNew(manufacturerUuid:any = null){
     return {
       name: null, 
+      type: null, 
       description: null, 
       note: null, 
       is_active: true, 

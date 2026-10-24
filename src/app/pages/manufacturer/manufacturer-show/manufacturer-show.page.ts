@@ -13,13 +13,14 @@ import { ManufacturerService } from '../../../services/manufacturer.service';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 
 @Component({
   selector: 'app-manufacturer-show',
   templateUrl: './manufacturer-show.page.html',
   styleUrls: ['./manufacturer-show.page.scss'],
   imports: [
-    CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, 
+    CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, EllipsisVerticalPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, CaretDownPopoverComponent, 
     IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonButtons, IonButton, 
     IonIcon, IonList, IonItem, IonNote, IonBreadcrumb, IonLabel, IonText, 
@@ -46,6 +47,10 @@ export class ManufacturerShowPage implements OnInit {
 
   async delete(uuid:string){
     console.log(uuid);
+  }
+
+  async deleteModel(modelUuid:string){
+    console.log(modelUuid);
   }
 
 }

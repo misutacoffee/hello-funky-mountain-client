@@ -24,7 +24,9 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonBreadcrumb
+  IonBreadcrumb,
+  NavController, 
+  IonCheckbox, 
 } from '@ionic/angular';
 import { EquipmentService } from '../../../services/equipment.service';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
@@ -39,12 +41,14 @@ import { ToastService } from '../../../services/toast.service';
     IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
     IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, IonSelect, RouterLink, 
     IonSelectOption, IonTextarea, IonList, ReactiveFormsModule, BreadcrumbsComponent, IonBreadcrumb, 
+    IonCheckbox, 
   ]
 })
 export class EquipmentCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private equipmentService = inject(EquipmentService);
   private toast = inject(ToastService);
+  private navCtl = inject(NavController);
   uuid:any;
   equipment = signal<any>(null);
   form = computed<FormGroup>(() => this.equipmentService.buildForm(this.equipment()));
@@ -63,6 +67,11 @@ export class EquipmentCreateEditPage implements OnInit {
     }else{
       this.toast.present('middle', "Please complete the form to proceed.");
     }
+  }
+
+  cancel(){
+    // alert if changes
+    this.navCtl.back();
   }
 
 }

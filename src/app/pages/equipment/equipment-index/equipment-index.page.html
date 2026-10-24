@@ -10,22 +10,22 @@
     </ion-row>
     <ion-row>
       <ion-col>
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              Equipment
+            </ion-title>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button [routerLink]="['/equipment', 'create']">
+              New
+              <ion-icon name="add-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
         <ion-card>
           <ion-card-content>
             <ion-list>
-              <ion-item>
-                <ion-label>
-                  <ion-title class="title-medium">
-                    Equipment
-                  </ion-title>
-                </ion-label>
-                <ion-buttons slot="end">
-                  <ion-button [routerLink]="['/equipment', 'create']" color="primary">
-                    New
-                    <ion-icon name="add-outline" slot="end"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-              </ion-item>
               @if(!equipment() || equipment()?.length === 0){
                 <ion-item>
                   <ion-label>
@@ -34,11 +34,30 @@
                 </ion-item>
               }@else{
                 @for (item of equipment(); track item.uuid){
-                  <ion-item [routerLink]="['/equipment', item.uuid]">
+                  <ion-item>
                     <ion-label>
-                      <h2>{{ item?.name }}</h2>
+                      <h2>
+                        <a [routerLink]="['/equipment', item.uuid]">
+                          {{ item?.name }}
+                        </a>
+                      </h2>
                       <p>{{ item?.description }}</p>
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/equipment', item.uuid]" button>
+                          View 
+                        </ion-item>
+                        <ion-item [routerLink]="['/equipment', item.uuid, 'edit']" button>
+                          Edit 
+                        </ion-item>
+                        <ion-item (click)="delete(item?.uuid)" button>
+                          <ion-text color="danger">
+                            Delete 
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }
