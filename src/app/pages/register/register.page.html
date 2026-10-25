@@ -1,11 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['']">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Equipment Rental</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['']">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-toolbar>
       <ion-title size="large">Equipment Rental</ion-title>
     </ion-toolbar>
@@ -24,17 +34,23 @@
           <ion-card-content>
             <ion-list [formGroup]="form()">
               <ion-item>
+                <ion-input label="Name" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
                 <ion-input label="Email" type="email" formControlName="email"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-input label="Password" type="password" formControlName="password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Confirm Password" type="password" formControlName="confirm_password"></ion-input>
               </ion-item>
             </ion-list>
           </ion-card-content>
         </ion-card>
         <ion-item color="transparent" lines="none">
           <ion-buttons slot="start">
-            <ion-button color="dark" fill="solid">
+            <ion-button color="dark" fill="solid" [disabled]="form()?.invalid">
               Submit
             </ion-button>
           </ion-buttons>
@@ -46,6 +62,13 @@
               Forgot Password
             </ion-button>
           </ion-buttons>
+        </ion-item>
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-note>
+              You'll need to verify your email in order to access most account features.
+            </ion-note>
+          </ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
