@@ -137,4 +137,8 @@ export const routes: Routes = [
     path: 'password-reset',
     loadComponent: () => import('./pages/password-reset/password-reset.page').then( m => m.PasswordResetPage)
   },
+  {
+    path: 'change-password',
+    loadComponent: () => import('./pages/change-password/change-password.page').then( m => m.ChangePasswordPage)
+  },
 ];
