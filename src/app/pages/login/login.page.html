@@ -44,7 +44,7 @@
         </ion-card>
         <ion-item color="transparent" lines="none">
           <ion-buttons slot="start">
-            <ion-button color="dark" fill="solid">
+            <ion-button color="dark" fill="solid" [disabled]="form()?.invalid">
               Login
             </ion-button>
             <ion-button [routerLink]="['/forgot-password']">

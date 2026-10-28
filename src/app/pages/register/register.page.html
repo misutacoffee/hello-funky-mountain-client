@@ -45,12 +45,17 @@
               <ion-item>
                 <ion-input label="Confirm Password" type="password" formControlName="confirm_password"></ion-input>
               </ion-item>
+              <ion-item>
+                <ion-label>
+                  {{form()?.get('uuid')?.value}}
+                </ion-label>
+              </ion-item>
             </ion-list>
           </ion-card-content>
         </ion-card>
         <ion-item color="transparent" lines="none">
           <ion-buttons slot="start">
-            <ion-button color="dark" fill="solid" [disabled]="form()?.invalid">
+            <ion-button (click)="onSubmit()" color="dark" fill="solid" [disabled]="form()?.invalid">
               Submit
             </ion-button>
           </ion-buttons>
@@ -70,6 +75,13 @@
             </ion-note>
           </ion-label>
         </ion-item>
+        @if(errors()){
+          <ion-item>
+            <ion-label>
+              {{errors() | json}}
+            </ion-label>
+          </ion-item>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>
