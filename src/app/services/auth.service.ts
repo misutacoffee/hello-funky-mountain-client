@@ -1,19 +1,24 @@
 import { Service, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { ToastService } from './toast.service';
 import { v4 as uuid } from 'uuid';
+import { TokenService } from './token.service';
+import { UserService } from './user.service';
 
 @Service()
 export class AuthService {
   private apiServ = inject(ApiService);
-  private toast = inject(ToastService);
+  private tokenServ = inject(TokenService);
+  private userServ = inject(UserService);
 
   async register(user:any){
     return new Promise((resolve, reject) => {
       this.apiServ.post('register', user).subscribe({
         next: (results:any) => {
+          // setUser
+          // setToken
+          this.tokenServ.setToken(results?.token);
+          this.userServ.setUser(results?.user);
           resolve(results);
         }, 
         error: (error:any) => {

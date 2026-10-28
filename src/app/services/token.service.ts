@@ -2,7 +2,7 @@ import { Service } from '@angular/core';
 
 @Service()
 export class TokenService {
-  private readonly storageKey = 'auth_token';
+  private readonly storageKey = 'token';
 
   getToken(): string | null {
     return localStorage.getItem(this.storageKey);

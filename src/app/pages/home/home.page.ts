@@ -2,39 +2,16 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  IonButton,
-  IonButtons,
-  IonCard,
-  IonCardSubtitle,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonIcon,
-  IonInput,
-  IonItem,
-  IonList, 
-  IonLabel,
-  IonNote, 
-  IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonTextarea,
-  IonTitle,
-  IonToolbar,
-  IonText,
+  IonButton, IonButtons, IonCard, IonCardSubtitle, IonCardContent, IonCardHeader,
+  IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem,
+  IonList, IonLabel, IonNote, IonRow, IonSelect, IonSelectOption, IonTextarea,
+  IonTitle, IonToolbar, IonText,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
-import { StorageService } from '../../services/storage.service';
 import { RouterLink } from '@angular/router';
-import { ManufacturerService } from '../../services/manufacturer.service';
-import { ManufacturerModelService } from '../../services/manufacturer-model.service';
-import { EquipmentService } from '../../services/equipment.service';
 import { HomeService } from '../../services/home.service';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-home',
@@ -49,6 +26,7 @@ import { HomeService } from '../../services/home.service';
 })
 export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
+  private tokenServ = inject(TokenService);
   homeData = signal<any>(null);
   contracts = computed(() => this.homeData()?.contracts || []);
   equipment = computed(() => this.homeData()?.equipment || []);
@@ -66,6 +44,8 @@ export class HomePage implements OnInit {
   async ionViewWillEnter() {
     const homeData = await this.homeServ.getHomeData();
     this.homeData.set(homeData);
+    const token:any = this.tokenServ.getToken();
+    console.log(token);
   }
   
 }

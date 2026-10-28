@@ -43,11 +43,11 @@ export class RegisterPage implements OnInit {
       console.log(results);
       if(results?.success){
         this.toast.present('bottom', results?.message ?? "User account successfully registered.");
-        this.form()?.patchValue({
-          'uuid': uuid(), 
-          'email': `${uuid()}@example.com`, 
-        });
-        // this.router.navigateByUrl('/');
+        // this.form()?.patchValue({
+        //   'uuid': uuid(), 
+        //   'email': `${uuid()}@example.com`, 
+        // });
+        this.router.navigateByUrl('/');
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);
