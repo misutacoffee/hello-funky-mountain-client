@@ -3,18 +3,21 @@ import { StorageService } from './storage.service';
 
 @Service()
 export class UserService {
-  private storageServ = inject(StorageService);
   private readonly storageKey = 'user';
 
-  async getUser(){
-    return localStorage.getItem(this.storageKey);
+  getUser(){
+    const value:any = localStorage.getItem(this.storageKey);
+    const user:any = JSON.parse(value);
+    return user
   }
 
-  async setUser(user:any){
-    localStorage.setItem(this.storageKey, user);
+  setUser(user:any){
+    const value:string = JSON.stringify(user);
+    localStorage.setItem(this.storageKey, value);
   }
 
-  async clearUser(){
-    // 
+  clearUser(){
+    localStorage.removeItem(this.storageKey);
   }
+
 }

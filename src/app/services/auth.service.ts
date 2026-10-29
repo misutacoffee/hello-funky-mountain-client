@@ -1,4 +1,4 @@
-import { Service, inject } from '@angular/core';
+import { Service, inject, signal, computed } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from './api.service';
 import { v4 as uuid } from 'uuid';
@@ -10,6 +10,45 @@ export class AuthService {
   private apiServ = inject(ApiService);
   private tokenServ = inject(TokenService);
   private userServ = inject(UserService);
+  private _user = signal<any>(null);
+  private _loading = signal<boolean>(true);
+  readonly user = this._user.asReadonly();
+  readonly loading = this._loading.asReadonly();
+  readonly isAuthenticated = computed(() => this._user() !== null);
+
+  async initialize(){
+    this._loading.set(true);
+    try{
+      const token = this.tokenServ.getToken();
+      if(!token){
+        this._user.set(null);
+        return
+      }
+      // user
+    }catch{
+      this.clearSession();
+    }finally{
+      this._loading.set(false);
+    }
+  }
+
+  clearSession(){
+    this.tokenServ.clearToken();
+    this._user.set(null);
+  }
+
+  async login(credentials:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post('login', credentials).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          resolve(error);
+        }, 
+      })
+    })
+  }
 
   async register(user:any){
     return new Promise((resolve, reject) => {
@@ -19,19 +58,20 @@ export class AuthService {
           // setToken
           this.tokenServ.setToken(results?.token);
           this.userServ.setUser(results?.user);
+          console.log(results);
           resolve(results);
         }, 
         error: (error:any) => {
           resolve(error);
-        }
+        }, 
       });
     });
   }
 
   buildLoginForm(){
     return new FormGroup({
-      'email': new FormControl(null, Validators.required), 
-      'password': new FormControl(null, Validators.required), 
+      'email': new FormControl('bbkarker@example.com', Validators.required), 
+      'password': new FormControl('Bananaman5000!1', Validators.required), 
     });
   }
 

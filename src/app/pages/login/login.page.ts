@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -23,12 +24,23 @@ import { homeOutline } from 'ionicons/icons';
 })
 export class LoginPage implements OnInit {
   private authServ = inject(AuthService);
+  private toast = inject(ToastService);
   form = computed(() => this.authServ.buildLoginForm());
   constructor() { 
     addIcons({homeOutline});
   }
 
   ngOnInit() {
+  }
+
+  async onSubmit(){
+    if(this.form()?.valid){
+      const credentials:any = this.form()?.value;
+      const results:any = await this.authServ.login(credentials);
+      console.log(results);
+    }else{
+      this.toast.present('middle', "Please complete the form to continue.");
+    }
   }
 
 }
