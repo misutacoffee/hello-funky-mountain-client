@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { HomeService } from '../../services/home.service';
 import { TokenService } from '../../services/token.service';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
   private tokenServ = inject(TokenService);
   private userServ = inject(UserService);
+  private authServ = inject(AuthService);
   homeData = signal<any>(null);
   contracts = computed(() => this.homeData()?.contracts || []);
   equipment = computed(() => this.homeData()?.equipment || []);
@@ -37,7 +39,7 @@ export class HomePage implements OnInit {
   models = computed(() => this.homeData()?.manufacturerModels || []);
   rentals = computed(() => this.homeData()?.rentals || []);
   users = computed(() => this.homeData()?.users || []);
-  user = signal<any>(null);
+  user = computed(() => this.authServ.user());
   constructor() { 
     addIcons({addOutline})
   }
@@ -47,10 +49,6 @@ export class HomePage implements OnInit {
   async ionViewWillEnter() {
     const homeData = await this.homeServ.getHomeData();
     this.homeData.set(homeData);
-    const token:any = this.tokenServ.getToken();
-    const user:any = this.userServ.getUser();
-    this.user.set(user);
-    console.log(user);
   }
   
 }

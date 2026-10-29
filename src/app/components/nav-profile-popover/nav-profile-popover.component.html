@@ -1,0 +1,15 @@
+<ion-button [id]="trigger">
+  <span class="ion-hide-sm-down">
+    {{user()?.name ?? 'Unknown User'}}
+  </span>
+  <ion-icon name="person-circle-outline" slot="end"></ion-icon>
+</ion-button>
+<ion-popover [trigger]="trigger" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ng-content></ng-content>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>

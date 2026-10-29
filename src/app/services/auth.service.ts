@@ -11,6 +11,7 @@ export class AuthService {
   private tokenServ = inject(TokenService);
   private userServ = inject(UserService);
   private _user = signal<any>(null);
+  private _token = signal<any>(null);
   private _loading = signal<boolean>(true);
   readonly user = this._user.asReadonly();
   readonly loading = this._loading.asReadonly();
@@ -19,12 +20,15 @@ export class AuthService {
   async initialize(){
     this._loading.set(true);
     try{
-      const token = this.tokenServ.getToken();
+      const token:any = this.tokenServ.getToken();
+      const user:any = this.userServ.getUser();
       if(!token){
         this._user.set(null);
         return
       }
       // user
+      this._token.set(token);
+      this._user.set(user);
     }catch{
       this.clearSession();
     }finally{

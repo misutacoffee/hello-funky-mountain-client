@@ -13,9 +13,23 @@
         Equipment Rental
       </ion-title>
       <ion-buttons slot="end">
-        <ion-button [routerLink]="['/login']">
-          Login
-        </ion-button>
+        @if(user()){
+          <app-nav-profile-popover [user]="user()">
+            <ion-item [routerLink]="['profile']" button>
+              Profile
+            </ion-item>
+            <ion-item [routerLink]="['settings']" button>
+              Settings
+            </ion-item>
+            <ion-item (click)="logout()" button>
+              Logout
+            </ion-item>
+          </app-nav-profile-popover>
+        }@else{
+          <ion-button [routerLink]="['/login']">
+            Login
+          </ion-button>
+        }
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
