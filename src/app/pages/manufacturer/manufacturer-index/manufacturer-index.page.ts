@@ -40,7 +40,7 @@ export class ManufacturerIndexPage implements OnInit {
   }
 
   async delete(uuid:string){
-    console.log(uuid);
+    // 
   }
 
 }

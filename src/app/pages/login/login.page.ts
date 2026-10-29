@@ -7,7 +7,7 @@ import {
   IonIcon, 
  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
 import { ToastService } from '../../services/toast.service';
@@ -25,6 +25,7 @@ import { ToastService } from '../../services/toast.service';
 export class LoginPage implements OnInit {
   private authServ = inject(AuthService);
   private toast = inject(ToastService);
+  private router = inject(Router);
   form = computed(() => this.authServ.buildLoginForm());
   constructor() { 
     addIcons({homeOutline});
@@ -37,7 +38,12 @@ export class LoginPage implements OnInit {
     if(this.form()?.valid){
       const credentials:any = this.form()?.value;
       const results:any = await this.authServ.login(credentials);
-      console.log(results);
+      if(results?.success){
+        this.toast.present('bottom', results?.message ?? "Login successful.");
+        this.router.navigateByUrl('/');
+      }else{
+        this.toast.present('middle', results?.message ?? "An error has occurred.");
+      }
     }else{
       this.toast.present('middle', "Please complete the form to continue.");
     }

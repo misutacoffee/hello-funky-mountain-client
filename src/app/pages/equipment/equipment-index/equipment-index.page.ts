@@ -35,7 +35,7 @@ export class EquipmentIndexPage implements OnInit {
   }
 
   async delete(uuid:string){
-    console.log(uuid);
+    // 
   }
 
 }

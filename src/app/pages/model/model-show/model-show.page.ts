@@ -44,7 +44,7 @@ export class ModelShowPage implements OnInit {
   }
 
   async delete(uuid:string){
-    console.log(uuid);
+    // 
   }
 
 }

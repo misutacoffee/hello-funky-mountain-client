@@ -40,13 +40,8 @@ export class RegisterPage implements OnInit {
     if(this.form().valid){
       const user:any = this.form().value;
       const results:any = await this.authServ.register(user);
-      console.log(results);
       if(results?.success){
         this.toast.present('bottom', results?.message ?? "User account successfully registered.");
-        // this.form()?.patchValue({
-        //   'uuid': uuid(), 
-        //   'email': `${uuid()}@example.com`, 
-        // });
         this.router.navigateByUrl('/');
       }else if(results?.error){
         const error:any = results?.error;
@@ -55,7 +50,6 @@ export class RegisterPage implements OnInit {
       }else{
         this.toast.present('middle', results?.message ?? "An error has occurred.");
       }
-      // console.log(results);
     }else{
       this.toast.present('middle', "Please complete the form to proceed.");
     }

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, computed, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton,
   IonContent, IonMenu, IonList, IonItem, IonLabel,
-  IonIcon, IonRouterOutlet, IonButton, 
+  IonIcon, IonRouterOutlet, IonButton,
+  IonAlert, 
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
@@ -19,12 +20,24 @@ import { NavProfilePopoverComponent } from '../../components/nav-profile-popover
     CommonModule, RouterLink, NavProfilePopoverComponent, 
     IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton,
     IonContent, IonMenu, IonList, IonItem, IonLabel,
-    IonIcon, IonRouterOutlet, IonButton, 
+    IonIcon, IonRouterOutlet, IonButton, IonAlert, 
   ],
 })
 export class MainLayoutComponent implements OnInit {
   private authServ = inject(AuthService);
+  private router = inject(Router);
   user = computed(() => this.authServ.user());
+  alertButtons = [
+    {
+      text: "Cancel", 
+    }, 
+    {
+      text: "Logout", 
+      handler: () => {
+        this.logout();
+      }
+    }
+  ]
   constructor() { 
     addIcons({homeOutline});
   }
@@ -32,9 +45,8 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit() {}
 
   async logout(){
-    // alert 
-    // logout
-    // clearSession
+    this.authServ.clearSession();
+    this.router.navigateByUrl('/login');
   }
 
 }

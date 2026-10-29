@@ -46,11 +46,11 @@ export class ManufacturerShowPage implements OnInit {
   }
 
   async delete(uuid:string){
-    console.log(uuid);
+    // 
   }
 
   async deleteModel(modelUuid:string){
-    console.log(modelUuid);
+    // 
   }
 
 }

@@ -70,14 +70,13 @@ export class ModelCreateEditPage implements OnInit {
 
   updateManufacturer(event:any){
     const manufacturerUuid:any = event?.detail?.value;
-    console.log(manufacturerUuid);
+    // 
   }
 
   async save(){
     if(this.form()?.valid){
       const model:any = this.form()?.value;
       const results:any = await this.modelServ.save(model);
-      console.log(results);
       if(results?.success){
         this.toast.present('bottom', results?.message ?? "Model successfully saved to the database.");
         this.navCtl.back();

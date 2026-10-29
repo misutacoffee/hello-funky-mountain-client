@@ -23,10 +23,10 @@ export class AuthService {
       const token:any = this.tokenServ.getToken();
       const user:any = this.userServ.getUser();
       if(!token){
+        this._token.set(null);
         this._user.set(null);
         return
       }
-      // user
       this._token.set(token);
       this._user.set(user);
     }catch{
@@ -38,6 +38,8 @@ export class AuthService {
 
   clearSession(){
     this.tokenServ.clearToken();
+    this.userServ.clearUser();
+    this._token.set(null);
     this._user.set(null);
   }
 
@@ -45,6 +47,14 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.apiServ.post('login', credentials).subscribe({
         next: (results:any) => {
+          if(results?.success){
+            const token:string = results?.token;
+            const user:any = results?.user;
+            this.tokenServ.setToken(token);
+            this.userServ.setUser(user);
+            this._token.set(token);
+            this._user.set(user);
+          }
           resolve(results);
         }, 
         error: (error:any) => {
@@ -58,11 +68,12 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.apiServ.post('register', user).subscribe({
         next: (results:any) => {
-          // setUser
-          // setToken
-          this.tokenServ.setToken(results?.token);
-          this.userServ.setUser(results?.user);
-          console.log(results);
+            const token:string = results?.token;
+            const user:any = results?.user;
+            this.tokenServ.setToken(token);
+            this.userServ.setUser(user);
+            this._token.set(token);
+            this._user.set(user);
           resolve(results);
         }, 
         error: (error:any) => {
@@ -74,8 +85,8 @@ export class AuthService {
 
   buildLoginForm(){
     return new FormGroup({
-      'email': new FormControl('bbkarker@example.com', Validators.required), 
-      'password': new FormControl('Bananaman5000!1', Validators.required), 
+      'email': new FormControl(null, Validators.required), 
+      'password': new FormControl(null, Validators.required), 
     });
   }
 

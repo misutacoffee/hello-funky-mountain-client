@@ -56,7 +56,7 @@ export class ModelIndexPage implements OnInit {
   }
 
   async delete(modelUuid:string){
-    console.log(modelUuid);
+    // 
   }
 
 }
