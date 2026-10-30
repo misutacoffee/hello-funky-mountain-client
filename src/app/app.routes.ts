@@ -141,4 +141,8 @@ export const routes: Routes = [
     path: 'change-password',
     loadComponent: () => import('./pages/change-password/change-password.page').then( m => m.ChangePasswordPage)
   },
+  {
+    path: 'email-verification',
+    loadComponent: () => import('./pages/auth/email-verification/email-verification.page').then( m => m.EmailVerificationPage)
+  },
 ];

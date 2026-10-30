@@ -68,16 +68,50 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.apiServ.post('register', user).subscribe({
         next: (results:any) => {
+          const token:string = results?.token;
+          const user:any = results?.user;
+          this.tokenServ.setToken(token);
+          this.userServ.setUser(user);
+          this._token.set(token);
+          this._user.set(user);
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          resolve(error);
+        }, 
+      });
+    });
+  }
+
+  async forgotPassword(form:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post('forgot-password', form).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }, 
+      });
+    });
+  }
+
+  async resetPassword(form:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post('reset-password', form).subscribe({
+        next: (results:any) => {
+          if(results?.success){
             const token:string = results?.token;
             const user:any = results?.user;
             this.tokenServ.setToken(token);
             this.userServ.setUser(user);
             this._token.set(token);
             this._user.set(user);
+          }
           resolve(results);
         }, 
         error: (error:any) => {
-          resolve(error);
+          reject(error);
         }, 
       });
     });
@@ -111,7 +145,7 @@ export class AuthService {
 
   buildForgotPasswordForm(){
     return new FormGroup({
-      'email': new FormControl(null, Validators.required), 
+      'email': new FormControl('richard.boulder@example.com', Validators.required), 
     });
   }
   
