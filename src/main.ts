@@ -8,6 +8,7 @@ import { provideAppInitializer, inject } from '@angular/core';
 import { AuthService } from './app/services/auth.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { tokenInterceptor } from './app/interceptors/token.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,7 +20,8 @@ bootstrapApplication(AppComponent, {
     }), 
     provideHttpClient(
       withInterceptors([
-        authInterceptor
+        authInterceptor, 
+        tokenInterceptor, 
       ]), 
     ), 
   ],
