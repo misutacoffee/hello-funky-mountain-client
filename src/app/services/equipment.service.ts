@@ -1,11 +1,40 @@
-import { Service, inject } from '@angular/core';
+import { Service, inject, computed } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
 
 @Service()
 export class EquipmentService {
   private apiServ = inject(ApiService);
+  private authServ = inject(AuthService);
+  user = computed(() => this.authServ.user());
+
+  async create(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('equipment/create').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async editByUuid(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`equipment/${uuid}/edit`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
 
   async getAll() {
     return new Promise((resolve, reject) => {
@@ -59,7 +88,7 @@ export class EquipmentService {
       rental_rate: '',
       rental_unit: '',
       is_active: '',
-      user_uuid: '',
+      user_uuid: this.user()?.uuid ?? '',
       manufacturer_model_uuid: '',
       uuid: uuid(), 
     }
@@ -68,7 +97,7 @@ export class EquipmentService {
   buildForm(equipment:any = null){
     return new FormGroup({
       name: new FormControl(equipment?.name || '', [Validators.required]),
-      serial_number: new FormControl(equipment?.serial_number || '', [Validators.required]),
+      serial_number: new FormControl(equipment?.serial_number || ''),
       type: new FormControl(equipment?.type || ''),
       description: new FormControl(equipment?.description || ''),
       note: new FormControl(equipment?.note || ''),

@@ -31,6 +31,7 @@ import {
 import { EquipmentService } from '../../../services/equipment.service';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ToastService } from '../../../services/toast.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -46,24 +47,37 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class EquipmentCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
-  private equipmentService = inject(EquipmentService);
+  private equipmentServ = inject(EquipmentService);
+  private authServ = inject(AuthService);
   private toast = inject(ToastService);
   private navCtl = inject(NavController);
   uuid:any;
-  equipment = signal<any>(null);
-  form = computed<FormGroup>(() => this.equipmentService.buildForm(this.equipment()));
+  equipmentData = signal<any>(null);
+  equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
+  form = computed<FormGroup>(() => this.equipmentServ.buildForm(this.equipment()));
+  user = computed<any>(() => this.authServ.user());
+  manufacturers = computed(() => this.equipmentData()?.manufacturers);
+  models = computed(() => this.equipmentData()?.models);
   constructor() { }
 
   async ngOnInit() {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const equipment:any = this.uuid ? await this.equipmentService.getByUuid(this.uuid) : this.equipmentService.createNew();
-    this.equipment.set(equipment);
+    const equipmentData:any = this.uuid ? await this.equipmentServ.editByUuid(this.uuid) : await this.equipmentServ.create();
+    this.equipmentData.set(equipmentData);
+  }
+
+  manufacturerSelectChange(event:any){
+    // 
+  }
+
+  modelSelectChange(event:any){
+    // 
   }
 
   async onSubmit() {
     if (this.form().valid) {
-      const equipment = this.equipmentService.trimObject(this.form().value);
-      const results = await this.equipmentService.save(equipment);
+      const equipment = this.equipmentServ.trimObject(this.form().value);
+      const results = await this.equipmentServ.save(equipment);
     }else{
       this.toast.present("Please complete the form to proceed.");
     }
