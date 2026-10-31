@@ -65,7 +65,7 @@ export class EquipmentCreateEditPage implements OnInit {
       const equipment = this.equipmentService.trimObject(this.form().value);
       const results = await this.equipmentService.save(equipment);
     }else{
-      this.toast.present('middle', "Please complete the form to proceed.");
+      this.toast.present("Please complete the form to proceed.");
     }
   }
 

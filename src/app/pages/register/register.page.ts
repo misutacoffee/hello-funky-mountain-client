@@ -41,17 +41,17 @@ export class RegisterPage implements OnInit {
       const user:any = this.form().value;
       const results:any = await this.authServ.register(user);
       if(results?.success){
-        this.toast.present('bottom', results?.message ?? "User account successfully registered.");
+        this.toast.present(results?.message ?? "User account successfully registered.");
         this.router.navigateByUrl('/');
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);
-        this.toast.present('middle', error?.message ?? "An error has occurred.");
+        this.toast.present(error?.message ?? "An error has occurred.");
       }else{
-        this.toast.present('middle', results?.message ?? "An error has occurred.");
+        this.toast.present(results?.message ?? "An error has occurred.");
       }
     }else{
-      this.toast.present('middle', "Please complete the form to proceed.");
+      this.toast.present("Please complete the form to proceed.");
     }
   }
 

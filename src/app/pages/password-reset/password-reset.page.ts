@@ -47,13 +47,13 @@ export class PasswordResetPage implements OnInit {
       const form:any = this.form()?.value;
       const results:any = await this.authServ.resetPassword(form);
       if(results?.success){
-        this.toast.present('bottom', results?.message ?? "Password successfully updated.");
+        this.toast.present(results?.message ?? "Password successfully updated.");
         this.router.navigateByUrl('/');
       }else{
-        this.toast.present('middle', results?.message ?? "An error has occurred.");
+        this.toast.present(results?.message ?? "An error has occurred.");
       }
     }else{
-      this.toast.present('middle', "Complete the form to continue.");
+      this.toast.present("Complete the form to continue.");
     }
   }
 

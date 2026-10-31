@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   async login(credentials:any){
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.apiServ.post('login', credentials).subscribe({
         next: (results:any) => {
           if(results?.success){
@@ -60,12 +60,26 @@ export class AuthService {
         error: (error:any) => {
           resolve(error);
         }, 
-      })
-    })
+      });
+    });
+  }
+
+  async logout(){
+    this.clearSession();
+    return new Promise((resolve) => {
+      this.apiServ.post('logout', null).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          resolve(error);
+        }, 
+      });
+    });
   }
 
   async register(user:any){
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.apiServ.post('register', user).subscribe({
         next: (results:any) => {
           const token:string = results?.token;
@@ -119,17 +133,17 @@ export class AuthService {
 
   buildLoginForm(){
     return new FormGroup({
-      'email': new FormControl(null, Validators.required), 
+      'email': new FormControl(null, [Validators.required, Validators.email]), 
       'password': new FormControl(null, Validators.required), 
     });
   }
 
   buildRegisterForm(){
     return new FormGroup({
-      'name': new FormControl('Ben Boulder', Validators.required), 
-      'email': new FormControl(`${uuid()}@example.com`, Validators.required), 
-      'password': new FormControl('Bananaman5000!1', Validators.required), 
-      'confirm_password': new FormControl('Bananaman5000!1', Validators.required), 
+      'name': new FormControl(null, Validators.required), 
+      'email': new FormControl(null, [Validators.required, Validators.email]), 
+      'password': new FormControl(null, Validators.required), 
+      'confirm_password': new FormControl(null, Validators.required), 
       'uuid': new FormControl(uuid(), Validators.required), 
     });
   }
@@ -137,7 +151,7 @@ export class AuthService {
   buildPasswordResetForm(){
     return new FormGroup({
       'token': new FormControl(null, Validators.required), 
-      'email': new FormControl(null, Validators.required), 
+      'email': new FormControl(null, [Validators.required, Validators.email]), 
       'password': new FormControl(null, Validators.required), 
       'confirm_password': new FormControl(null, Validators.required), 
     }); 
@@ -145,7 +159,7 @@ export class AuthService {
 
   buildForgotPasswordForm(){
     return new FormGroup({
-      'email': new FormControl('richard.boulder@example.com', Validators.required), 
+      'email': new FormControl(null, [Validators.required, Validators.email]), 
     });
   }
   

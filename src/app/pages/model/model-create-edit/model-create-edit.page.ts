@@ -78,13 +78,13 @@ export class ModelCreateEditPage implements OnInit {
       const model:any = this.form()?.value;
       const results:any = await this.modelServ.save(model);
       if(results?.success){
-        this.toast.present('bottom', results?.message ?? "Model successfully saved to the database.");
+        this.toast.present(results?.message ?? "Model successfully saved to the database.");
         this.navCtl.back();
       }else{
-        this.toast.present('middle', results?.message ?? "An error has occurred.");
+        this.toast.present(results?.message ?? "An error has occurred.");
       }
     }else{
-        this.toast.present('middle', "Please complete the form to continue.");
+        this.toast.present("Please complete the form to continue.");
     }
   }
 

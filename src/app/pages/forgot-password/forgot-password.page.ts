@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardContent, 
-  IonList, IonText, IonLabel, IonInput, IonButtons, IonButton, IonItem, IonIcon, 
+  IonList, IonText, IonLabel, IonInput, IonButtons, IonButton, IonItem, IonIcon,
+  IonNote, 
  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { homeOutline } from 'ionicons/icons';
+import { checkmarkCircleOutline, homeOutline } from 'ionicons/icons';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -18,15 +19,16 @@ import { ToastService } from '../../services/toast.service';
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, RouterLink, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardContent, 
-    IonList, IonText, IonLabel, IonInput, IonButtons, IonButton, IonItem, IonIcon, 
+    IonList, IonText, IonLabel, IonInput, IonButtons, IonButton, IonItem, IonIcon, IonNote, 
   ]
 })
 export class ForgotPasswordPage implements OnInit {
   private authServ = inject(AuthService);
   private toast = inject(ToastService);
   form = computed(() => this.authServ.buildForgotPasswordForm());
+  formSubmitted:boolean = false;
   constructor() { 
-    addIcons({homeOutline});
+    addIcons({homeOutline, checkmarkCircleOutline});
   }
 
   ngOnInit() {
@@ -35,9 +37,13 @@ export class ForgotPasswordPage implements OnInit {
   async onSubmit(){
     if(this.form().valid){
       const form:any = this.form()?.value;
-      const results = await this.authServ.forgotPassword(form);
+      const results:any = await this.authServ.forgotPassword(form);
+      if(results?.success){
+        this.formSubmitted = true;
+        this.form()?.patchValue({email: null});
+      }
     }else{
-      this.toast.present('middle', "Please complete the form to continue.");
+      this.toast.present("Please complete the form to continue.");
     }
   }
 

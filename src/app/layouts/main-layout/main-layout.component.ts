@@ -11,6 +11,7 @@ import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
 import { NavProfilePopoverComponent } from '../../components/nav-profile-popover/nav-profile-popover.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -26,6 +27,7 @@ import { NavProfilePopoverComponent } from '../../components/nav-profile-popover
 export class MainLayoutComponent implements OnInit {
   private authServ = inject(AuthService);
   private router = inject(Router);
+  private toast = inject(ToastService);
   user = computed(() => this.authServ.user());
   alertButtons = [
     {
@@ -45,8 +47,11 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit() {}
 
   async logout(){
-    this.authServ.clearSession();
-    this.router.navigateByUrl('/login');
+    const results:any = await this.authServ.logout();
+    if(results?.success){
+      this.toast.present("Logout successful.");
+      this.router.navigateByUrl('/login');
+    }
   }
 
 }

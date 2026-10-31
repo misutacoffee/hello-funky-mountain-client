@@ -39,13 +39,13 @@ export class LoginPage implements OnInit {
       const credentials:any = this.form()?.value;
       const results:any = await this.authServ.login(credentials);
       if(results?.success){
-        this.toast.present('bottom', results?.message ?? "Login successful.");
+        this.toast.present(results?.message ?? "Login successful.");
         this.router.navigateByUrl('/');
       }else{
-        this.toast.present('middle', results?.message ?? "An error has occurred.");
+        this.toast.present(results?.message ?? "An error has occurred.");
       }
     }else{
-      this.toast.present('middle', "Please complete the form to continue.");
+      this.toast.present("Please complete the form to continue.");
     }
   }
 
