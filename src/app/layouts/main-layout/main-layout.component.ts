@@ -51,6 +51,8 @@ export class MainLayoutComponent implements OnInit {
     if(results?.success){
       this.toast.present("Logout successful.");
       this.router.navigateByUrl('/login');
+    }else{
+      this.toast.present("Logout unsuccessful. Please check your network connection and try again.");
     }
   }
 

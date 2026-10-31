@@ -11,8 +11,9 @@ export class DevService {
         next: (results:any) => {
           resolve(results);
         }, 
-        error: (error:any) => {
-          reject(error);
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
         }
       })
     });
@@ -24,8 +25,9 @@ export class DevService {
         next: (results:any) => {
           resolve(results);
         }, 
-        error: (error:any) => {
-          reject(error);
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
         }
       })
     });

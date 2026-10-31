@@ -6,6 +6,8 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideAppInitializer, inject } from '@angular/core';
 import { AuthService } from './app/services/auth.service';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './app/interceptors/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -15,5 +17,10 @@ bootstrapApplication(AppComponent, {
     provideAppInitializer(() => {
       return inject(AuthService).initialize();
     }), 
+    provideHttpClient(
+      withInterceptors([
+        authInterceptor
+      ]), 
+    ), 
   ],
 });

@@ -10,11 +10,12 @@ export class AuthService {
   private apiServ = inject(ApiService);
   private tokenServ = inject(TokenService);
   private userServ = inject(UserService);
-  private _user = signal<any>(null);
-  private _token = signal<any>(null);
   private _loading = signal<boolean>(true);
-  readonly user = this._user.asReadonly();
+  private _token = signal<any>(null);
+  private _user = signal<any>(null);
   readonly loading = this._loading.asReadonly();
+  readonly token = this._token.asReadonly();
+  readonly user = this._user.asReadonly();
   readonly isAuthenticated = computed(() => this._user() !== null);
 
   async initialize(){
@@ -65,14 +66,18 @@ export class AuthService {
   }
 
   async logout(){
-    this.clearSession();
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
       this.apiServ.post('logout', null).subscribe({
         next: (results:any) => {
+          if(results?.success){
+            this.clearSession();
+          }
           resolve(results);
         }, 
-        error: (error:any) => {
-          resolve(error);
+        error: (results:any) => {
+          this.clearSession();
+          resolve(results?.error);
+          reject(results);
         }, 
       });
     });

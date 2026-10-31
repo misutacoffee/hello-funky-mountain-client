@@ -14,7 +14,6 @@ import { HomeService } from '../../services/home.service';
 import { TokenService } from '../../services/token.service';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { AuthenticationTestRequestComponent } from '../../components/dev/authentication-test-request/authentication-test-request.component';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +24,6 @@ import { AuthenticationTestRequestComponent } from '../../components/dev/authent
     IonLabel, FormsModule, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle,
     IonCardSubtitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonItem, 
     IonSelect, IonSelectOption, IonTextarea, RouterLink, IonNote, IonText, 
-    AuthenticationTestRequestComponent, 
   ]
 })
 export class HomePage implements OnInit {
