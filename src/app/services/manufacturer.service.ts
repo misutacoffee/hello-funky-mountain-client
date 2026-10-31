@@ -8,13 +8,29 @@ export class ManufacturerService {
   private apiServ = inject(ApiService);
 
   async getAll() {
-    const results = await this.apiServ.get('manufacturers');
-    return results
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('manufacturers').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   async getByUuid(uuid: string) {
-    const results = await this.apiServ.get(`manufacturers/${uuid}`);
-    return results
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`manufacturers/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   trimObject(obj: any) {
@@ -48,9 +64,16 @@ export class ManufacturerService {
   }
 
   async save(manufacturer:any){
-    // Implement the logic to save manufacturer to your data source
-    const results = await this.apiServ.put(`manufacturers/${manufacturer.uuid}`, manufacturer);
-    return results
+    return new Promise((resolve, reject) => {
+      this.apiServ.put(`manufacturers/${manufacturer.uuid}`, manufacturer).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   async delete(uuid:string){

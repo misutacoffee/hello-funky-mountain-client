@@ -6,7 +6,16 @@ export class HomeService {
   private apiServ = inject(ApiService);
 
   async getHomeData() {
-    const results = await this.apiServ.get('home');
-    return results;
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('home').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
+  
 }

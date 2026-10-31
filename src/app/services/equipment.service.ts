@@ -8,13 +8,29 @@ export class EquipmentService {
   private apiServ = inject(ApiService);
 
   async getAll() {
-    const results = await this.apiServ.get('equipment');
-    return results
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('equipment').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   async getByUuid(uuid: string) {
-    const results = await this.apiServ.get(`equipment/${uuid}`);
-    return results
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`equipment/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   trimObject(obj: any) {

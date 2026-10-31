@@ -12,43 +12,30 @@ export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl;
 
-  get<T>(endpoint: string, params?: Record<string, string | number | boolean>) {
-    return new Promise((resolve, reject) => {
-      let httpParams = new HttpParams();
+  get<T>(
+    endpoint: string,
+    params?: Record<string, string | number | boolean>,
+  ): Observable<T> {
+    let httpParams = new HttpParams();
 
-      if (params) {
-        for (const [key, value] of Object.entries(params)) {
-          httpParams = httpParams.set(key, String(value));
-        }
+    if (params) {
+      for (const [key, value] of Object.entries(params)) {
+        httpParams = httpParams.set(key, String(value));
       }
+    }
 
-      this.http.get(this.url(endpoint), { params: httpParams }).subscribe((data:any) => {
-        resolve(data);
-      }, (error) => {
-        reject(error);
-      });
-    });
+    return this.http.get<T>(
+      this.url(endpoint),
+      { params: httpParams },
+    );
   }
-
-  //   return this.http.get<T>(
-  //     this.url(endpoint),
-  //     { params: httpParams },
-  //   );
-  // }
-
+  
   post<T>(endpoint: string, body: unknown): Observable<T> {
     return this.http.post<T>(this.url(endpoint), body);
   }
 
-  put<T>(endpoint: string, body: unknown){
-    return new Promise((resolve, reject) => {
-      this.http.put(this.url(endpoint), body).subscribe((data:any) => {
-        resolve(data);
-      }, (error) => {
-        reject(error);
-      });
-    });
-    // return this.http.put<T>(this.url(endpoint), body);
+  put<T>(endpoint: string, body: unknown): Observable<T> {
+    return this.http.put<T>(this.url(endpoint), body);
   }
 
   patch<T>(endpoint: string, body: unknown): Observable<T> {

@@ -1,0 +1,41 @@
+<ion-card>
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+        <ion-title>
+          Test Authentication Requests
+        </ion-title>
+      </ion-item>
+      <ion-item>
+        <ion-buttons slot="start">
+          <ion-button (click)="authenticatedRequest()" color="success" fill="solid">
+            Submit
+          </ion-button>
+        </ion-buttons>
+        <ion-label>
+          Make an authenticated test request.
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-buttons slot="start">
+          <ion-button (click)="unauthenticatedRequest()" color="primary" fill="solid">
+            Submit
+          </ion-button>
+        </ion-buttons>
+        <ion-label>
+          Make an unauthenticated test request.
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          Results:
+        </ion-label>
+        <ion-text>
+          @if(results()){
+            {{results() | json}}
+          }
+        </ion-text>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
