@@ -1,4 +1,4 @@
-<ion-modal [trigger]="trigger()">
+<ion-modal [trigger]="trigger()" (willDismiss)="onWillDismiss($event)">
   <ng-template>
     <ion-header>
       <ion-toolbar>

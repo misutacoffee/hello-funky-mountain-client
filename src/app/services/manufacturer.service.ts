@@ -69,8 +69,9 @@ export class ManufacturerService {
         next: (results:any) => {
           resolve(results);
         }, 
-        error: (error:any) => {
-          reject(error);
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
         }
       })
     });

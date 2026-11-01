@@ -1,4 +1,4 @@
-<ion-modal [trigger]="trigger()">
+<ion-modal [trigger]="trigger()" (willDismiss)="onWillDismiss($event)">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -16,6 +16,16 @@
         <ion-item>
           <ion-input label="Name" formControlName="name"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-textarea label="Description" formControlName="description" autoGrow></ion-textarea>
+        </ion-item>
+        @if(errors()){
+          <ion-item>
+            <ion-label>
+              {{errors() | json}}
+            </ion-label>
+          </ion-item>
+        }
       </ion-list>
     </ion-content>
   </ng-template>

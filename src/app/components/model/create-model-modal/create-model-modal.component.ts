@@ -35,6 +35,10 @@ export class CreateModelModalComponent  implements OnInit {
 
   ngOnInit() {}
 
+  onWillDismiss(event:any){
+    // 
+  }
+
   clearManufacturer(){
     this.form()?.get('manufacturer_uuid')?.setValue(null);
   }

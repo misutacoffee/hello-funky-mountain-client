@@ -35,8 +35,8 @@ export class EquipmentCreateEditPage implements OnInit {
   equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
   form = computed<FormGroup>(() => this.equipmentServ.buildForm(this.equipment()));
   user = computed<any>(() => this.authServ.user());
-  manufacturers = computed(() => this.equipmentData()?.manufacturers);
-  models = computed(() => this.equipmentData()?.models);
+  manufacturers = computed<any[]>(() => this.equipmentData()?.manufacturers ?? []);
+  models = computed<any[]>(() => this.equipmentData()?.models ?? []);
   selectedManufacturer = signal<any>(null);
   selectedModel = signal<any>(null);
   selectedManufacturerUuid = computed(() => this.selectedManufacturer()?.uuid ?? null);
@@ -50,6 +50,19 @@ export class EquipmentCreateEditPage implements OnInit {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
     const equipmentData:any = this.uuid ? await this.equipmentServ.editByUuid(this.uuid) : await this.equipmentServ.create();
     this.equipmentData.set(equipmentData);
+  }
+
+  onManufacturerDismiss(event:any){
+    const manufacturer:any = event?.detail?.data || null;
+    if(manufacturer){
+      const manufacturers = [...this.manufacturers() || [], manufacturer];
+      this.equipmentData.set({
+        ...this.equipmentData(),
+        manufacturers: manufacturers
+      });
+      this.selectedManufacturer.set(manufacturer);
+      // 
+    }
   }
 
   async addManufacturer(){
