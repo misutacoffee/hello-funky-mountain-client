@@ -32,24 +32,30 @@
                 <ion-input label="Name" formControlName="name"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col>
-                      <ion-select (ionChange)="manufacturerSelectChange($event)" label="Manufacturer">
-                        @for(manufacturer of manufacturers(); track manufacturer.uuid){
-                          <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name}}</ion-select-option>
-                        }
-                      </ion-select>
-                    </ion-col>
-                    <ion-col>
-                      <ion-select (ionChange)="manufacturerSelectChange($event)" label="Model">
-                        @for(model of models(); track model.uuid){
-                          <ion-select-option [value]="model.uuid">{{model?.name}}</ion-select-option>
-                        }
-                      </ion-select>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
+                <ion-select [value]="selectedManufacturerUuid()" (ionChange)="manufacturerSelectChange($event)" label="Manufacturer">
+                  @for(manufacturer of manufacturers(); track manufacturer.uuid){
+                    <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name}}</ion-select-option>
+                  }
+                  <ion-button (click)="addManufacturer()" slot="end" color="dark" fill="clear">
+                    <ion-icon name="add-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="clearManufacturer()" slot="end" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
+                    <ion-icon name="close-outline"></ion-icon>
+                  </ion-button>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-select [value]="selectedModelUuid()" (ionChange)="modelSelectChange($event)" label="Model">
+                  @for(model of models(); track model.uuid){
+                    <ion-select-option [value]="model.uuid">{{model?.name}}</ion-select-option>
+                  }
+                  <ion-button (click)="addModel()" slot="end" color="dark" fill="clear">
+                    <ion-icon name="add-outline"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="clearModel()" slot="end" color="dark" fill="clear" [disabled]="!selectedModel()">
+                    <ion-icon name="close-outline"></ion-icon>
+                  </ion-button>
+                </ion-select>
               </ion-item>
               <ion-item>
                 <ion-input label="Serial Number" formControlName="serial_number"></ion-input>
