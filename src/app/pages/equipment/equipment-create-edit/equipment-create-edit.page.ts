@@ -60,11 +60,18 @@ export class EquipmentCreateEditPage implements OnInit {
     // 
   }
 
+  async onManufacturerModalDismiss(event:any){
+    // 
+  }
+
   manufacturerSelectChange(event:any){
     const manufacturerUuid = event?.detail?.value;
+    const manufacturer:any = this.manufacturers()?.find((manufacturer:any) => manufacturer.uuid === manufacturerUuid);
+    this.selectedManufacturer.set(manufacturer ?? null);
     if(this.selectedModel() && this.selectedModel()?.manufacturer_uuid !== manufacturerUuid){
       this.selectedModel.set(null);
       this.form()?.patchValue({manufacturer_model_uuid: null});
+
     }
   }
 

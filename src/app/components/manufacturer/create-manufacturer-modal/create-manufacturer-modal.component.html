@@ -1,21 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="cancel()">Cancel</ion-button>
-    </ion-buttons>
-    <ion-title>Create Manufacturer</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true" [disabled]="form()?.invalid">Confirm</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <ion-list [formGroup]="form()">
-    <ion-item>
-      <ion-input label="Name" formControlName="name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-textarea label="Description" formControlName="description" autoGrow></ion-textarea>
-    </ion-item>
-  </ion-list>
-</ion-content>
+<ion-modal [trigger]="trigger()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Create Manufacturer</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true" [disabled]="form()?.invalid">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list [formGroup]="form()">
+        <ion-item>
+          <ion-input label="Name" formControlName="name"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -36,26 +36,38 @@
                   @for(manufacturer of manufacturers(); track manufacturer.uuid){
                     <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name}}</ion-select-option>
                   }
-                  <ion-button (click)="addManufacturer()" slot="end" color="dark" fill="clear">
-                    <ion-icon name="add-outline"></ion-icon>
-                  </ion-button>
-                  <ion-button (click)="clearManufacturer()" slot="end" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
-                    <ion-icon name="close-outline"></ion-icon>
-                  </ion-button>
                 </ion-select>
+                <ion-buttons slot="end">
+                  @if(selectedManufacturer()){
+                    <ion-button (click)="clearManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                  }@else{
+                    <ion-button id="manufacturer-modal" (click)="addManufacturer()" color="dark" fill="clear">
+                      <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                    <app-create-manufacturer-modal trigger="manufacturer-modal"></app-create-manufacturer-modal>
+                  }
+                </ion-buttons>
               </ion-item>
               <ion-item>
                 <ion-select [value]="selectedModelUuid()" (ionChange)="modelSelectChange($event)" label="Model">
                   @for(model of models(); track model.uuid){
                     <ion-select-option [value]="model.uuid">{{model?.name}}</ion-select-option>
                   }
-                  <ion-button (click)="addModel()" slot="end" color="dark" fill="clear">
-                    <ion-icon name="add-outline"></ion-icon>
-                  </ion-button>
-                  <ion-button (click)="clearModel()" slot="end" color="dark" fill="clear" [disabled]="!selectedModel()">
-                    <ion-icon name="close-outline"></ion-icon>
-                  </ion-button>
                 </ion-select>
+                <ion-buttons slot="end">
+                  @if(selectedModel()){
+                    <ion-button (click)="clearModel()" color="dark" fill="clear" [disabled]="!selectedModel()">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                  }@else{
+                    <ion-button id="model-modal" (click)="addModel()" color="dark" fill="clear">
+                      <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                    <app-create-model-modal trigger="model-modal" [manufacturers]="manufacturers()"></app-create-model-modal>
+                  }
+                </ion-buttons>
               </ion-item>
               <ion-item>
                 <ion-input label="Serial Number" formControlName="serial_number"></ion-input>
