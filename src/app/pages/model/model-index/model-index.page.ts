@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -9,7 +9,6 @@ import {
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
-import { v4 as uuid } from 'uuid';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
@@ -33,8 +32,19 @@ export class ModelIndexPage implements OnInit {
   manufacturerUuid:any;
   models = signal<any>(null);
   manufacturer = signal<any>(null);
+  filterOptions = signal<any>({
+    activeOnly: true, 
+  });
+  filteredModels = computed(() => this.filterModels(this.models(), this.filterOptions()));
+  displayModels = computed(() => this.filteredModels()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  activeOnly = signal<boolean>(true);
   constructor() { 
     addIcons({addOutline});
+    effect(() => {
+      this.filterOptions.set({
+        activeOnly: this.activeOnly(), 
+      });
+    });
   }
 
   ngOnInit() {
@@ -53,6 +63,14 @@ export class ModelIndexPage implements OnInit {
       this.manufacturer.set(null);
       this.models.set(models);
     }
+  }
+
+  filterModels(models:any, filterOptions:any){
+    let filtered:any = models;
+    if(filterOptions?.activeOnly){
+      filtered = filtered?.filter((model:any) => model?.is_active);
+    }
+    return filtered;
   }
 
   async delete(modelUuid:string){

@@ -26,8 +26,8 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-              @if(manufacturers() && manufacturers()?.length !== 0){
-                @for(manufacturer of manufacturers(); track manufacturer.uuid){
+              @if(displayManufacturers() && displayManufacturers()?.length !== 0){
+                @for(manufacturer of displayManufacturers(); track manufacturer.uuid){
                   <ion-item>
                     <ion-label>
                       <h2>

@@ -27,8 +27,19 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 export class ManufacturerIndexPage implements OnInit {
   private manufacturerServ = inject(ManufacturerService);
   manufacturers = signal<any>(null);
+  filteredManufacturers = computed(() => this.manufacturerServ.filterManufacturers(this.manufacturers(), this.filterOptions()));
+  displayManufacturers = computed(() => this.filteredManufacturers()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  filterOptions = signal<any>({
+    activeOnly: true, 
+  });
+  activeOnly = signal<boolean>(true);
   constructor() { 
     addIcons({addOutline, ellipsisVerticalOutline});
+    effect(() => {
+      this.filterOptions.set({
+        activeOnly: this.activeOnly(), 
+      });
+    });
   }
 
   ngOnInit() {

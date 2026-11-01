@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed, signal } from '@angular/core';
+import { Component, OnInit, inject, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
@@ -13,7 +13,8 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { ToastService } from '../../../services/toast.service';
 import { addIcons } from 'ionicons';
-import { addOutline } from 'ionicons/icons';
+import { addOutline, closeOutline } from 'ionicons/icons';
+import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
 
 @Component({
   selector: 'app-model-create-edit',
@@ -24,11 +25,13 @@ import { addOutline } from 'ionicons/icons';
     IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonBreadcrumb, 
     IonList, IonItem, IonLabel, IonNote, IonText, IonIcon, IonButtons, IonButton, IonInput, 
     IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonCard, IonCardContent, 
+    CreateManufacturerModalComponent,
   ]
 })
 export class ModelCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private modelServ = inject(ManufacturerModelService);
+  private manufacturerServ = inject(ManufacturerService);
   private navCtl = inject(NavController);
   private toast = inject(ToastService);
   uuid:any;
@@ -37,8 +40,19 @@ export class ModelCreateEditPage implements OnInit {
   manufacturers = signal<any>(null);
   model = signal<any>(null);
   form = computed<FormGroup>(() => this.modelServ.buildForm(this.model()));
+  filteredManufacturers = computed(() => this.manufacturerServ.filterManufacturers(this.manufacturers(), this.filterOptions()));
+  displayManufacturers = computed(() => this.filteredManufacturers()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  filterOptions = signal<any>({
+    activeOnly: true, 
+  });
+  activeOnly = signal<boolean>(true);
   constructor() { 
-    addIcons({addOutline});
+    addIcons({addOutline, closeOutline});
+    effect(() => {
+      this.filterOptions.set({
+        activeOnly: this.activeOnly(), // manufacturers 
+      });
+    });
   }
 
   ngOnInit() {
@@ -68,8 +82,28 @@ export class ModelCreateEditPage implements OnInit {
     }
   }
 
+  onManufacturerDismiss(event:any){
+    const manufacturer:any = event?.detail?.data;
+    if(manufacturer){
+      const manufacturers = [...this.manufacturers() || [], manufacturer];
+      this.manufacturers.set(manufacturers);
+      this.manufacturer.set(manufacturer);
+      this.form()?.patchValue({manufacturer_uuid: manufacturer?.uuid});
+    }
+  }
+
   updateManufacturer(event:any){
     const manufacturerUuid:any = event?.detail?.value;
+    const manufacturer:any = this.manufacturers()?.find((manufacturer:any) => manufacturer?.uuid == manufacturerUuid) ?? null;
+    this.manufacturer.set(manufacturer);
+  }
+
+  clearManufacturer(){
+    this.form()?.patchValue({manufacturer_uuid: null});
+    this.manufacturer.set(null);
+  }
+
+  async addManufacturer(){
     // 
   }
 

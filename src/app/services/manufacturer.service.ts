@@ -7,6 +7,14 @@ import { ApiService } from './api.service';
 export class ManufacturerService {
   private apiServ = inject(ApiService);
 
+  filterManufacturers(manufacturers:any, filterOptions:any){
+    let filtered:any = manufacturers;
+    if(filterOptions?.activeOnly){
+      filtered = filtered?.filter((manufacturer:any) => manufacturer?.is_active);
+    }
+    return filtered
+  }
+
   async getAll() {
     return new Promise((resolve, reject) => {
       this.apiServ.get('manufacturers').subscribe({
