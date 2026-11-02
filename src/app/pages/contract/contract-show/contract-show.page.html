@@ -1,13 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>contract-show</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">contract-show</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-breadcrumbs>
+          <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+          <ion-breadcrumb [routerLink]="['../']">Contracts</ion-breadcrumb>
+          <ion-breadcrumb>{{contract()?.name ?? 'Unknown Contract'}}</ion-breadcrumb>
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="9" size-xl="6">
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              {{contract()?.name ?? 'Unknown Contract'}}
+            </ion-title>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button [routerLink]="['/contracts', contract()?.uuid, 'edit']">
+              Edit
+            </ion-button>
+            <app-caret-down-popover>
+              <ion-item (click)="delete(contract()?.uuid)" button>
+                <ion-text color="danger">
+                  Delete
+                </ion-text>
+              </ion-item>
+            </app-caret-down-popover>
+          </ion-buttons>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  Display Name
+                </ion-label>
+                <ion-text>
+                  {{contract()?.display_name}}
+                </ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
