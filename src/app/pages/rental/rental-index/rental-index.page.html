@@ -39,6 +39,11 @@
                         </a>
                       </h2>
                     </ion-label>
+                    <ion-text>
+                      <a [routerLink]="['/contracts', rental?.contract_uuid]">
+                        {{rental?.contract?.name ?? 'Unknown Contract'}}
+                      </a>
+                    </ion-text>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>

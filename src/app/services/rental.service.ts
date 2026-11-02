@@ -18,7 +18,7 @@ export class RentalService {
     return {
       rental_date: null, 
       return_date: null, 
-      description: null, 
+      description: 'asdfasdfasdf', 
       note: null, 
       contract_uuid: null, 
       user_uuid: this.user()?.uuid || null, 
@@ -70,9 +70,10 @@ export class RentalService {
     return new Promise((resolve, reject) => {
       this.apiServ.get('rentals/create').subscribe({
         next: (results:any) => {
-          let rental:any = this.createNew();
-          rental.contracts = results?.contracts;
-          resolve(rental);
+          resolve({
+            contracts: results?.contracts, 
+            rental: this.createNew(), 
+          });
         }, 
         error: (results:any) => {
           resolve(results?.error);
