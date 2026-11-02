@@ -50,10 +50,6 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -66,20 +62,29 @@
             </ion-button>
           </ion-buttons>
         </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      @if(models() && models()?.length !== 0){
-        @for(model of models(); track model.uuid){
-          <ion-col>
-            <ion-card>
-              <ion-card-content>
-                <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!models() || models()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Models Available 
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(model of models(); track model.uuid){
                   <ion-item>
                     <ion-label>
-                      <a [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]">
-                        {{model?.name ?? 'Unknown Model'}}
-                      </a>
+                      <h2>
+                        <a [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]">
+                          {{model?.name ?? 'Unknown Model'}}
+                        </a>
+                      </h2>
+                      @if(model?.description && model?.description !== ""){
+                        <p>
+                          {{model?.description}}
+                        </p>
+                      }
                     </ion-label>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
@@ -97,29 +102,12 @@
                       </app-ellipsis-vertical-popover>
                     </ion-buttons>
                   </ion-item>
-                  @if(model?.description && model?.description !== ""){
-                    <ion-item>
-                      <ion-label>
-                        <ion-note>
-                          {{model?.description}}
-                        </ion-note>
-                      </ion-label>
-                    </ion-item>
-                  }
-                </ion-list>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        }
-      }@else{
-        <ion-col>
-          <ion-card>
-            <ion-card-content>
-              No Models Available 
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      }
+                }
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

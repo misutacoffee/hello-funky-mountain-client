@@ -9,26 +9,27 @@ export class ContractService {
   private apiServ = inject(ApiService);
   private authServ = inject(AuthService);
   user = computed(() => this.authServ.user());
+  
   filterContracts(contracts:any, filterOptions:any){
     return contracts
   }
 
   createNew(){
     return {
-      name: '', 
-      display_name: '', 
-      phone: '', 
-      email: '', 
-      primary_address: '', 
-      secondary_address: '', 
-      tertiary_address: '', 
-      city: '', 
-      state: '', 
-      zip: '', 
-      description: '', 
-      note: '', 
+      name: null, 
+      display_name: null, 
+      phone: null, 
+      email: null, 
+      primary_address: null, 
+      secondary_address: null, 
+      tertiary_address: null, 
+      city: null, 
+      state: null, 
+      zip: null, 
+      description: null, 
+      note: null, 
       is_active: true, 
-      user_uuid: this.user()?.uuid || '', 
+      user_uuid: this.user()?.uuid || null, 
       uuid: uuid(), 
     }
   }

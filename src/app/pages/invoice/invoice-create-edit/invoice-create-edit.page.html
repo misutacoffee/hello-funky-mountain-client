@@ -1,13 +1,74 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>invoice-create-edit</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">invoice-create-edit</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-breadcrumbs>
+          @if(uuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Invoices</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{invoice()?.id ?? 'Unlinked Invoice'}}</ion-breadcrumb>
+            <ion-breadcrumb>Edit</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
+          }
+        </app-breadcrumbs>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="9" size-xl="6">
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              {{uuid ? 'Edit' : 'Create'}} Invoice 
+            </ion-title>
+          </ion-label>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list [formGroup]="form()">
+              <ion-item>
+                <ion-input label="PO Number" formControlName="purchase_order_number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Invoice Date" formControlName="invoice_date"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Amount" formControlName="amount"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Tax" formControlName="tax"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Due Date" type="date" formControlName="due_date"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Paid Date" type="date" formControlName="paid_date"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Rental UUID" formControlName="rental_uuid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="UUID" formControlName="uuid"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-item color="transparent" lines="none">
+          <ion-buttons>
+            <ion-button (click)="onSubmit()" [disabled]="form()?.invalid" color="dark" fill="solid">
+              {{uuid ? 'Update' : 'Create'}}
+            </ion-button>
+            <ion-button (click)="cancel()">
+              Cancel 
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
