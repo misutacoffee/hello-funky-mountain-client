@@ -70,8 +70,9 @@ export class RentalService {
     return new Promise((resolve, reject) => {
       this.apiServ.get('rentals/create').subscribe({
         next: (results:any) => {
-          resolve(this.createNew());
-          resolve(results);
+          let rental:any = this.createNew();
+          rental.contracts = results?.contracts;
+          resolve(rental);
         }, 
         error: (results:any) => {
           resolve(results?.error);

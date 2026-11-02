@@ -7,6 +7,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
 import { ToastService } from '../../../services/toast.service';
 import { RentalService } from '../../../services/rental.service';
+import { addIcons } from 'ionicons';
+import { addOutline, closeOutline } from 'ionicons/icons';
+import { CreateContractModalComponent } from '../../../components/contract/create-contract-modal/create-contract-modal.component';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -17,18 +20,30 @@ import { RentalService } from '../../../services/rental.service';
     IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonItem, IonTitle, 
     IonCard, IonCardContent, IonList, IonButtons, IonButton, IonIcon, IonLabel, IonNote, IonText, 
     IonInput, IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonBreadcrumb, 
+    CreateContractModalComponent, 
   ]
 })
 export class RentalCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
+  private contractServ = inject(ContractService);
   private toast = inject(ToastService);
   private navCtl = inject(NavController);
   uuid:any;
   rental = signal<any>(null);
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental()));
   errors = signal<any>(null);
-  constructor() { }
+  contracts = computed(() => this.rental()?.contracts);
+  activeOnly = signal<boolean>(true);
+  filterOptions = signal<any>({
+    activeOnly: this.activeOnly(), 
+  });
+  filteredContracts = computed(() => this.contractServ.filterContracts(this.contracts(), this.filterOptions()));
+  displayContracts = computed(() => this.filteredContracts()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  contract = signal<any>(null);
+  constructor() { 
+    addIcons({addOutline, closeOutline});
+  }
 
   ngOnInit() {
   }
@@ -37,6 +52,28 @@ export class RentalCreateEditPage implements OnInit {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
     const rental:any = this.uuid ? await this.rentalServ.edit(this.uuid) : await this.rentalServ.create();
     this.rental.set(rental);
+  }
+
+  contractSelectChange(event:any){
+    const uuid = event?.detail?.value || null;
+    const contract = this.contracts()?.find((contract:any) => contract?.uuid == uuid) || null;
+    this.contract.set(contract);
+    this.form()?.patchValue({contract_uuid: uuid});
+  }
+
+  onContractDismiss(event:any){
+    const contract:any = event?.detail?.data || null;
+    if(contract){
+      const contracts = [...this.contracts() || [], contract];
+      this.rental.set({...this.rental(), contracts: contracts});
+      this.contract.set(contract);
+      this.form()?.patchValue({contract_uuid: contract?.uuid || null});
+    }
+  }
+
+  deselectContract(){
+      this.contract.set(null);
+      this.form()?.patchValue({contract_uuid: null});
   }
 
   async onSubmit(){

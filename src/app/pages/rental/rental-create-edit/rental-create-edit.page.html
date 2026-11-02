@@ -29,6 +29,25 @@
           <ion-card-content>
             <ion-list [formGroup]="form()">
               <ion-item>
+                <ion-select (ionChange)="contractSelectChange($event)" [value]="contract()?.uuid" label="Contract" [placeholder]="!displayContracts() || displayContracts()?.length == 0 ? 'No Contracts Available' : 'Select Contract'" [disabled]="!displayContracts() || displayContracts()?.length == 0 ? true : false">
+                  @for(contract of displayContracts(); track contract.uuid){
+                    <ion-select-option [value]="contract?.uuid">{{contract?.name ?? 'Unknown Contract'}}</ion-select-option>
+                  }
+                </ion-select>
+                <ion-buttons slot="end">
+                  @if(!contract()){
+                    <ion-button id="contract-modal">
+                      <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                    <app-create-contract-modal trigger="contract-modal" (willDismiss)="onContractDismiss($event)"></app-create-contract-modal>
+                  }@else{
+                    <ion-button (click)="deselectContract()">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                  }
+                </ion-buttons>
+              </ion-item>
+              <ion-item>
                 <ion-input label="Rental Date" type="date" formControlName="rental_date"></ion-input>
               </ion-item>
               <ion-item>
@@ -39,15 +58,6 @@
               </ion-item>
               <ion-item>
                 <ion-textarea label="Note" formControlName="note" autoGrow></ion-textarea>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Contract UUID" formControlName="contract_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="UUID" formControlName="uuid"></ion-input>
               </ion-item>
             </ion-list>
           </ion-card-content>
