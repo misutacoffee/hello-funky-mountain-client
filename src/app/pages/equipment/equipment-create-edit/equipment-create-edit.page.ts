@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -33,6 +33,8 @@ export class EquipmentCreateEditPage implements OnInit {
   uuid:any;
   equipmentData = signal<any>(null);
   equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
+  manufacturer = computed<any>(() => this.equipment()?.manufacturer ?? null);
+  model = computed<any>(() => this.equipment()?.manufacturer_model ?? null);
   form = computed<FormGroup>(() => this.equipmentServ.buildForm(this.equipment()));
   user = computed<any>(() => this.authServ.user());
   manufacturers = computed<any[]>(() => this.equipmentData()?.manufacturers ?? []);
@@ -42,11 +44,23 @@ export class EquipmentCreateEditPage implements OnInit {
   selectedManufacturerUuid = computed(() => this.selectedManufacturer()?.uuid ?? null);
   selectedModelUuid = computed(() => this.selectedModel()?.uuid ?? null);
   filteredModels = computed(() => this.models()?.filter((model:any) => model.manufacturer_uuid === this.selectedManufacturerUuid()));
+  errors = signal<any>(null);
   constructor() { 
     addIcons({closeOutline, addOutline});
+    effect(() => {
+      if(this.manufacturer()){
+        this.selectedManufacturer.set(this.manufacturer());
+      }
+      if(this.model()){
+        this.selectedModel.set(this.model());
+      }
+    });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+  }
+
+  async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
     const equipmentData:any = this.uuid ? await this.equipmentServ.editByUuid(this.uuid) : await this.equipmentServ.create();
     this.equipmentData.set(equipmentData);
@@ -110,8 +124,18 @@ export class EquipmentCreateEditPage implements OnInit {
 
   async onSubmit() {
     if (this.form().valid) {
-      const equipment = this.equipmentServ.trimObject(this.form().value);
-      const results = await this.equipmentServ.save(equipment);
+      const equipment = this.form().value;
+      const results:any = await this.equipmentServ.save(equipment);
+      if(results?.success){
+        this.toast.present(results?.message || "Equipment saved successfully.");
+        this.errors.set(null);
+        this.navCtl.back();
+      }else if(results?.error){
+        this.toast.present(results?.message || "An error has occurred.");
+        this.errors.set(results.error);
+      }else{
+        this.toast.present("An error has occurred.");
+      }
     }else{
       this.toast.present("Please complete the form to proceed.");
     }

@@ -62,7 +62,7 @@ export class EquipmentService {
     });
   }
 
-  trimObject(obj: any) {
+  trimObject(obj: any) { // do we need these with reactive forms?
     return {
       name: obj?.name?.trim() || '',
       serial_number: obj?.serial_number?.trim() || '',
@@ -71,6 +71,7 @@ export class EquipmentService {
       note: obj?.note?.trim() || '',
       rental_rate: obj?.rental_rate?.trim() || '',
       rental_unit: obj?.rental_unit?.trim() || '',
+      status: obj?.status,
       is_active: obj?.is_active,
       user_uuid: obj?.user_uuid?.trim() || '',
       manufacturer_model_uuid: obj?.manufacturer_model_uuid?.trim() || '',
@@ -87,6 +88,7 @@ export class EquipmentService {
       note: '',
       rental_rate: '',
       rental_unit: '',
+      status: '', 
       is_active: '',
       user_uuid: this.user()?.uuid ?? '',
       manufacturer_model_uuid: '',
@@ -103,16 +105,25 @@ export class EquipmentService {
       note: new FormControl(equipment?.note || ''),
       rental_rate: new FormControl(equipment?.rental_rate || ''),
       rental_unit: new FormControl(equipment?.rental_unit || ''),
+      status: new FormControl(equipment?.status || ''),
       is_active: new FormControl(equipment?.is_active || true, [Validators.required]),
       user_uuid: new FormControl(equipment?.user_uuid || '', [Validators.required]),
       manufacturer_model_uuid: new FormControl(equipment?.manufacturer_model_uuid || '', [Validators.required]),
-      status: new FormControl(equipment?.status || ''),
       uuid: new FormControl(equipment?.uuid || '', [Validators.required]),
     }); 
   }
 
   async save(equipment:any){
-    // Implement the logic to save equipment to your data source
+    return new Promise((resolve, reject) => {
+      this.apiServ.put(`equipment/${equipment?.uuid}`, equipment).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
   }
 
   async delete(uuid:string){

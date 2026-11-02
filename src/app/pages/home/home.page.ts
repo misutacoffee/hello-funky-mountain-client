@@ -44,7 +44,8 @@ export class HomePage implements OnInit {
     addIcons({addOutline})
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   async ionViewWillEnter() {
     const homeData = await this.homeServ.getHomeData();
