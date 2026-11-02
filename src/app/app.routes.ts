@@ -25,7 +25,7 @@ export const routes: Routes = [
           }, 
           {
             path: 'create',
-            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+            loadComponent: () => import('./pages/contract/contract-create-edit/contract-create-edit.page').then( m => m.ContractCreateEditPage)
           }, 
           {
             path: ':uuid',
@@ -33,7 +33,7 @@ export const routes: Routes = [
           }, 
           {
             path: ':uuid/edit',
-            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+            loadComponent: () => import('./pages/contract/contract-create-edit/contract-create-edit.page').then( m => m.ContractCreateEditPage)
           },
         ]
       }, 

@@ -178,12 +178,12 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/rentals']">
-                    Rentals
+                  <a [routerLink]="['/contracts']">
+                    Contracts
                   </a>
                 </ion-card-title>
                 <ion-card-subtitle>
-                  {{rentals().length}} rental{{rentals().length === 1 ? '' : 's'}}
+                  {{contracts().length}} contract{{contracts().length === 1 ? '' : 's'}}
                 </ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
@@ -195,12 +195,12 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/contracts']">
-                    Contracts
+                  <a [routerLink]="['/rentals']">
+                    Rentals
                   </a>
                 </ion-card-title>
                 <ion-card-subtitle>
-                  {{contracts().length}} contract{{contracts().length === 1 ? '' : 's'}}
+                  {{rentals().length}} rental{{rentals().length === 1 ? '' : 's'}}
                 </ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
