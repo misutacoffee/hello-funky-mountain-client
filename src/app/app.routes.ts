@@ -17,6 +17,27 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
       },
       {
+        path: 'contracts', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/contract/contract-index/contract-index.page').then( m => m.ContractIndexPage)
+          }, 
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+          }, 
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/contract/contract-show/contract-show.page').then( m => m.ContractShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+          },
+        ]
+      }, 
+      {
         path: 'equipment', 
         children: [
           {
@@ -34,6 +55,27 @@ export const routes: Routes = [
           {
             path: ':uuid/edit',
             loadComponent: () => import('./pages/equipment/equipment-create-edit/equipment-create-edit.page').then( m => m.EquipmentCreateEditPage)
+          },
+        ]
+      }, 
+      {
+        path: 'invoices', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/invoice/invoice-index/invoice-index.page').then( m => m.InvoiceIndexPage)
+          }, 
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/invoice/invoice-create-edit/invoice-create-edit.page').then( m => m.InvoiceCreateEditPage)
+          }, 
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/invoice/invoice-show/invoice-show.page').then( m => m.InvoiceShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/invoice/invoice-create-edit/invoice-create-edit.page').then( m => m.InvoiceCreateEditPage)
           },
         ]
       }, 
@@ -93,6 +135,27 @@ export const routes: Routes = [
           //   path: ':uuid/edit',
           //   loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
           // },
+        ]
+      }, 
+      {
+        path: 'rentals', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/rental/rental-index/rental-index.page').then( m => m.RentalIndexPage)
+          }, 
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+          }, 
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/rental/rental-show/rental-show.page').then( m => m.RentalShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+          },
         ]
       }, 
       {
