@@ -41,9 +41,6 @@
                 <ion-input label="Name" formControlName="name"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-input label="Manufacturer UUID" formControlName="manufacturer_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
                 <ion-select 
                   (ionChange)="manufacturerSelectChange($event)" 
                   [value]="manufacturer()?.uuid || null"

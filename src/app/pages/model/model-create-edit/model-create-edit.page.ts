@@ -92,14 +92,12 @@ export class ModelCreateEditPage implements OnInit {
     const manufacturer:any = this.manufacturers()?.find((manufacturer:any) => manufacturer?.uuid == manufacturerUuid) ?? null;
     this.form()?.patchValue({manufacturer_uuid: manufacturerUuid});
     this.manufacturer.set(manufacturer);
-      if(this.manufacturerUuid){
-        this.manufacturerUuid = manufacturer?.uuid;
-        const url:string = this.uuid ? `/manufacturers/${this.manufacturerUuid}/${this.uuid}/edit` : `/manufacturers/${this.manufacturerUuid}/create`;
-        this.location.replaceState(url);
-      }
+    if(this.manufacturerUuid){
+      this.manufacturerUuid = manufacturer?.uuid;
+      const url:string = this.uuid ? `/manufacturers/${this.manufacturerUuid}/${this.uuid}/edit` : `/manufacturers/${this.manufacturerUuid}/create`;
+      this.location.replaceState(url);
+    }
   }
-
-
 
   clearManufacturer(){
     this.form()?.patchValue({manufacturer_uuid: null});

@@ -18,7 +18,7 @@ export class RentalService {
     return {
       rental_date: null, 
       return_date: null, 
-      description: 'asdfasdfasdf', 
+      description: null, 
       note: null, 
       contract_uuid: null, 
       user_uuid: this.user()?.uuid || null, 

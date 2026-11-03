@@ -38,6 +38,11 @@
                           {{rental?.id ?? 'Unlinked Rental'}}
                         </a>
                       </h2>
+                      @if(rental?.description && rental?.description != ''){
+                        <p>
+                          {{rental?.description}}
+                        </p>
+                      }
                     </ion-label>
                     <ion-text>
                       <a [routerLink]="['/contracts', rental?.contract_uuid]">
