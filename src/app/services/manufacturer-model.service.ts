@@ -7,80 +7,19 @@ import { v4 as uuid } from 'uuid';
 export class ManufacturerModelService {
   private apiServ = inject(ApiService);
 
-  async create(){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get('models/create').subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
+  filterModels(models:any, filterOptions:any){
+    return models
   }
 
-  async editByUuid(uuid:string){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`models/${uuid}/edit`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getAll(){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get('models').subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getAllByManufacturerUuid(manufacturerUuid:string){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`manufacturers/${manufacturerUuid}/models`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getByUuid(uuid:string){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`models/${uuid}`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  trimObject(obj:any){
+  createNew(manufacturerUuid:any = null){
     return {
-      name: obj?.name, 
-      type: obj?.type, 
-      description: obj?.description, 
-      note: obj?.note, 
-      is_active: obj?.is_active, 
-      manufacturer_uuid: obj?.manufacturer_uuid, 
-      uuid: obj?.uuid, 
+      name: null, 
+      type: null, 
+      description: null, 
+      note: null, 
+      is_active: true, 
+      manufacturer_uuid: manufacturerUuid || null, 
+      uuid: uuid(), 
     }
   }
 
@@ -96,19 +35,85 @@ export class ManufacturerModelService {
     });
   }
 
-  createNew(manufacturerUuid:any = null){
-    return {
-      name: null, 
-      type: null, 
-      description: null, 
-      note: null, 
-      is_active: true, 
-      manufacturer_uuid: manufacturerUuid || null, 
-      uuid: uuid(), 
-    }
+  async index(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('models').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
   }
 
-  async save(model:any){
+  async indexByManufacturer(manufacturerUuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`manufacturers/${manufacturerUuid}/models`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async show(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`models/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async create(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('models/create').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async edit(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`models/${uuid}/edit`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async store(model:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post(`models/${model?.uuid}`, model).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async update(model:any){
     return new Promise((resolve, reject) => {
       this.apiServ.put(`models/${model?.uuid}`, model).subscribe({
         next: (results:any) => {
@@ -117,8 +122,12 @@ export class ManufacturerModelService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
+  }
+
+  async delete(uuid:string){
+    // 
   }
 
 }

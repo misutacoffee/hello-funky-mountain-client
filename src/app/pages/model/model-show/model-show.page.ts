@@ -28,9 +28,8 @@ export class ModelShowPage implements OnInit {
   private modelServ = inject(ManufacturerModelService);
   uuid:any;
   manufacturerUuid:any;
-  modelData = signal<any>(null);
-  model = computed<any>(() => this.modelServ.trimObject(this.modelData()));
-  manufacturer = computed(() => this.modelData()?.manufacturer);
+  model = signal<any>(null);
+  manufacturer = computed(() => this.model()?.manufacturer);
   constructor() { }
 
   ngOnInit() {
@@ -39,8 +38,8 @@ export class ModelShowPage implements OnInit {
   async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
     this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
-    const modelData:any = await this.modelServ.getByUuid(this.uuid);
-    this.modelData.set(modelData);
+    const model:any = await this.modelServ.show(this.uuid);
+    this.model.set(model);
   }
 
   async delete(uuid:string){

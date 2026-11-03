@@ -60,7 +60,7 @@ export class CreateModelModalComponent  implements OnInit {
   async confirm(){
     if(this.form()?.valid){
       const model = this.form()?.value;
-      const results:any = await this.modelServ.save(model);
+      const results:any = await this.modelServ.store(model);
       if(results?.success){
         this.toast.present(results?.message || "Manufacturer saved successfully.");
         this.modal()?.dismiss(model, 'confirm');

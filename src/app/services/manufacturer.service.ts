@@ -15,42 +15,6 @@ export class ManufacturerService {
     return filtered
   }
 
-  async getAll() {
-    return new Promise((resolve, reject) => {
-      this.apiServ.get('manufacturers').subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getByUuid(uuid: string) {
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`manufacturers/${uuid}`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  trimObject(obj: any) {
-    return {
-      name: obj?.name?.trim() || '',
-      description: obj?.description?.trim() || '',
-      note: obj?.note?.trim() || '',
-      is_active: obj?.is_active || true,
-      uuid: obj?.uuid || uuid(),
-    }
-  }
-
   createNew(){
     return {
       name: '',
@@ -71,7 +35,73 @@ export class ManufacturerService {
     }); 
   }
 
-  async save(manufacturer:any){
+  async index() {
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('manufacturers').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async show(uuid: string) {
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`manufacturers/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async create(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('manufacturers/create').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async edit(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`manufacturers/${uuid}/edit`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  async store(manufacturer:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post(`manufacturers/${manufacturer.uuid}`, manufacturer).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async update(manufacturer:any){
     return new Promise((resolve, reject) => {
       this.apiServ.put(`manufacturers/${manufacturer.uuid}`, manufacturer).subscribe({
         next: (results:any) => {
@@ -81,12 +111,12 @@ export class ManufacturerService {
           resolve(results?.error);
           reject(results);
         }
-      })
+      });
     });
   }
 
   async delete(uuid:string){
-    // Implement the logic to delete manufacturer by UUID from your data source
+    // 
   }
 
 }

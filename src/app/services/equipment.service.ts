@@ -57,7 +57,7 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
@@ -70,7 +70,7 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
@@ -83,7 +83,7 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
@@ -96,7 +96,7 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
@@ -109,7 +109,7 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
@@ -122,12 +122,12 @@ export class EquipmentService {
         error: (error:any) => {
           reject(error);
         }
-      })
+      });
     });
   }
 
   async delete(uuid:string){
-    // Implement the logic to delete equipment by UUID from your data source
+    // 
   }
 
 }

@@ -11,6 +11,8 @@ import { addIcons } from 'ionicons';
 import { closeOutline, addOutline } from 'ionicons/icons';
 import { CreateModelModalComponent } from '../../../components/model/create-model-modal/create-model-modal.component';
 import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
+import { ManufacturerService } from '../../../services/manufacturer.service';
+import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -27,6 +29,8 @@ import { CreateManufacturerModalComponent } from '../../../components/manufactur
 export class EquipmentCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private equipmentServ = inject(EquipmentService);
+  private manufacturerServ = inject(ManufacturerService);
+  private modelServ = inject(ManufacturerModelService);
   private authServ = inject(AuthService);
   private toast = inject(ToastService);
   private navCtl = inject(NavController);
@@ -43,8 +47,17 @@ export class EquipmentCreateEditPage implements OnInit {
   selectedModel = signal<any>(null);
   selectedManufacturerUuid = computed(() => this.selectedManufacturer()?.uuid ?? null);
   selectedModelUuid = computed(() => this.selectedModel()?.uuid ?? null);
-  filteredModels = computed(() => this.models()?.filter((model:any) => model.manufacturer_uuid === this.selectedManufacturerUuid()));
   errors = signal<any>(null);
+  manufacturerActiveOnly = signal<boolean>(true);
+  modelActiveOnly = signal<boolean>(true);
+  manufacturerFilterOptions = signal<any>({
+    activeOnly: this.manufacturerActiveOnly(), 
+  })
+  modelFilterOptions = signal<any>({
+    activeOnly: this.modelActiveOnly(), 
+  });
+  // filterOptions
+
   constructor() { 
     addIcons({closeOutline, addOutline});
     effect(() => {

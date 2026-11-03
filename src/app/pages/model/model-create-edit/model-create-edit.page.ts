@@ -63,7 +63,7 @@ export class ModelCreateEditPage implements OnInit {
     this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
     if(this.uuid){
       // edit
-      const data:any = await this.modelServ.editByUuid(this.uuid);
+      const data:any = await this.modelServ.edit(this.uuid);
       const manufacturers = data?.manufacturers;
       const model:any = data?.model;
       const manufacturer = model?.manufacturer;
@@ -110,7 +110,7 @@ export class ModelCreateEditPage implements OnInit {
   async save(){
     if(this.form()?.valid){
       const model:any = this.form()?.value;
-      const results:any = await this.modelServ.save(model);
+      const results:any = this.uuid ? await this.modelServ.update(model) : this.modelServ.store(model);
       if(results?.success){
         this.toast.present(results?.message ?? "Model successfully saved to the database.");
         this.navCtl.back();
