@@ -5,7 +5,8 @@ import {
   IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton,
   IonContent, IonMenu, IonList, IonItem, IonLabel,
   IonIcon, IonRouterOutlet, IonButton,
-  IonAlert, 
+  IonAlert,
+  IonMenuToggle, 
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
@@ -21,7 +22,7 @@ import { ToastService } from '../../services/toast.service';
     CommonModule, RouterLink, NavProfilePopoverComponent, 
     IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton,
     IonContent, IonMenu, IonList, IonItem, IonLabel,
-    IonIcon, IonRouterOutlet, IonButton, IonAlert, 
+    IonIcon, IonRouterOutlet, IonButton, IonAlert, IonMenuToggle, 
   ],
 })
 export class MainLayoutComponent implements OnInit {

@@ -65,6 +65,7 @@ export class ManufacturerService {
     return new Promise((resolve, reject) => {
       this.apiServ.get('manufacturers/create').subscribe({
         next: (results:any) => {
+          resolve(this.createNew());
           resolve(results);
         }, 
         error: (error:any) => {
@@ -89,7 +90,7 @@ export class ManufacturerService {
 
   async store(manufacturer:any){
     return new Promise((resolve, reject) => {
-      this.apiServ.post(`manufacturers/${manufacturer.uuid}`, manufacturer).subscribe({
+      this.apiServ.post('manufacturers', manufacturer).subscribe({
         next: (results:any) => {
           resolve(results);
         }, 

@@ -41,7 +41,15 @@
                 <ion-input label="Name" formControlName="name"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-select (ionChange)="updateManufacturer($event)" label="Manufacturer" formControlName="manufacturer_uuid" placeholder="Select a Manufacturer">
+                <ion-input label="Manufacturer UUID" formControlName="manufacturer_uuid"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-select 
+                  (ionChange)="manufacturerSelectChange($event)" 
+                  [value]="manufacturer()?.uuid || null"
+                  label="Manufacturer" 
+                  placeholder="Select a Manufacturer"
+                >
                   @for(manufacturer of displayManufacturers(); track manufacturer.uuid){
                     <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name ?? 'Unknown Manufacturer'}}</ion-select-option>
                   }

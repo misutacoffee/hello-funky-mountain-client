@@ -102,7 +102,7 @@ export class EquipmentService {
 
   async store(equipment:any){
     return new Promise((resolve, reject) => {
-      this.apiServ.post(`equipment/${equipment?.uuid}`, equipment).subscribe({
+      this.apiServ.post('equipment', equipment).subscribe({
         next: (results:any) => {
           resolve(results);
         }, 

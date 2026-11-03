@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, computed, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
   IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonBreadcrumb, 
@@ -34,11 +34,13 @@ export class ModelCreateEditPage implements OnInit {
   private manufacturerServ = inject(ManufacturerService);
   private navCtl = inject(NavController);
   private toast = inject(ToastService);
+  private location = inject(Location);
   uuid:any;
   manufacturerUuid:any;
+  data = signal<any>(null);
+  model = computed(() => this.data()?.model);
   manufacturer = signal<any>(null);
-  manufacturers = signal<any>(null);
-  model = signal<any>(null);
+  manufacturers = computed(() => this.data()?.manufacturers);
   form = computed<FormGroup>(() => this.modelServ.buildForm(this.model()));
   filteredManufacturers = computed(() => this.manufacturerServ.filterManufacturers(this.manufacturers(), this.filterOptions()));
   displayManufacturers = computed(() => this.filteredManufacturers()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
@@ -59,44 +61,45 @@ export class ModelCreateEditPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
-    this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
-    if(this.uuid){
-      // edit
-      const data:any = await this.modelServ.edit(this.uuid);
-      const manufacturers = data?.manufacturers;
-      const model:any = data?.model;
-      const manufacturer = model?.manufacturer;
+    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') || null;
+    this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') || null;
+    const data:any = this.uuid ? await this.modelServ.edit(this.uuid) : await this.modelServ.create(this.manufacturerUuid);
+    this.data.set(data);
+    // 
+    if(this.manufacturerUuid){
+      const manufacturer:any = data?.manufacturers?.find((manufacturer:any) => manufacturer?.uuid == this.manufacturerUuid) || null;
       this.manufacturer.set(manufacturer);
-      this.manufacturers.set(manufacturers);
-      this.model.set(model);
-    }else{
-      // create 
-      const data:any = await this.modelServ.create();
-      const manufacturers:any = data?.manufacturers;
-      const model:any = this.modelServ.createNew(this.manufacturerUuid);
-      const manufacturer:any = manufacturers?.find((manufacturer:any) => this.manufacturerUuid && manufacturer?.uuid == this.manufacturerUuid) ?? null;
-      this.manufacturer.set(manufacturer);
-      this.manufacturers.set(manufacturers);
-      this.model.set(model);
     }
   }
 
-  onManufacturerDismiss(event:any){
+  onManufacturerDismiss(event:any){ // create manufacturer modal
     const manufacturer:any = event?.detail?.data;
     if(manufacturer){
       const manufacturers = [...this.manufacturers() || [], manufacturer];
-      this.manufacturers.set(manufacturers);
+      this.data.set({...this.data(), manufacturers});
       this.manufacturer.set(manufacturer);
       this.form()?.patchValue({manufacturer_uuid: manufacturer?.uuid});
+      if(this.manufacturerUuid){
+        this.manufacturerUuid = manufacturer?.uuid;
+        const url:string = this.uuid ? `/manufacturers/${this.manufacturerUuid}/${this.uuid}/edit` : `/manufacturers/${this.manufacturerUuid}/create`;
+        this.location.replaceState(url);
+      }
     }
   }
 
-  updateManufacturer(event:any){
+  manufacturerSelectChange(event:any){
     const manufacturerUuid:any = event?.detail?.value;
     const manufacturer:any = this.manufacturers()?.find((manufacturer:any) => manufacturer?.uuid == manufacturerUuid) ?? null;
+    this.form()?.patchValue({manufacturer_uuid: manufacturerUuid});
     this.manufacturer.set(manufacturer);
+      if(this.manufacturerUuid){
+        this.manufacturerUuid = manufacturer?.uuid;
+        const url:string = this.uuid ? `/manufacturers/${this.manufacturerUuid}/${this.uuid}/edit` : `/manufacturers/${this.manufacturerUuid}/create`;
+        this.location.replaceState(url);
+      }
   }
+
+
 
   clearManufacturer(){
     this.form()?.patchValue({manufacturer_uuid: null});
@@ -110,7 +113,7 @@ export class ModelCreateEditPage implements OnInit {
   async save(){
     if(this.form()?.valid){
       const model:any = this.form()?.value;
-      const results:any = this.uuid ? await this.modelServ.update(model) : this.modelServ.store(model);
+      const results:any = this.uuid ? await this.modelServ.update(model) : await this.modelServ.store(model);
       if(results?.success){
         this.toast.present(results?.message ?? "Model successfully saved to the database.");
         this.navCtl.back();

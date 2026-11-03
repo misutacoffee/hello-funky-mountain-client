@@ -74,10 +74,16 @@ export class ManufacturerModelService {
     });
   }
 
-  async create(){
+  async create(manufacturerUuid:any = null){
     return new Promise((resolve, reject) => {
       this.apiServ.get('models/create').subscribe({
         next: (results:any) => {
+          const manufacturers:any = results?.manufacturers;
+          const model:any = this.createNew(manufacturerUuid);
+          resolve({
+            manufacturers: manufacturers, 
+            model: model, 
+          });
           resolve(results);
         }, 
         error: (error:any) => {
@@ -102,7 +108,7 @@ export class ManufacturerModelService {
 
   async store(model:any){
     return new Promise((resolve, reject) => {
-      this.apiServ.post(`models/${model?.uuid}`, model).subscribe({
+      this.apiServ.post('models', model).subscribe({
         next: (results:any) => {
           resolve(results);
         }, 
