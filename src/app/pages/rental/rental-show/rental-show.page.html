@@ -51,11 +51,45 @@
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button>
-              Add
+            <ion-button id="equipment-modal">
+              Select
             </ion-button>
+            <app-equipment-select-modal 
+              trigger="equipment-modal" 
+              (willDismiss)="equipmentSelectDismiss($event)"
+              [equipment]="equipment()"
+            ></app-equipment-select-modal>
+            <app-caret-down-popover>
+              <ion-item [routerLink]="['/equipment']" button>
+                View
+              </ion-item>
+              <ion-item [routerLink]="['/equipment', 'create']" button>
+                Create
+              </ion-item>
+            </app-caret-down-popover>
           </ion-buttons>
         </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!rentalEquipment() || rentalEquipment()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Rental Equipment Selected 
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(equipment of rentalEquipment(); track equipment){
+                  <ion-item>
+                    <ion-label>
+                      {{equipment | json}}
+                    </ion-label>
+                  </ion-item>
+                }
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

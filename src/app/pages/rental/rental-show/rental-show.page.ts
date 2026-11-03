@@ -6,6 +6,7 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { RentalService } from '../../../services/rental.service';
+import { EquipmentSelectModalComponent } from '../../../components/equipment/equipment-select-modal/equipment-select-modal.component';
 
 @Component({
   selector: 'app-rental-show',
@@ -15,13 +16,17 @@ import { RentalService } from '../../../services/rental.service';
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, 
     IonCard, IonCardContent, IonList, IonItem, IonLabel, IonText, IonNote, IonIcon, IonButtons, 
-    IonButton, 
+    IonButton, EquipmentSelectModalComponent, 
   ]
 })
 export class RentalShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
-  rental = signal<any>(null);
+  data = signal<any>(null);
+  rental = computed(() => this.data()?.rental || null);
+  equipment = computed(() => this.data()?.equipment || null);
+  invoices = computed(() => this.data()?.invoices || null);
+  rentalEquipment = computed(() => this.rental()?.rental_equipment || null);
   constructor() { }
 
   ngOnInit() {
@@ -29,8 +34,13 @@ export class RentalShowPage implements OnInit {
 
   async ionViewWillEnter(){
     const uuid:any = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const rental = await this.rentalServ.show(uuid);
-    this.rental.set(rental);
+    const data = await this.rentalServ.show(uuid);
+    this.data.set(data);
+    console.log(data);
+  }
+
+  equipmentSelectDismiss(event:any){
+    
   }
 
   async delete(uuid:string){
