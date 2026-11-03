@@ -28,7 +28,7 @@ export class EquipmentShowPage implements OnInit {
 
   async ionViewWillEnter() {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const equipment:any = await this.equipmentServ.getByUuid(this.uuid);
+    const equipment:any = await this.equipmentServ.show(this.uuid);
     this.equipment.set(equipment);
   }
 

@@ -30,7 +30,7 @@ export class EquipmentIndexPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    const equipment:any = await this.equipmentServ.getAll();
+    const equipment:any = await this.equipmentServ.index();
     this.equipment.set(equipment);
   }
 

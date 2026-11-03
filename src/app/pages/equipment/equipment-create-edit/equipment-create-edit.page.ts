@@ -62,7 +62,7 @@ export class EquipmentCreateEditPage implements OnInit {
 
   async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const equipmentData:any = this.uuid ? await this.equipmentServ.editByUuid(this.uuid) : await this.equipmentServ.create();
+    const equipmentData:any = this.uuid ? await this.equipmentServ.edit(this.uuid) : await this.equipmentServ.create();
     this.equipmentData.set(equipmentData);
   }
 
@@ -125,7 +125,7 @@ export class EquipmentCreateEditPage implements OnInit {
   async onSubmit() {
     if (this.form().valid) {
       const equipment = this.form().value;
-      const results:any = await this.equipmentServ.save(equipment);
+      const results:any = this.uuid ? await this.equipmentServ.update(equipment) : await this.equipmentServ.store(equipment);
       if(results?.success){
         this.toast.present(results?.message || "Equipment saved successfully.");
         this.errors.set(null);

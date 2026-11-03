@@ -10,73 +10,8 @@ export class EquipmentService {
   private authServ = inject(AuthService);
   user = computed(() => this.authServ.user());
 
-  async create(){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get('equipment/create').subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async editByUuid(uuid:string){
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`equipment/${uuid}/edit`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getAll() {
-    return new Promise((resolve, reject) => {
-      this.apiServ.get('equipment').subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  async getByUuid(uuid: string) {
-    return new Promise((resolve, reject) => {
-      this.apiServ.get(`equipment/${uuid}`).subscribe({
-        next: (results:any) => {
-          resolve(results);
-        }, 
-        error: (error:any) => {
-          reject(error);
-        }
-      })
-    });
-  }
-
-  trimObject(obj: any) { // do we need these with reactive forms?
-    return {
-      name: obj?.name?.trim() || '',
-      serial_number: obj?.serial_number?.trim() || '',
-      type: obj?.type?.trim() || '',
-      description: obj?.description?.trim() || '',
-      note: obj?.note?.trim() || '',
-      rental_rate: obj?.rental_rate?.trim() || '',
-      rental_unit: obj?.rental_unit?.trim() || '',
-      status: obj?.status,
-      is_active: obj?.is_active,
-      user_uuid: obj?.user_uuid?.trim() || '',
-      manufacturer_model_uuid: obj?.manufacturer_model_uuid?.trim() || '',
-      uuid: obj?.uuid || uuid(),
-    }
+  filterEquipment(equipment:any, filterOptions:any){
+    return equipment
   }
 
   createNew(){
@@ -113,7 +48,72 @@ export class EquipmentService {
     }); 
   }
 
-  async save(equipment:any){
+  async index() {
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('equipment').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async show(uuid: string) {
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`equipment/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async create(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('equipment/create').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async edit(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`equipment/${uuid}/edit`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async store(equipment:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post(`equipment/${equipment?.uuid}`, equipment).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      })
+    });
+  }
+
+  async update(equipment:any){
     return new Promise((resolve, reject) => {
       this.apiServ.put(`equipment/${equipment?.uuid}`, equipment).subscribe({
         next: (results:any) => {

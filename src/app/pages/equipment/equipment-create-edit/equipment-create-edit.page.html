@@ -32,14 +32,20 @@
                 <ion-input label="Name" formControlName="name"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-select [value]="selectedManufacturerUuid()" (ionChange)="manufacturerSelectChange($event)" label="Manufacturer">
+                <ion-select 
+                  [value]="selectedManufacturerUuid()" 
+                  (ionChange)="manufacturerSelectChange($event)" 
+                  label="Manufacturer" 
+                  placeholder="Select Manufacturer"
+                >
                   @for(manufacturer of manufacturers(); track manufacturer.uuid){
                     <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name}}</ion-select-option>
                   }
                 </ion-select>
                 <ion-buttons slot="end">
                   @if(selectedManufacturer()){
-                    <ion-button (click)="clearManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
+                    <ion-button (click)="clearManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()"
+                    >
                       <ion-icon name="close-outline"></ion-icon>
                     </ion-button>
                   }@else{
@@ -51,7 +57,12 @@
                 </ion-buttons>
               </ion-item>
               <ion-item>
-                <ion-select [value]="selectedModelUuid()" (ionChange)="modelSelectChange($event)" label="Model">
+                <ion-select 
+                  [value]="selectedModelUuid()" 
+                  (ionChange)="modelSelectChange($event)" 
+                  label="Model" 
+                  placeholder="Select Model"
+                >
                   @for(model of models(); track model.uuid){
                     <ion-select-option [value]="model.uuid">{{model?.name}}</ion-select-option>
                   }
