@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../services/toast.service';
+import { EquipmentService } from '../../../services/equipment.service';
 
 @Component({
   selector: 'app-equipment-select-modal',
@@ -16,15 +17,20 @@ import { ToastService } from '../../../services/toast.service';
   ],
 })
 export class EquipmentSelectModalComponent  implements OnInit {
-  private manufacturerServ = inject(ManufacturerService);
+  private equipmentServ = inject(EquipmentService);
   private toast = inject(ToastService);
-  manufacturer = signal<any>(this.manufacturerServ.createNew());
-  form = computed(() => this.manufacturerServ.buildForm(this.manufacturer()));
   trigger = input<string>('modal-trigger');
   modal = viewChild(IonModal);
   willDismiss = output<any>();
   errors = signal<any>(null);
+  activeOnly = signal<boolean>(true);
+  filterOptions = signal<any>({
+    activeOnly: this.activeOnly(), 
+  });
+  rentalEquipment = input<any>();
   equipment = input<any>();
+  filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.filterOptions()));
+  displayEquipment = computed(() => this.equipmentServ.selectEquipment(this.filteredEquipment(), this.rentalEquipment()));
   constructor() { }
 
   ngOnInit() {}
@@ -33,26 +39,21 @@ export class EquipmentSelectModalComponent  implements OnInit {
     this.willDismiss.emit(event);
   }
 
+  toggleSelect(uuid:string){
+    this.equipment()?.forEach((equipment:any) => {
+      if(equipment?.uuid == uuid){
+        equipment.isSelected = !equipment.isSelected;
+      }
+    });
+  }
+
   cancel(){
     this.modal()?.dismiss(null, 'cancel');
   }
 
   async confirm(){
-    if(this.form()?.valid){
-      const manufacturer = this.form()?.value;
-      const results:any = await this.manufacturerServ.store(manufacturer);
-      if(results?.success){
-        this.toast.present(results?.message || "Manufacturer saved successfully.");
-        this.modal()?.dismiss(manufacturer, 'confirm');
-        this.errors.set(null);
-      }else if(results?.errors){
-        this.errors.set(results?.errors);
-      }else{
-        this.toast.present(results?.message || "An error occurred while saving the manufacturer.");
-      }
-    }else{
-      this.toast.present("Please complete the form to continue.");
-    }
+    const selectedUuids:any = this.equipment()?.filter((equipment:any) => equipment?.isSelected)?.map((equipment:any) => equipment?.uuid);
+    this.modal()?.dismiss(selectedUuids, 'confirm');
   }
 
 }

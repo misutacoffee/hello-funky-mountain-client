@@ -7,38 +7,31 @@
         </ion-buttons>
         <ion-title>Equipment Select</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true" [disabled]="form()?.invalid">Confirm</ion-button>
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        @if(!equipment() || equipment()?.length === 0){
+        @if(!displayEquipment() || displayEquipment()?.length === 0){
           <ion-item>
             <ion-label>
               No Equipment Available
             </ion-label>
           </ion-item>
         }@else{
-          @for(equipment of equipment(); track equipment.uuid){
+          @for(equipment of displayEquipment(); track equipment.uuid){
             <ion-item>
               <ion-label>
-                <ion-checkbox color="dark" labelPlacement="end" [value]="equipment?.uuid">
+                <ion-checkbox (ionChange)="toggleSelect(equipment?.uuid)" [checked]="equipment?.isSelected" color="dark" labelPlacement="end" [value]="equipment?.uuid">
                   {{equipment?.name || 'Unknown Equipment'}}
                   <small>
-                    {{equipment?.model?.name}}
+                    {{equipment?.isSelected | json}}
                   </small>
                 </ion-checkbox>
               </ion-label>
             </ion-item>
           }
-        }
-        @if(errors()){
-          <ion-item>
-            <ion-label>
-              {{errors() | json}}
-            </ion-label>
-          </ion-item>
         }
       </ion-list>
     </ion-content>

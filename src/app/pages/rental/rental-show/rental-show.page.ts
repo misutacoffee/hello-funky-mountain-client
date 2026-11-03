@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
@@ -16,7 +16,7 @@ import { EquipmentSelectModalComponent } from '../../../components/equipment/equ
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, 
     IonCard, IonCardContent, IonList, IonItem, IonLabel, IonText, IonNote, IonIcon, IonButtons, 
-    IonButton, EquipmentSelectModalComponent, 
+    IonButton, EquipmentSelectModalComponent, IonItemDivider, 
   ]
 })
 export class RentalShowPage implements OnInit {
@@ -36,11 +36,11 @@ export class RentalShowPage implements OnInit {
     const uuid:any = this.activatedRoute.snapshot.paramMap.get('uuid');
     const data = await this.rentalServ.show(uuid);
     this.data.set(data);
-    console.log(data);
   }
 
   equipmentSelectDismiss(event:any){
-    
+    const selectedUuids:any = event?.detail?.data;
+    console.log(selectedUuids);
   }
 
   async delete(uuid:string){

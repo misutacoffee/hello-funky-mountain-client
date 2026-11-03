@@ -22,6 +22,14 @@
               Edit
             </ion-button>
             <app-caret-down-popover>
+              <ion-item-divider>
+                <ion-label>
+                  Rental
+                </ion-label>
+              </ion-item-divider>
+              <ion-item [routerLink]="['/rentals', rental()?.uuid, 'edit']" button>
+                Edit
+              </ion-item>
               <ion-item (click)="delete(rental()?.uuid)" button>
                 <ion-text color="danger">
                   Delete
@@ -58,8 +66,14 @@
               trigger="equipment-modal" 
               (willDismiss)="equipmentSelectDismiss($event)"
               [equipment]="equipment()"
+              [rentalEquipment]="rentalEquipment()"
             ></app-equipment-select-modal>
             <app-caret-down-popover>
+              <ion-item-divider>
+                <ion-label>
+                  Equipment
+                </ion-label>
+              </ion-item-divider>
               <ion-item [routerLink]="['/equipment']" button>
                 View
               </ion-item>

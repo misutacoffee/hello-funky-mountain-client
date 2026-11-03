@@ -10,8 +10,24 @@ export class EquipmentService {
   private authServ = inject(AuthService);
   user = computed(() => this.authServ.user());
 
-  filterEquipment(equipment:any, filterOptions:any){
+  selectEquipment(equipment:any, array:any){
+    equipment?.forEach((equipment:any) => {
+      const selected:any = array?.find((item:any) => item?.equipment_uuid === equipment?.uuid);
+      if(selected){
+        equipment.isSelected = true;
+      }else{
+        equipment.isSelected = false;
+      }
+    })?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name));
     return equipment
+  }
+
+  filterEquipment(equipment:any, filterOptions:any){
+    let filtered:any = equipment;
+    if(filterOptions?.activeOnly){
+      filtered = filtered?.filter((equipment:any) => equipment?.is_active);
+    }
+    return filtered
   }
 
   createNew(){
