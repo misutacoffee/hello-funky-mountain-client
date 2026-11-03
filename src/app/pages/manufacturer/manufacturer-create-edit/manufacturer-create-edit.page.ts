@@ -37,14 +37,14 @@ export class ManufacturerCreateEditPage implements OnInit {
 
   async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
-    const manufacturer:any = this.uuid ? await this.manufacturerServ.getByUuid(this.uuid) : this.manufacturerServ.createNew();
+    const manufacturer:any = this.uuid ? await this.manufacturerServ.edit(this.uuid) : await this.manufacturerServ.create();
     this.manufacturer.set(manufacturer);
   }
 
   async save(){
     if(this.form()?.valid){
       const manufacturer:any = this.form()?.value;
-      const results:any = await this.manufacturerServ.save(manufacturer);
+      const results:any = this.uuid ? await this.manufacturerServ.update(manufacturer) : await this.manufacturerServ.store(manufacturer);
       if(results?.success){
         this.toast.present(results?.message ?? "Manufacturer successfully saved to the database.");
         this.navCtl.back();

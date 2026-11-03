@@ -38,7 +38,7 @@ export class CreateManufacturerModalComponent  implements OnInit {
   async confirm(){
     if(this.form()?.valid){
       const manufacturer = this.form()?.value;
-      const results:any = await this.manufacturerServ.save(manufacturer);
+      const results:any = await this.manufacturerServ.store(manufacturer);
       if(results?.success){
         this.toast.present(results?.message || "Manufacturer saved successfully.");
         this.modal()?.dismiss(manufacturer, 'confirm');

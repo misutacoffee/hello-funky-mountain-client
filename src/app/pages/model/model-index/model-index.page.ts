@@ -53,9 +53,8 @@ export class ModelIndexPage implements OnInit {
   async ionViewWillEnter(){
     this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
     if(this.manufacturerUuid){
-      const manufacturerData:any = await this.modelServ.indexByManufacturer(this.manufacturerUuid);
-      const manufacturer = this.manufacturerServ.trimObject(manufacturerData);
-      const models:any = manufacturerData?.manufacturer_models;
+      const manufacturer:any = await this.modelServ.indexByManufacturer(this.manufacturerUuid);
+      const models:any = manufacturer?.manufacturer_models;
       this.manufacturer.set(manufacturer);
       this.models.set(models);
     }else{

@@ -41,7 +41,7 @@ export class ManufacturerShowPage implements OnInit {
 
   async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
-    const manufacturer = await this.manufacturerServ.getByUuid(this.uuid);
+    const manufacturer = await this.manufacturerServ.show(this.uuid);
     this.manufacturer.set(manufacturer);
   }
 

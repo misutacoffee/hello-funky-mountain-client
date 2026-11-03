@@ -46,7 +46,7 @@ export class ManufacturerIndexPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    const manufacturers = await this.manufacturerServ.getAll();
+    const manufacturers = await this.manufacturerServ.index();
     this.manufacturers.set(manufacturers);
   }
 
