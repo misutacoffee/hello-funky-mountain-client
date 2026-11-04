@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar, NavController } from '@ionic/angular';
@@ -24,24 +24,48 @@ export class InvoiceCreateEditPage implements OnInit {
   private toast = inject(ToastService);
   private navCtl = inject(NavController);
   uuid:any;
-  invoice = signal<any>(null);
+  contractUuid:any;
+  rentalUuid:any;
+  data = signal<any>(null);
+  contract = computed(() => this.data()?.contract);
+  invoice = computed(() => this.data()?.invoice);
+  rental = computed(() => this.data()?.rental);
   form = computed<FormGroup>(() => this.invoiceServ.buildForm(this.invoice()));
   errors = signal<any>(null);
-  constructor() { }
+  constructor() { 
+    effect(() => {
+      if(this.contract()){
+        this.form()?.patchValue({contract_uuid: this.contract()?.uuid || null});
+      }
+      if(this.rental()){
+        this.form()?.patchValue({rental_uuid: this.rental()?.uuid || null});
+      }
+    })
+  }
 
   ngOnInit() {
   }
 
   async ionViewWillEnter(){
-    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
-    const contract:any = this.uuid ? await this.invoiceServ.edit(this.uuid) : await this.invoiceServ.create();
-    this.invoice.set(contract);
+    this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
+    this.contractUuid = this.activatedRoute.snapshot.paramMap.get('contract_uuid');
+    this.rentalUuid = this.activatedRoute.snapshot.paramMap.get('rental_uuid');
+    let promise:any = this.invoiceServ.create();
+    if(this.uuid){
+      promise = this.invoiceServ.edit(this.uuid);
+    }else if(this.contractUuid){
+      promise = this.invoiceServ.createByContract(this.contractUuid);
+    }else if(this.rentalUuid){
+      promise = this.invoiceServ.createByRental(this.rentalUuid);
+    }
+    const data:any = await promise;
+    this.data.set(data);
   }
 
   async onSubmit(){
     if(this.form()?.valid){
-      const contract = this.form()?.value;
-      const results:any = this.uuid ? await this.invoiceServ.update(contract) : await this.invoiceServ.store(contract);
+      const invoice = this.form()?.value;
+      const results:any = this.uuid ? await this.invoiceServ.update(invoice) : await this.invoiceServ.store(invoice);
       if(results?.success){
         this.toast.present(results?.message ?? "User account successfully registered.");
         this.navCtl.back();

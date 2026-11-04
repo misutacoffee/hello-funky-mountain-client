@@ -7,6 +7,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { RentalService } from '../../../services/rental.service';
 import { EquipmentSelectModalComponent } from '../../../components/equipment/equipment-select-modal/equipment-select-modal.component';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 
 @Component({
   selector: 'app-rental-show',
@@ -16,7 +17,7 @@ import { EquipmentSelectModalComponent } from '../../../components/equipment/equ
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, 
     IonCard, IonCardContent, IonList, IonItem, IonLabel, IonText, IonNote, IonIcon, IonButtons, 
-    IonButton, EquipmentSelectModalComponent, IonItemDivider, 
+    IonButton, EquipmentSelectModalComponent, IonItemDivider, EllipsisVerticalPopoverComponent, 
   ]
 })
 export class RentalShowPage implements OnInit {
@@ -27,6 +28,7 @@ export class RentalShowPage implements OnInit {
   equipment = computed(() => this.data()?.equipment || null);
   invoices = computed(() => this.data()?.invoices || null);
   rentalEquipment = computed(() => this.rental()?.rental_equipment || null);
+  contract = computed(() => this.rental()?.contract);
   constructor() { }
 
   ngOnInit() {
@@ -43,6 +45,10 @@ export class RentalShowPage implements OnInit {
   }
 
   async delete(uuid:string){
+    // 
+  }
+
+  async deleteInvoice(invoice:any){
     // 
   }
 

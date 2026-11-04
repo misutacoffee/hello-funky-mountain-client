@@ -49,6 +49,52 @@
                   {{rental()?.id ?? 'Unlinked Rental'}}
                 </ion-text>
               </ion-item>
+              <ion-item>
+                <ion-label>
+                  Contract
+                </ion-label>
+                <ion-text>
+                  @if(contract()){
+                    <a [routerLink]="['/contracts', contract()?.uuid]">
+                      {{contract()?.name || 'Unknown Contract'}}
+                    </a>
+                  }@else{
+                    N/A
+                  }
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Rental Date
+                </ion-label>
+                <ion-text>
+                  {{rental()?.rental_date || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Return Date
+                </ion-label>
+                <ion-text>
+                  {{rental()?.return_date || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Description
+                </ion-label>
+                <ion-text>
+                  {{rental()?.description || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Note
+                </ion-label>
+                <ion-text>
+                  {{rental()?.note || 'N/A'}}
+                </ion-text>
+              </ion-item>
             </ion-list>
           </ion-card-content>
         </ion-card>
@@ -98,6 +144,56 @@
                     <ion-label>
                       {{equipment | json}}
                     </ion-label>
+                  </ion-item>
+                }
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              Invoices
+            </ion-title>
+          </ion-label>
+          <ion-buttons>
+            <ion-button [routerLink]="['/rentals', rental()?.uuid, 'invoices', 'create']">
+              Create
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!invoices() || invoices()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Invoices Available
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(invoice of invoices(); track invoice.uuid){
+                  <ion-item>
+                    <ion-label>
+                      <a [routerLink]="['/invoices', invoice?.uuid]">
+                        {{invoice?.id}}
+                      </a>
+                    </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
+                          View
+                        </ion-item>
+                        <ion-item [routerLink]="['/invoices', invoice?.uuid, 'edit']" button>
+                          Edit
+                        </ion-item>
+                        <ion-item (click)="deleteInvoice(invoice)" button>
+                          <ion-text color="danger">
+                            Delete
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }

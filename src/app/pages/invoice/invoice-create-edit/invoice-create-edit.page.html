@@ -8,6 +8,18 @@
             <ion-breadcrumb [routerLink]="['../../']">Invoices</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">{{invoice()?.id ?? 'Unlinked Invoice'}}</ion-breadcrumb>
             <ion-breadcrumb>Edit</ion-breadcrumb>
+          }@else if(contractUuid){
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Contracts</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{contract()?.name || 'Unknown Contract'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
+          }@else if(rentalUuid){
+            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Rentals</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{rental()?.id || 'Unlinked Rental'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
           }@else{
             <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>

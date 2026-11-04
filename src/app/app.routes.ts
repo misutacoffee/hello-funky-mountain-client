@@ -36,9 +36,21 @@ export const routes: Routes = [
             loadComponent: () => import('./pages/contract/contract-create-edit/contract-create-edit.page').then( m => m.ContractCreateEditPage)
           },
           {
+            path: ':contract_uuid/invoices',
+            loadComponent: () => import('./pages/invoice/invoice-index/invoice-index.page').then( m => m.InvoiceIndexPage)
+          },
+          {
+            path: ':contract_uuid/invoices/create',
+            loadComponent: () => import('./pages/invoice/invoice-create-edit/invoice-create-edit.page').then( m => m.InvoiceCreateEditPage)
+          }, 
+          {
             path: ':contract_uuid/rentals',
             loadComponent: () => import('./pages/rental/rental-index/rental-index.page').then( m => m.RentalIndexPage)
           },
+          // {
+          //   path: ':contract_uuid/rentals/:rental_uuid/invoices/create', 
+          //   loadComponent: () => import('./pages/invoice/invoice-create-edit/invoice-create-edit.page').then( m => m.InvoiceCreateEditPage)
+          // }, 
           {
             path: ':contract_uuid/rentals/create',
             loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
@@ -164,6 +176,14 @@ export const routes: Routes = [
             path: ':uuid/edit',
             loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
           },
+          {
+            path: ':rental_uuid/invoices',
+            loadComponent: () => import('./pages/invoice/invoice-index/invoice-index.page').then( m => m.InvoiceIndexPage)
+          },
+          {
+            path: ':rental_uuid/invoices/create',
+            loadComponent: () => import('./pages/invoice/invoice-create-edit/invoice-create-edit.page').then( m => m.InvoiceCreateEditPage)
+          }, 
         ]
       }, 
       {

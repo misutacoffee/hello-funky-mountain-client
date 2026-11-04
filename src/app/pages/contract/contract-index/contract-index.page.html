@@ -45,8 +45,11 @@
                       }
                     </ion-label>
                     <ion-buttons slot="end">
-                      <ion-button fill="solid" disabled>
-                        Rental
+                      <ion-button [routerLink]="['/contracts', contract?.uuid, 'invoices']">
+                        Invoices
+                      </ion-button>
+                      <ion-button [routerLink]="['/contracts', contract?.uuid, 'rentals']">
+                        Rentals
                       </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/contracts', contract?.uuid]" button>
