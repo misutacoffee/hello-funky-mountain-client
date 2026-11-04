@@ -149,6 +149,9 @@
                       </a>
                     </ion-label>
                     <ion-buttons slot="end">
+                      <ion-button [routerLink]="['/rentals', rental?.uuid]">
+                        View
+                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>
                           View

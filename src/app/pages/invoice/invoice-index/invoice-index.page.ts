@@ -22,7 +22,6 @@ import { InvoiceService } from '../../../services/invoice.service';
   ]
 })
 export class InvoiceIndexPage implements OnInit {
-  private contractServ = inject(ContractService);
   private invoiceServ = inject(InvoiceService);
   invoices = signal<any>(null);
   activeOnly = signal<boolean>(true);
@@ -44,7 +43,7 @@ export class InvoiceIndexPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    const contracts = await this.contractServ.index();
+    const contracts = await this.invoiceServ.index();
     this.invoices.set(contracts);
   }
 

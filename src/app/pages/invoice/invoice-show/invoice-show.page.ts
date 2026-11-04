@@ -6,6 +6,7 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { InvoiceService } from '../../../services/invoice.service';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 
 @Component({
   selector: 'app-invoice-show',
@@ -15,13 +16,15 @@ import { InvoiceService } from '../../../services/invoice.service';
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, 
     IonCard, IonCardContent, IonList, IonItem, IonLabel, IonText, IonNote, IonIcon, IonButtons, 
-    IonButton, 
+    IonButton, EllipsisVerticalPopoverComponent, 
   ]
 })
 export class InvoiceShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private invoiceServ = inject(InvoiceService);
   invoice = signal<any>(null);
+  contract = computed(() => this.invoice()?.contract);
+  rental = computed(() => this.invoice()?.rental);
   constructor() { }
 
   ngOnInit() {
@@ -34,6 +37,14 @@ export class InvoiceShowPage implements OnInit {
   }
 
   async delete(uuid:string){
+    // 
+  }
+
+  async deleteContract(contract:any){
+    // 
+  }
+
+  async deleteRental(rental:any){
     // 
   }
 

@@ -180,6 +180,9 @@
                       </a>
                     </ion-label>
                     <ion-buttons slot="end">
+                      <ion-button [routerLink]="['/invoices', invoice?.uuid]">
+                        View
+                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
                           View
