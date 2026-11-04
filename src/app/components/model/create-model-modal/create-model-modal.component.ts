@@ -6,14 +6,15 @@ import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../services/toast.service';
+import { CreateManufacturerModalComponent } from '../../manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
 
 @Component({
   selector: 'app-create-model-modal',
   templateUrl: './create-model-modal.component.html',
   styleUrls: ['./create-model-modal.component.scss'],
   imports: [
-    CommonModule,
-    IonHeader, IonTextarea, IonSelect, IonModal, IonSelectOption, IonList, IonButtons, IonIcon, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonLabel, IonItem, FormsModule, ReactiveFormsModule
+    CommonModule, CreateManufacturerModalComponent, 
+    IonHeader, IonTextarea, IonSelect, IonModal, IonSelectOption, IonList, IonButtons, IonIcon, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonLabel, IonItem, FormsModule, ReactiveFormsModule, 
   ],
 })
 export class CreateModelModalComponent  implements OnInit {
@@ -28,25 +29,39 @@ export class CreateModelModalComponent  implements OnInit {
   willDismiss = output<any>();
   errors = signal<any>(null);
   manufacturer = input<any>(null);
+  newManufacturer = output<any>();
   constructor() { 
     addIcons({addOutline});
     effect(() => {
-      this.form()?.get('manufacturer_uuid')?.valueChanges?.subscribe((value:any) => {
-        const selectedManufacturer = this.manufacturers()?.find((manufacturer:any) => manufacturer.uuid === value);
-        this.selectedManufacturer.set(selectedManufacturer || null);
-      });
-      // 
+      if(this.manufacturer()){
+        this.selectedManufacturer.set(this.manufacturer() || null);
+        this.form()?.patchValue({manufacturer_uuid: this.manufacturer()?.uuid || null});
+      }
     });
   }
 
   ngOnInit() {}
 
-  clearManufacturer(){
-    this.form()?.get('manufacturer_uuid')?.setValue(null);
+  onManufacturerDismiss(event:any){
+    const manufacturer:any = event?.detail?.data;
+    if(manufacturer){
+      this.selectedManufacturer.set(manufacturer || null);
+      this.form()?.patchValue({manufacturer_uuid: manufacturer?.uuid || null});
+      // add to selectable options
+      this.newManufacturer.emit(event);
+    }
   }
 
-  updateManufacturer(event:any){
-    // 
+  deselectManufacturer(){
+    this.selectedManufacturer.set(null);
+    this.form()?.patchValue({manufacturer_uuid: null});
+  }
+
+  manufacturerSelectChange(event:any){
+    const manufacturerUuid:any = event?.detail?.value;
+    const manufacturer = this.manufacturers()?.find((manufacturer:any) => manufacturer?.uuid == manufacturerUuid) || null;
+    this.selectedManufacturer.set(manufacturer);
+    this.form()?.patchValue({manufacturer_uuid: manufacturerUuid});
   }
 
   onWillDismiss(event:any){

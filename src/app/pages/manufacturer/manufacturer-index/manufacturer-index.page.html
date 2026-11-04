@@ -39,6 +39,9 @@
                       </p>
                     </ion-label>
                     <ion-buttons slot="end">
+                      <ion-button [routerLink]="['/manufacturers', manufacturer?.uuid]">
+                        View
+                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/manufacturers', manufacturer?.uuid]" button>
                           View 

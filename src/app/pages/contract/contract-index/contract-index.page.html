@@ -45,6 +45,9 @@
                       }
                     </ion-label>
                     <ion-buttons slot="end">
+                      <ion-button [routerLink]="['/contracts', contract?.uuid]">
+                        View
+                      </ion-button>
                       <ion-button [routerLink]="['/contracts', contract?.uuid, 'invoices']">
                         Invoices
                       </ion-button>

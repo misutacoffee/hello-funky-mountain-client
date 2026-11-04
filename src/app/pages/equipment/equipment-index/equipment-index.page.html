@@ -43,6 +43,9 @@
                       <p>{{ item?.description }}</p>
                     </ion-label>
                     <ion-buttons slot="end">
+                      <ion-button [routerLink]="['/equipment', item.uuid]">
+                        View
+                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/equipment', item.uuid]" button>
                           View 

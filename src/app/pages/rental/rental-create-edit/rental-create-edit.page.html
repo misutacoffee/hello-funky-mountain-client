@@ -29,7 +29,13 @@
           <ion-card-content>
             <ion-list [formGroup]="form()">
               <ion-item>
-                <ion-select (ionChange)="contractSelectChange($event)" [value]="contract()?.uuid" label="Contract" [placeholder]="!displayContracts() || displayContracts()?.length == 0 ? 'No Contracts Available' : 'Select Contract'" [disabled]="!displayContracts() || displayContracts()?.length == 0 ? true : false">
+                <ion-select 
+                  (ionChange)="contractSelectChange($event)" 
+                  [value]="contract()?.uuid" 
+                  label="Contract" 
+                  [placeholder]="!displayContracts() || displayContracts()?.length == 0 ? 'No Contracts Available' : 'Select Contract'" 
+                  [disabled]="!displayContracts() || displayContracts()?.length == 0 ? true : false"
+                >
                   @for(contract of displayContracts(); track contract.uuid){
                     <ion-select-option [value]="contract?.uuid">{{contract?.name ?? 'Unknown Contract'}}</ion-select-option>
                   }

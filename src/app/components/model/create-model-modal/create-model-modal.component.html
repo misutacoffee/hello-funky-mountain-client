@@ -17,18 +17,27 @@
           <ion-input label="Name" formControlName="name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-select (ionChange)="updateManufacturer($event)" label="Manufacturer" formControlName="manufacturer_uuid" placeholder="Select a Manufacturer">
+          <ion-select 
+            (ionChange)="manufacturerSelectChange($event)" 
+            label="Manufacturer" 
+            [value]="selectedManufacturer()?.uuid"
+            placeholder="Select a Manufacturer"
+          >
             @for(manufacturer of manufacturers(); track manufacturer.uuid){
               <ion-select-option [value]="manufacturer.uuid">{{manufacturer?.name ?? 'Unknown Manufacturer'}}</ion-select-option>
             }
           </ion-select>
           <ion-buttons slot="end">
-            <ion-button fill="clear" color="dark">
-              <ion-icon name="add-outline"></ion-icon>
-            </ion-button>
-            <ion-button (click)="clearManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
-              <ion-icon name="close-outline"></ion-icon>
-            </ion-button>
+            @if(selectedManufacturer()){
+              <ion-button (click)="deselectManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()">
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-button>
+            }@else{
+              <ion-button id="model-modal-manufacturer-modal" color="dark" fill="clear">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
+              <app-create-manufacturer-modal trigger="model-modal-manufacturer-modal" (willDismiss)="onManufacturerDismiss($event)"></app-create-manufacturer-modal>
+            }
           </ion-buttons>
         </ion-item>
         <ion-item>

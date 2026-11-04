@@ -44,15 +44,24 @@
                 </ion-select>
                 <ion-buttons slot="end">
                   @if(selectedManufacturer()){
-                    <ion-button (click)="clearManufacturer()" color="dark" fill="clear" [disabled]="!selectedManufacturer()"
+                    <ion-button 
+                      (click)="clearManufacturer()" 
+                      color="dark" fill="clear" 
+                      [disabled]="!selectedManufacturer()"
                     >
                       <ion-icon name="close-outline"></ion-icon>
                     </ion-button>
                   }@else{
-                    <ion-button id="manufacturer-modal" (click)="addManufacturer()" color="dark" fill="clear">
+                    <ion-button 
+                      id="manufacturer-modal" 
+                      color="dark" fill="clear"
+                    >
                       <ion-icon name="add-outline"></ion-icon>
                     </ion-button>
-                    <app-create-manufacturer-modal trigger="manufacturer-modal" (willDismiss)="onManufacturerDismiss($event)"></app-create-manufacturer-modal>
+                    <app-create-manufacturer-modal 
+                      trigger="manufacturer-modal" 
+                      (willDismiss)="onManufacturerDismiss($event)"
+                    ></app-create-manufacturer-modal>
                   }
                 </ion-buttons>
               </ion-item>
@@ -73,10 +82,16 @@
                       <ion-icon name="close-outline"></ion-icon>
                     </ion-button>
                   }@else{
-                    <ion-button id="model-modal" (click)="addModel()" color="dark" fill="clear">
+                    <ion-button id="model-modal" color="dark" fill="clear">
                       <ion-icon name="add-outline"></ion-icon>
                     </ion-button>
-                    <app-create-model-modal trigger="model-modal" [manufacturers]="manufacturers()" [manufacturer]="selectedManufacturer()"></app-create-model-modal>
+                    <app-create-model-modal 
+                      trigger="model-modal" 
+                      [manufacturers]="manufacturers()" 
+                      [manufacturer]="selectedManufacturer()"
+                      (willDismiss)="onModelDismiss($event)"
+                      (newManufacturer)="onManufacturerDismiss($event)"
+                    ></app-create-model-modal>
                   }
                 </ion-buttons>
               </ion-item>

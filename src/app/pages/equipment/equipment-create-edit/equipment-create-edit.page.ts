@@ -88,20 +88,21 @@ export class EquipmentCreateEditPage implements OnInit {
         manufacturers: manufacturers
       });
       this.selectedManufacturer.set(manufacturer);
-      // 
+      this.form()?.patchValue({manufacturer_uuid: manufacturer?.uuid || null});
     }
   }
 
-  async addManufacturer(){
-    // 
-  }
-
-  async addModel(){
-    // 
-  }
-
-  async onManufacturerModalDismiss(event:any){
-    // 
+  onModelDismiss(event:any){
+    const model:any = event?.detail?.data || null;
+    if(model){
+      const models = [...this.models() || [], model];
+      this.equipmentData.set({
+        ...this.equipmentData(),
+        models: models, 
+      });
+      this.selectedModel.set(model);
+      this.form()?.patchValue({manufacturer_model_uuid: model?.uuid || null});
+    }
   }
 
   manufacturerSelectChange(event:any){
