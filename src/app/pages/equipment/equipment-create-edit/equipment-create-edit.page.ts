@@ -38,7 +38,7 @@ export class EquipmentCreateEditPage implements OnInit {
   equipmentData = signal<any>(null);
   equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
   manufacturer = computed<any>(() => this.equipment()?.manufacturer ?? null);
-  model = computed<any>(() => this.equipment()?.manufacturer_model ?? null);
+  model = computed<any>(() => this.equipment()?.model ?? null);
   form = computed<FormGroup>(() => this.equipmentServ.buildForm(this.equipment()));
   user = computed<any>(() => this.authServ.user());
   manufacturers = computed<any[]>(() => this.equipmentData()?.manufacturers ?? []);

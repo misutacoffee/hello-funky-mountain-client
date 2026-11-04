@@ -22,7 +22,10 @@
               Edit
             </ion-button>
             <app-caret-down-popover>
-              <ion-item (click)="delete(contract()?.uuid)" button>
+              <ion-item [routerLink]="['/contracts', contract()?.uuid, 'edit']" button>
+                Edit
+              </ion-item>
+              <ion-item (click)="delete(contract())" button>
                 <ion-text color="danger">
                   Delete
                 </ion-text>
@@ -35,12 +38,115 @@
             <ion-list>
               <ion-item>
                 <ion-label>
+                  Name
+                </ion-label>
+                <ion-text>
+                  {{contract()?.name || 'Unknown Contract'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
                   Display Name
                 </ion-label>
                 <ion-text>
-                  {{contract()?.display_name}}
+                  {{contract()?.display_name || contract()?.name || 'Unknown Contract'}}
                 </ion-text>
               </ion-item>
+              <ion-item>
+                <ion-label>
+                  Phone
+                </ion-label>
+                <ion-text>
+                  {{contract()?.phone || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Email
+                </ion-label>
+                <ion-text>
+                  {{contract()?.phone || 'Unknown Email'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Address
+                </ion-label>
+                <ion-text>
+                  <p>
+                    {{contract()?.primary_address || 'N/A'}}
+                    @if(contract()?.secondary_address){
+                      <br>
+                      {{contract()?.secondary_address}}
+                    }
+                    @if(contract()?.tertiary_address){
+                      <br>
+                      {{contract()?.tertiary_address}}
+                    }
+                    @if(contract()?.city || contract()?.state || contract()?.zip){
+                      <br>
+                      {{contract()?.city}}{{contract()?.city && contract()?.state ? ', ' : ''}}{{contract()?.state}} {{contract()?.zip}}
+                    }
+                  </p>
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Description
+                </ion-label>
+                <ion-text>
+                  {{contract()?.description || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Note
+                </ion-label>
+                <ion-text>
+                  {{contract()?.note || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Is Active
+                </ion-label>
+                <ion-text>
+                  {{contract()?.is_active ? 'True' : 'False'}}
+                </ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              Rentals
+            </ion-title>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button>
+              Create
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!rentals() || rentals()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Rentals Available
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(rental of rentals(); track rental.uuid){
+                  <ion-item>
+                    <ion-label>
+                      {{rental | json}}
+                    </ion-label>
+                  </ion-item>
+                }
+              }
             </ion-list>
           </ion-card-content>
         </ion-card>

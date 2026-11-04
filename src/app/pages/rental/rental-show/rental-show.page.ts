@@ -40,7 +40,6 @@ export class RentalShowPage implements OnInit {
 
   equipmentSelectDismiss(event:any){
     const selectedUuids:any = event?.detail?.data;
-    console.log(selectedUuids);
   }
 
   async delete(uuid:string){

@@ -1,11 +1,13 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar, NavController } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
+import { AlertService } from '../../../services/alert.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-contract-show',
@@ -21,7 +23,11 @@ import { CaretDownPopoverComponent } from '../../../components/caret-down-popove
 export class ContractShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private contractServ = inject(ContractService);
+  private alert = inject(AlertService);
+  private toast = inject(ToastService);
+  private navCtl = inject(NavController);
   contract = signal<any>(null);
+  rentals = computed(() => this.contract()?.rentals);
   constructor() { }
 
   ngOnInit() {
@@ -33,8 +39,17 @@ export class ContractShowPage implements OnInit {
     this.contract.set(contract);
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(contract:any){
+    const ok:any = await this.alert.present(`Delete ${contract?.name} as a contract?`, "Would you like to delete this contract? This action can not be undone.");
+    if(ok){
+      const results:any = await this.contractServ.delete(contract?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Contract successfully deleted.");
+        this.navCtl.back();
+      }else{
+        this.toast.present("An error has occurred.");
+      }
+    }
   }
 
 }

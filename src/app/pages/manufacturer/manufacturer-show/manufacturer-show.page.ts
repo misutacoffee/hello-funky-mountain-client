@@ -31,7 +31,7 @@ export class ManufacturerShowPage implements OnInit {
   private manufacturerServ = inject(ManufacturerService);
   uuid:any;
   manufacturer = signal<any>(null);
-  models = computed<any>(() => this.manufacturer()?.manufacturer_models);
+  models = computed<any>(() => this.manufacturer()?.models);
   constructor() { 
     addIcons({addOutline});
   }

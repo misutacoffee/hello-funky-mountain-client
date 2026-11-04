@@ -8,6 +8,8 @@ import { addOutline } from 'ionicons/icons';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { RouterLink } from '@angular/router';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { ToastService } from '../../../services/toast.service';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-contract-index',
@@ -22,6 +24,8 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 })
 export class ContractIndexPage implements OnInit {
   private contractServ = inject(ContractService);
+  private toast = inject(ToastService);
+  private alert = inject(AlertService);
   contracts = signal<any>(null);
   activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
@@ -46,8 +50,18 @@ export class ContractIndexPage implements OnInit {
     this.contracts.set(contracts);
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(contract:any){
+    const ok:any = await this.alert.present(`Delete ${contract?.name} as a contract?`, "Would you like to delete this contract? This action can not be undone.");
+    if(ok){
+      const results:any = await this.contractServ.delete(contract?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Contract successfully deleted.");
+        const contracts:any = this.contracts()?.filter((c:any) => c?.uuid !== contract?.uuid);
+        this.contracts.set(contracts);
+      }else{
+        this.toast.present("An error has occurred.");
+      }
+    }
   }
 
 }

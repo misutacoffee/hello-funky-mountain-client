@@ -24,6 +24,16 @@
                   <ion-button [routerLink]="['/equipment', uuid, 'edit']">
                     Edit
                   </ion-button>
+                  <app-caret-down-popover>
+                    <ion-item [routerLink]="['/equipment', equipment()?.uuid, 'edit']" button>
+                      Edit
+                    </ion-item>
+                    <ion-item (click)="delete()" button>
+                      <ion-text color="danger">
+                        Delete
+                      </ion-text>
+                    </ion-item>
+                  </app-caret-down-popover>
                 </ion-buttons>
               </ion-item>
               <ion-item>
@@ -32,6 +42,22 @@
                 </ion-label>
                 <ion-text slot="end">
                   {{equipment()?.serial_number || 'Unknown Serial Number'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Manufacturer
+                </ion-label>
+                <ion-text>
+                  {{equipment()?.manufacturer?.name ?? 'Unknown Manufacturer'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Model
+                </ion-label>
+                <ion-text>
+                  {{equipment()?.model?.name ?? 'Unknown Model'}}
                 </ion-text>
               </ion-item>
               @if(equipment()?.description && equipment()?.description != ''){
@@ -50,8 +76,35 @@
               }
               <ion-item>
                 <ion-label>
-                  {{equipment() | json}}
+                  Rental Rate
                 </ion-label>
+                <ion-text>
+                  {{equipment()?.rental_rate || 'Unknown Rental Rate'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Rental Unit
+                </ion-label>
+                <ion-text>
+                  {{equipment()?.rental_unit || 'Unknown Rental Unit'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Status
+                </ion-label>
+                <ion-text>
+                  {{equipment()?.status || 'Unknown Status'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Is Active
+                </ion-label>
+                <ion-text>
+                  {{equipment()?.is_active ? 'True' : 'False'}}
+                </ion-text>
               </ion-item>
             </ion-list>
           </ion-card-content>
