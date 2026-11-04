@@ -58,6 +58,34 @@ export class InvoiceService {
     });
   }
 
+  async indexByContract(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`contracts/${uuid}/invoices`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async indexByRental(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`rentals/${uuid}/invoices`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
   async show(uuid:string){
     return new Promise((resolve, reject) => {
       this.apiServ.get(`invoices/${uuid}`).subscribe({

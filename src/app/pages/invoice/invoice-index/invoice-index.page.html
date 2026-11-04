@@ -3,8 +3,20 @@
     <ion-row>
       <ion-col>
         <app-breadcrumbs>
-          <ion-breadcrumb [routerLink]="['../']">Home</ion-breadcrumb>
-          <ion-breadcrumb>Invoices</ion-breadcrumb>
+          @if(contractUuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Contracts</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{contract()?.name || 'Unknown Contract'}}</ion-breadcrumb>
+            <ion-breadcrumb>Invoices</ion-breadcrumb>
+          }@else if(rentalUuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Rentals</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{rental()?.id || 'Unlinked Rental'}}</ion-breadcrumb>
+            <ion-breadcrumb>Invoices</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../']">Home</ion-breadcrumb>
+            <ion-breadcrumb>Invoices</ion-breadcrumb>
+          }
         </app-breadcrumbs>
       </ion-col>
     </ion-row>

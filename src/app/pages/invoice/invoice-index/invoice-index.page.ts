@@ -6,7 +6,7 @@ import { ContractService } from '../../../services/contract.service';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { InvoiceService } from '../../../services/invoice.service';
 
@@ -22,8 +22,14 @@ import { InvoiceService } from '../../../services/invoice.service';
   ]
 })
 export class InvoiceIndexPage implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
   private invoiceServ = inject(InvoiceService);
-  invoices = signal<any>(null);
+  contractUuid:any;
+  rentalUuid:any;
+  data = signal<any>(null);
+  invoices = computed(() => this.data()?.invoices);
+  contract = computed(() => this.data()?.contract);
+  rental = computed(() => this.data()?.rental);
   activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
     activeOnly: true, 
@@ -43,8 +49,16 @@ export class InvoiceIndexPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    const contracts = await this.invoiceServ.index();
-    this.invoices.set(contracts);
+    this.contractUuid = this.activatedRoute.snapshot.paramMap.get('contract_uuid');
+    this.rentalUuid = this.activatedRoute.snapshot.paramMap.get('rental_uuid');
+    let promise:any = this.invoiceServ.index();
+    if(this.contractUuid){
+      promise = this.invoiceServ.indexByContract(this.contractUuid);
+    }else if(this.rentalUuid){
+      promise = this.invoiceServ.indexByRental(this.rentalUuid);
+    }
+    const data = await promise;
+    this.data.set(data);
   }
 
   async delete(uuid:string){
