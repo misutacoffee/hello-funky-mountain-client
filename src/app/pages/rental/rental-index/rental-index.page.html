@@ -3,22 +3,40 @@
     <ion-row>
       <ion-col>
         <app-breadcrumbs>
-          <ion-breadcrumb [routerLink]="['../']">Home</ion-breadcrumb>
-          <ion-breadcrumb>Rentals</ion-breadcrumb>
+          @if(contractUuid){
+            <ion-breadcrumb [routerLink]="['../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">Contracts</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">{{contract()?.name || 'Unknown Contract'}}</ion-breadcrumb>
+            <ion-breadcrumb>Rentals</ion-breadcrumb>
+          }@else{
+            <ion-breadcrumb [routerLink]="['../']">Home</ion-breadcrumb>
+            <ion-breadcrumb>Rentals</ion-breadcrumb>
+          }
         </app-breadcrumbs>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
         <ion-item color="transparent" lines="none">
-          <ion-title>
-            Rentals
-          </ion-title>
-          <ion-buttons slot="end">
-            <ion-button [routerLink]="['/rentals', 'create']" color="dark">
-              Create
-            </ion-button>
-          </ion-buttons>
+          @if(contractUuid){
+            <ion-title>
+              {{contract()?.name || 'Unknown Contract'}} Rentals
+            </ion-title>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['/contracts', contract()?.uuid, 'rentals', 'create']" color="dark">
+                Create
+              </ion-button>
+            </ion-buttons>
+          }@else{
+            <ion-title>
+              Rentals
+            </ion-title>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['/rentals', 'create']" color="dark">
+                Create
+              </ion-button>
+            </ion-buttons>
+          }
         </ion-item>
         <ion-card>
           <ion-card-content>
@@ -44,11 +62,13 @@
                         </p>
                       }
                     </ion-label>
-                    <ion-text>
-                      <a [routerLink]="['/contracts', rental?.contract_uuid]">
-                        {{rental?.contract?.name ?? 'Unknown Contract'}}
-                      </a>
-                    </ion-text>
+                    @if(!contractUuid){
+                      <ion-text>
+                        <a [routerLink]="['/contracts', rental?.contract_uuid]">
+                          {{rental?.contract?.name ?? 'Unknown Contract'}}
+                        </a>
+                      </ion-text>
+                    }
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>

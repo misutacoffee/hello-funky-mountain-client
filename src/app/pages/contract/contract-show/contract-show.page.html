@@ -120,11 +120,13 @@
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              Rentals
+              <a [routerLink]="['/contracts', contract()?.uuid, 'rentals']">
+                Rentals
+              </a>
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button>
+            <ion-button [routerLink]="['/contracts', contract()?.uuid, 'rentals', 'create']">
               Create
             </ion-button>
           </ion-buttons>
@@ -142,8 +144,25 @@
                 @for(rental of rentals(); track rental.uuid){
                   <ion-item>
                     <ion-label>
-                      {{rental | json}}
+                      <a [routerLink]="['/rentals', rental?.uuid]">
+                        {{rental?.id || 'Unlinked Rental'}}
+                      </a>
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/rentals', rental?.uuid]" button>
+                          View
+                        </ion-item>
+                        <ion-item [routerLink]="['/rentals', rental?.uuid, 'edit']" button>
+                          Edit
+                        </ion-item>
+                        <ion-item (click)="deleteRental(rental)" button>
+                          <ion-text color="danger">
+                            Delete
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }

@@ -23,6 +23,7 @@ export class InvoiceService {
       due_date: null, 
       paid_date: null, 
       rental_uuid: null, 
+      contract_uuid: null, 
       user_uuid: this.user()?.uuid || null, 
       uuid: uuid(), 
     }
@@ -37,6 +38,7 @@ export class InvoiceService {
       due_date: new FormControl(contract?.due_date),
       paid_date: new FormControl(contract?.paid_date),
       rental_uuid: new FormControl(contract?.rental_uuid, [Validators.required]),
+      contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
       user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
       uuid: new FormControl(contract?.uuid, [Validators.required]),
     });

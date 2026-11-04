@@ -8,6 +8,7 @@ import { ContractService } from '../../../services/contract.service';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 
 @Component({
   selector: 'app-contract-show',
@@ -17,7 +18,7 @@ import { ToastService } from '../../../services/toast.service';
     CommonModule, FormsModule, BreadcrumbsComponent, RouterLink, CaretDownPopoverComponent, 
     IonContent, IonHeader, IonTitle, IonToolbar, IonBreadcrumb, IonGrid, IonRow, IonCol, 
     IonCard, IonCardContent, IonList, IonItem, IonLabel, IonText, IonNote, IonIcon, IonButtons, 
-    IonButton, 
+    IonButton, EllipsisVerticalPopoverComponent, 
   ]
 })
 export class ContractShowPage implements OnInit {
@@ -50,6 +51,10 @@ export class ContractShowPage implements OnInit {
         this.toast.present("An error has occurred.");
       }
     }
+  }
+
+  async deleteRental(rental:any){
+
   }
 
 }

@@ -30,6 +30,7 @@ export class RentalCreateEditPage implements OnInit {
   private toast = inject(ToastService);
   private navCtl = inject(NavController);
   uuid:any;
+  contractUuid:any;
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental);
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental()));
@@ -51,9 +52,15 @@ export class RentalCreateEditPage implements OnInit {
 
   async ionViewWillEnter(){
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
+    this.contractUuid = this.activatedRoute.snapshot.paramMap.get('contract_uuid') as unknown as string;
     const data:any = this.uuid ? await this.rentalServ.edit(this.uuid) : await this.rentalServ.create();
     this.data.set(data);
     this.contract.set(data?.rental?.contract || null);
+    if(!this.uuid && this.contractUuid){
+      const contract = this.contracts()?.find((contract:any) => contract?.uuid == this.contractUuid) || null;
+      this.contract.set(contract);
+      this.form()?.patchValue({contract_uuid: this.contractUuid});
+    }
   }
 
   contractSelectChange(event:any){

@@ -52,6 +52,20 @@ export class RentalService {
     });
   }
 
+  async indexByContract(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`contracts/${uuid}/rentals`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
   async show(uuid:string){
     return new Promise((resolve, reject) => {
       this.apiServ.get(`rentals/${uuid}`).subscribe({

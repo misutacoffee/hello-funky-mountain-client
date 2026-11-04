@@ -35,6 +35,14 @@ export const routes: Routes = [
             path: ':uuid/edit',
             loadComponent: () => import('./pages/contract/contract-create-edit/contract-create-edit.page').then( m => m.ContractCreateEditPage)
           },
+          {
+            path: ':contract_uuid/rentals',
+            loadComponent: () => import('./pages/rental/rental-index/rental-index.page').then( m => m.RentalIndexPage)
+          },
+          {
+            path: ':contract_uuid/rentals/create',
+            loadComponent: () => import('./pages/rental/rental-create-edit/rental-create-edit.page').then( m => m.RentalCreateEditPage)
+          },
         ]
       }, 
       {
