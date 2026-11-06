@@ -1,4 +1,4 @@
-import { Service, inject, signal, computed } from '@angular/core';
+import { Service, inject, computed } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { v4 as uuid } from 'uuid';
@@ -85,7 +85,7 @@ export class RentalService {
       this.apiServ.get('rentals/create').subscribe({
         next: (results:any) => {
           resolve({
-            contracts: results?.contracts, 
+            ...results, 
             rental: this.createNew(), 
           });
         }, 

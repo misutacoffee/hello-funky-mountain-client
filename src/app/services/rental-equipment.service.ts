@@ -1,0 +1,142 @@
+import { Service, inject, computed } from '@angular/core';
+import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
+import { v4 as uuid } from 'uuid';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+@Service()
+export class RentalEquipmentService {
+  private apiServ = inject(ApiService);
+  private authServ = inject(AuthService);
+  user = computed(() => this.authServ.user());
+  
+  filterRentals(rentalEquipment:any, filterOptions:any){
+    return rentalEquipment
+  }
+
+  createNew(){
+    return {
+      rental_date: null, 
+      return_date: null, 
+      description: null, 
+      note: null, 
+      contract_uuid: null, 
+      user_uuid: this.user()?.uuid || null, 
+      uuid: uuid(), 
+    }
+  }
+
+  buildForm(contract:any){
+    return new FormGroup({
+      rental_date: new FormControl(contract?.rental_date),
+      return_date: new FormControl(contract?.return_date),
+      description: new FormControl(contract?.description),
+      note: new FormControl(contract?.note),
+      contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
+      user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
+      uuid: new FormControl(contract?.uuid, [Validators.required]),
+    });
+  }
+
+  async index(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('rental-equipment').subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      })
+    });
+  }
+
+  async show(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`rental-equipment/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async create(){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get('rental-equipment/create').subscribe({
+        next: (results:any) => {
+          resolve({
+            ...results, 
+            rental: this.createNew(), 
+          });
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async edit(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`rental-equipment/${uuid}/edit`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async store(contract:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.post('rental-equipment', contract).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async update(contract:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.put(`rental-equipment/${contract?.uuid}`, contract).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async delete(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.delete(`rental-equipment/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+}
