@@ -2,12 +2,14 @@ import { Service, inject, computed } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { v4 as uuid } from 'uuid';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { RentalEquipmentService } from './rental-equipment.service';
 
 @Service()
 export class RentalService {
   private apiServ = inject(ApiService);
   private authServ = inject(AuthService);
+  private rentalEquipmentServ = inject(RentalEquipmentService);
   user = computed(() => this.authServ.user());
   
   filterRentals(rentals:any, filterOptions:any){
@@ -26,15 +28,17 @@ export class RentalService {
     }
   }
 
-  buildForm(contract:any){
+  buildForm(rental:any){
+    const rentalEquipment:any = rental?.rental_equipment;
     return new FormGroup({
-      rental_date: new FormControl(contract?.rental_date),
-      return_date: new FormControl(contract?.return_date),
-      description: new FormControl(contract?.description),
-      note: new FormControl(contract?.note),
-      contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
-      user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
-      uuid: new FormControl(contract?.uuid, [Validators.required]),
+      rental_date: new FormControl(rental?.rental_date),
+      return_date: new FormControl(rental?.return_date),
+      description: new FormControl(rental?.description),
+      note: new FormControl(rental?.note),
+      contract_uuid: new FormControl(rental?.contract_uuid, [Validators.required]),
+      user_uuid: new FormControl(rental?.user_uuid, [Validators.required]),
+      uuid: new FormControl(rental?.uuid, [Validators.required]),
+      rental_equipment: new FormArray(rentalEquipment?.map((re:any) => this.rentalEquipmentServ.buildForm(re)) || []), 
     });
   }
 

@@ -16,25 +16,25 @@ export class RentalEquipmentService {
 
   createNew(){
     return {
-      rental_date: null, 
-      return_date: null, 
-      description: null, 
+      rental_uuid: null, 
+      equipment_uuid: null, 
+      quantity: null, 
+      unit_price: null, 
+      total_price: null, 
       note: null, 
-      contract_uuid: null, 
-      user_uuid: this.user()?.uuid || null, 
       uuid: uuid(), 
     }
   }
 
-  buildForm(contract:any){
+  buildForm(rentalEquipment:any){
     return new FormGroup({
-      rental_date: new FormControl(contract?.rental_date),
-      return_date: new FormControl(contract?.return_date),
-      description: new FormControl(contract?.description),
-      note: new FormControl(contract?.note),
-      contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
-      user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
-      uuid: new FormControl(contract?.uuid, [Validators.required]),
+      rental_uuid: new FormControl(rentalEquipment?.rental_uuid, [Validators.required]),
+      equipment_uuid: new FormControl(rentalEquipment?.equipment_uuid, [Validators.required]),
+      quantity: new FormControl(rentalEquipment?.quantity),
+      unit_price: new FormControl(rentalEquipment?.unit_price),
+      total_price: new FormControl(rentalEquipment?.total_price),
+      note: new FormControl(rentalEquipment?.note),
+      uuid: new FormControl(rentalEquipment?.uuid, [Validators.required]),
     });
   }
 

@@ -18,6 +18,9 @@
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
+        <p>
+          {{form()?.getRawValue() | json}}
+        </p>
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
