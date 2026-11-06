@@ -104,7 +104,10 @@ export class InvoiceService {
     return new Promise((resolve, reject) => {
       this.apiServ.get('invoices/create').subscribe({
         next: (results:any) => {
-          resolve(this.createNew());
+          resolve({
+            ...results, 
+            invoice: this.createNew(), 
+          });
           resolve(results);
         }, 
         error: (results:any) => {
@@ -120,7 +123,7 @@ export class InvoiceService {
       this.apiServ.get(`contracts/${uuid}/invoices/create`).subscribe({
         next: (results:any) => {
           resolve({
-            contract: results?.contract, 
+            ...results, 
             invoice: this.createNew(), 
           });
         }, 
@@ -137,9 +140,8 @@ export class InvoiceService {
       this.apiServ.get(`rentals/${uuid}/invoices/create`).subscribe({
         next: (results:any) => {
           resolve({
-            contract: results?.contract, 
+            ...results, 
             invoice: this.createNew(), 
-            rental: results?.rental, 
           });
         }, 
         error: (results:any) => {
@@ -181,6 +183,20 @@ export class InvoiceService {
   async update(contract:any){
     return new Promise((resolve, reject) => {
       this.apiServ.put(`invoices/${contract?.uuid}`, contract).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
+  async delete(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.delete(`invoices/${uuid}`).subscribe({
         next: (results:any) => {
           resolve(results);
         }, 

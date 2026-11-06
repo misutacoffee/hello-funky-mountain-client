@@ -8,6 +8,9 @@ import { CaretDownPopoverComponent } from '../../../components/caret-down-popove
 import { RentalService } from '../../../services/rental.service';
 import { EquipmentSelectModalComponent } from '../../../components/equipment/equipment-select-modal/equipment-select-modal.component';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { AlertService } from '../../../services/alert.service';
+import { ToastService } from '../../../services/toast.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-rental-show',
@@ -23,6 +26,9 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 export class RentalShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
+  private alert = inject(AlertService);
+  private toast = inject(ToastService);
+  private navServ = inject(NavService);
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental || null);
   equipment = computed(() => this.data()?.equipment || null);
@@ -44,8 +50,20 @@ export class RentalShowPage implements OnInit {
     const selectedUuids:any = event?.detail?.data;
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(rental:any){
+    const ok:any = await this.alert.present(
+      `Delete ${rental?.id || 'Unlinked Rental'}?`, 
+      "Are you sure you want to delete this rental? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.rentalServ.delete(rental?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        this.navServ.back();
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
   }
 
   async deleteInvoice(invoice:any){

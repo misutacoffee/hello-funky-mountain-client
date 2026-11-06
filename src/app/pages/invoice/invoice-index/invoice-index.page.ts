@@ -9,6 +9,8 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { InvoiceService } from '../../../services/invoice.service';
+import { ToastService } from '../../../services/toast.service';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-invoice-index',
@@ -24,6 +26,8 @@ import { InvoiceService } from '../../../services/invoice.service';
 export class InvoiceIndexPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private invoiceServ = inject(InvoiceService);
+  private toast = inject(ToastService);
+  private alert = inject(AlertService);
   contractUuid:any;
   rentalUuid:any;
   data = signal<any>(null);
@@ -61,8 +65,19 @@ export class InvoiceIndexPage implements OnInit {
     this.data.set(data);
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(invoice:any){
+    const ok:any = await this.alert.present(
+      `Delete ${invoice?.id || 'Unlinked Rental'}`, 
+      "Are you sure you want to delete this rental? This action can not be undone."
+    );
+    if(ok){
+      const results:any = await this.invoiceServ.delete(invoice?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        const filtered:any = this.invoices()?.filter((m:any) => m?.uuid !== invoice?.uuid);
+        this.data.set({...this.data, rentals: filtered});
+      }
+    }
   }
 
 }

@@ -139,4 +139,18 @@ export class RentalService {
     });
   }
 
+  async delete(uuid:string){
+    return new Promise((resolve, reject) => {
+      this.apiServ.delete(`rentals/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
+  }
+
 }

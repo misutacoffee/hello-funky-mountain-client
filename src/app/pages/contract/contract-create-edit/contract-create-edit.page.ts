@@ -44,7 +44,7 @@ export class ContractCreateEditPage implements OnInit {
       const contract = this.form()?.value;
       const results:any = this.uuid ? await this.contractServ.update(contract) : await this.contractServ.store(contract);
       if(results?.success){
-        this.toast.present(results?.message ?? "User account successfully registered.");
+        this.toast.present(results?.message ?? `Contract successfully ${this.uuid ? 'updated' : 'stored'} to the database.`);
         this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;

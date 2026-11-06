@@ -8,6 +8,8 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { RentalService } from '../../../services/rental.service';
+import { AlertService } from '../../../services/alert.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-rental-index',
@@ -23,23 +25,20 @@ import { RentalService } from '../../../services/rental.service';
 export class RentalIndexPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
+  private alert = inject(AlertService);
+  private  toast = inject(ToastService);
   contractUuid:any;
   data = signal<any>(null);
   contract = computed(() => this.data()?.contract || null);
   rentals = computed(() => this.data()?.rentals || null);
   activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
-    activeOnly: true, 
+    activeOnly: this.activeOnly(), 
   });
   filteredRentals = computed(() => this.rentalServ.filterRentals(this.rentals(), this.filterOptions()));
   displayRentals = computed(() => this.filteredRentals()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   constructor() { 
     addIcons({addOutline});
-    effect(() => {
-      this.filterOptions.set({
-        activeOnly: this.activeOnly(), 
-      });
-    });
   }
 
   ngOnInit() {
@@ -51,8 +50,19 @@ export class RentalIndexPage implements OnInit {
     this.data.set(data);
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(rental:any){
+    const ok:any = await this.alert.present(
+      `Delete ${rental?.id || 'Unlinked Rental'}`, 
+      "Are you sure you want to delete this rental? This action can not be undone."
+    );
+    if(ok){
+      const results:any = await this.rentalServ.delete(rental?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        const filtered:any = this.rentals()?.filter((m:any) => m?.uuid !== rental?.uuid);
+        this.data.set({...this.data, rentals: filtered});
+      }
+    }
   }
 
 }

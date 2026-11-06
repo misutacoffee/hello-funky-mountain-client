@@ -37,52 +37,110 @@
             </ion-title>
           </ion-label>
         </ion-item>
-        <ion-card>
-          <ion-card-content>
-            <ion-list [formGroup]="form()">
-              <ion-item>
-                <ion-input label="PO Number" formControlName="purchase_order_number"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Invoice Date" formControlName="invoice_date"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Amount" formControlName="amount"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Tax" formControlName="tax"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Due Date" type="date" formControlName="due_date"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Paid Date" type="date" formControlName="paid_date"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Rental UUID" formControlName="rental_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="Contract UUID" formControlName="contract_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input label="UUID" formControlName="uuid"></ion-input>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-        <ion-item color="transparent" lines="none">
-          <ion-buttons>
-            <ion-button (click)="onSubmit()" [disabled]="form()?.invalid" color="dark" fill="solid">
-              {{uuid ? 'Update' : 'Create'}}
-            </ion-button>
-            <ion-button (click)="cancel()">
-              Cancel 
-            </ion-button>
-          </ion-buttons>
-        </ion-item>
+        <form [formGroup]="form()" (ngSubmit)="onSubmit()">
+          <ion-card>
+            <ion-card-content>
+              <ion-list>
+                <ion-item>
+                  @if(!contracts() || contracts()?.length == 0){
+                    <ion-select label="Contract" placeholder="No Contracts Available" disabled></ion-select>
+                  }@else{
+                    <ion-select 
+                      label="Contract" placeholder="Select a Contract"
+                      [value]="selectedContract()?.uuid || null"
+                      (ionChange)="onContractSelectChange($event)"
+                    >
+                      @for(contract of contracts(); track contract.uuid){
+                        <ion-select-option [value]="contract?.uuid">
+                          {{contract?.name || 'Unknown Contract'}}
+                        </ion-select-option>
+                      }
+                    </ion-select>
+                  }
+                  <ion-buttons slot="end">
+                    @if(selectedContract()){
+                      <ion-button (click)="clearSelectedContract()">
+                        <ion-icon name="close-outline"></ion-icon>
+                      </ion-button>
+                    }@else{
+                      <ion-button>
+                        <ion-icon name="add-outline"></ion-icon>
+                      </ion-button>
+                    }
+                  </ion-buttons>
+                </ion-item>
+                <ion-item>
+                  @if(!rentals() || rentals()?.length == 0){
+                    <ion-select label="Rental" placeholder="No Rentals Available" disabled></ion-select>
+                  }@else{
+                    <ion-select 
+                      label="Rental" placeholder="Select a Rental"
+                      [value]="selectedRental()?.uuid || null"
+                      (ionChange)="onRentalSelectChange($event)"
+                    >
+                      @for(rental of rentals(); track rental.uuid){
+                        <ion-select-option [value]="rental?.uuid">
+                          {{rental?.id || 'Unlinked Rental'}}
+                        </ion-select-option>
+                      }
+                    </ion-select>
+                  }
+                  <ion-buttons slot="end">
+                    @if(selectedRental()){
+                      <ion-button (click)="clearSelectedRental()">
+                        <ion-icon name="close-outline"></ion-icon>
+                      </ion-button>
+                    }@else{
+                      <ion-button>
+                        <ion-icon name="add-outline"></ion-icon>
+                      </ion-button>
+                    }
+                  </ion-buttons>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="PO Number" formControlName="purchase_order_number"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Invoice Date" formControlName="invoice_date"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Amount" formControlName="amount"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Tax" formControlName="tax"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Due Date" type="date" formControlName="due_date"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Paid Date" type="date" formControlName="paid_date"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Rental UUID" formControlName="rental_uuid"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="Contract UUID" formControlName="contract_uuid"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="UUID" formControlName="uuid"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+          <ion-item color="transparent" lines="none">
+            <ion-buttons>
+              <ion-button type="submit" [disabled]="form()?.invalid" color="dark" fill="solid">
+                {{uuid ? 'Update' : 'Create'}}
+              </ion-button>
+              <ion-button (click)="cancel()">
+                Cancel 
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>

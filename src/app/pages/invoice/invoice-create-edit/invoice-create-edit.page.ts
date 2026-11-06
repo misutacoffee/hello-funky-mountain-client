@@ -7,6 +7,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
 import { InvoiceService } from '../../../services/invoice.service';
 import { NavService } from '../../../services/nav.service';
+import { addIcons } from 'ionicons';
+import { addOutline, closeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-invoice-create-edit',
@@ -33,7 +35,12 @@ export class InvoiceCreateEditPage implements OnInit {
   rental = computed(() => this.data()?.rental);
   form = computed<FormGroup>(() => this.invoiceServ.buildForm(this.invoice()));
   errors = signal<any>(null);
+  contracts = computed(() => this.data()?.contracts);
+  rentals = computed(() => this.data()?.rentals);
+  selectedContract = signal<any>(null);
+  selectedRental = signal<any>(null);
   constructor() { 
+    addIcons({addOutline, closeOutline});
     effect(() => {
       if(this.contract()){
         this.form()?.patchValue({contract_uuid: this.contract()?.uuid || null});
@@ -63,12 +70,36 @@ export class InvoiceCreateEditPage implements OnInit {
     this.data.set(data);
   }
 
+  clearSelectedContract(){
+    this.selectedContract.set(null);
+    this.form()?.patchValue({contract_uuid: null});
+  }
+
+  clearSelectedRental(){
+    this.selectedRental.set(null);
+    this.form()?.patchValue({rental_uuid: null});
+  }
+
+  onContractSelectChange(event:any){
+    const contractUuid:any = event?.detail?.value;
+    const contract = this.contracts()?.find((contract:any) =>contract?.uuid == contractUuid);
+    this.selectedContract.set(contract || null);
+    this.form()?.patchValue({contract_uuid: contractUuid || null});
+  }
+
+  onRentalSelectChange(event:any){
+    const rentalUuid:any = event?.detail?.value;
+    const rental = this.contracts()?.find((contract:any) =>contract?.uuid == rentalUuid);
+    this.selectedRental.set(rental || null);
+    this.form()?.patchValue({rental_uuid: rentalUuid || null});
+  }
+
   async onSubmit(){
     if(this.form()?.valid){
       const invoice = this.form()?.value;
       const results:any = this.uuid ? await this.invoiceServ.update(invoice) : await this.invoiceServ.store(invoice);
       if(results?.success){
-        this.toast.present(results?.message ?? "User account successfully registered.");
+        this.toast.present(results?.message ?? `Invoice successfully ${this.uuid ? 'updated' : 'stored'} to the database.`);
         this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;

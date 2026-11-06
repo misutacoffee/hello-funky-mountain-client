@@ -91,7 +91,7 @@ export class RentalCreateEditPage implements OnInit {
       const contract = this.form()?.value;
       const results:any = this.uuid ? await this.rentalServ.update(contract) : await this.rentalServ.store(contract);
       if(results?.success){
-        this.toast.present(results?.message ?? "User account successfully registered.");
+        this.toast.present(results?.message ?? `Rental successfully ${this.uuid ? 'updated' : 'stored'} to the database.`);
         this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;
