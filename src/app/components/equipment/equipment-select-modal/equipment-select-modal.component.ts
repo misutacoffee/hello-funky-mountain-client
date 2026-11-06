@@ -1,9 +1,7 @@
 import { Component, OnInit, inject, signal, computed, input, viewChild, output } from '@angular/core';
 import { IonHeader, IonModal, IonList, IonButtons, IonIcon, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonLabel, IonItem, IonTextarea, IonSelect, IonSelectOption, IonCheckbox, IonText, IonNote } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ManufacturerService } from '../../../services/manufacturer.service';
 import { CommonModule } from '@angular/common';
-import { ToastService } from '../../../services/toast.service';
 import { EquipmentService } from '../../../services/equipment.service';
 
 @Component({
@@ -18,7 +16,6 @@ import { EquipmentService } from '../../../services/equipment.service';
 })
 export class EquipmentSelectModalComponent  implements OnInit {
   private equipmentServ = inject(EquipmentService);
-  private toast = inject(ToastService);
   trigger = input<string>('modal-trigger');
   modal = viewChild(IonModal);
   willDismiss = output<any>();

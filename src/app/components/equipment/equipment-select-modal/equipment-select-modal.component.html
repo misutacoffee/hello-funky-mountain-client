@@ -23,11 +23,13 @@
           @for(equipment of displayEquipment(); track equipment.uuid){
             <ion-item>
               <ion-label>
-                <ion-checkbox (ionChange)="toggleSelect(equipment?.uuid)" [checked]="equipment?.isSelected" color="dark" labelPlacement="end" [value]="equipment?.uuid">
+                <ion-checkbox 
+                  (ionChange)="toggleSelect(equipment?.uuid)" 
+                  [checked]="equipment?.isSelected" 
+                  color="dark" labelPlacement="end" 
+                  [value]="equipment?.uuid"
+                >
                   {{equipment?.name || 'Unknown Equipment'}}
-                  <small>
-                    {{equipment?.isSelected | json}}
-                  </small>
                 </ion-checkbox>
               </ion-label>
             </ion-item>

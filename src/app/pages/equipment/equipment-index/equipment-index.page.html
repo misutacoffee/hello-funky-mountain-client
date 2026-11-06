@@ -25,14 +25,14 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-              @if(!equipment() || equipment()?.length === 0){
+              @if(!displayEquipment() || displayEquipment()?.length === 0){
                 <ion-item>
                   <ion-label>
                     No equipment available
                   </ion-label>
                 </ion-item>
               }@else{
-                @for (equipment of equipment(); track equipment.uuid){
+                @for (equipment of displayEquipment(); track equipment.uuid){
                   <ion-item>
                     <ion-label>
                       <h2>

@@ -70,6 +70,59 @@
             </ion-card-content>
           </ion-card>
           <ion-item color="transparent" lines="none">
+            <ion-label>
+              <ion-title>
+                Equipment Select
+              </ion-title>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button [routerLink]="['/equipment', 'create']">
+                Create
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-card>
+            <ion-card-content>
+              <ion-list>
+                @if(!displayEquipment() || displayEquipment()?.length == 0){
+                  <ion-item>
+                    <ion-label>
+                      No Equipment Available
+                    </ion-label>
+                  </ion-item>
+                }@else{
+                  @for(equipment of displayEquipment(); track equipment.uuid){
+                    <ion-item class="cursor-default">
+                      <ion-buttons slot="start">
+                        <ion-checkbox color="dark"></ion-checkbox>
+                      </ion-buttons>
+                      <ion-label>
+                        <a [routerLink]="['/equipment', equipment?.uuid]">
+                          {{equipment?.name || 'Unknown Equipment'}}
+                        </a>
+                      </ion-label>
+                      <ion-buttons slot="end">
+                        <app-ellipsis-vertical-popover>
+                          <ion-item [routerLink]="['/equipment', equipment?.uuid]" button>
+                            View
+                          </ion-item>
+                          <ion-item [routerLink]="['/equipment', equipment?.uuid, 'edit']" button>
+                            Edit
+                          </ion-item>
+                          <ion-item (click)="deleteEquipment(equipment)" button>
+                            <ion-text color="danger">
+                              Delete
+                            </ion-text>
+                          </ion-item>
+                        </app-ellipsis-vertical-popover>
+                      </ion-buttons>
+                    </ion-item>
+                  }
+                }
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+          <ion-item color="transparent" lines="none">
             <ion-buttons>
               <ion-button type="submit" [disabled]="form()?.invalid" color="dark" fill="solid">
                 {{uuid ? 'Update' : 'Create'}}

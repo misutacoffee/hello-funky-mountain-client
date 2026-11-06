@@ -11,6 +11,9 @@ import { addIcons } from 'ionicons';
 import { addOutline, closeOutline } from 'ionicons/icons';
 import { CreateContractModalComponent } from '../../../components/contract/create-contract-modal/create-contract-modal.component';
 import { NavService } from '../../../services/nav.service';
+import { EquipmentService } from '../../../services/equipment.service';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { AlertService } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -21,15 +24,17 @@ import { NavService } from '../../../services/nav.service';
     IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonItem, IonTitle, 
     IonCard, IonCardContent, IonList, IonButtons, IonButton, IonIcon, IonLabel, IonNote, IonText, 
     IonInput, IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonBreadcrumb, 
-    CreateContractModalComponent, 
+    CreateContractModalComponent, EllipsisVerticalPopoverComponent, 
   ]
 })
 export class RentalCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
   private contractServ = inject(ContractService);
+  private equipmentServ = inject(EquipmentService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
+  private alert = inject(AlertService);
   uuid:any;
   contractUuid:any;
   data = signal<any>(null);
@@ -44,6 +49,13 @@ export class RentalCreateEditPage implements OnInit {
   filteredContracts = computed(() => this.contractServ.filterContracts(this.contracts(), this.filterOptions()));
   displayContracts = computed(() => this.filteredContracts()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   contract = signal<any>(null);
+  equipment = computed(() => this.data()?.equipment);
+  equipmentActiveOnly = signal<boolean>(true);
+  equipmentFilterOptions = signal<any>({
+    activeOnly: this.activeOnly(), 
+  });
+  filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
+  displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   constructor() { 
     addIcons({addOutline, closeOutline});
   }
@@ -107,6 +119,23 @@ export class RentalCreateEditPage implements OnInit {
 
   cancel(){
     this.navServ.back();
+  }
+
+  async deleteEquipment(equipment:any){
+    const ok:any = await this.alert.present(
+      `Delete ${equipment?.name || 'Unknown Equipment'}?`, 
+      "Are you sure you want to delete this equipment? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.equipmentServ.delete(equipment?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Equipment successfully deleted from the database.");
+        const filtered = this.equipment()?.filter((e:any) => e?.uuid !== equipment?.uuid);
+        this.data.set({...this.data(), equipment: filtered});
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
   }
 
 }

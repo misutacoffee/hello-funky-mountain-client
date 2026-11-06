@@ -10,7 +10,6 @@ import { addOutline } from 'ionicons/icons';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
-import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-equipment-index',
@@ -26,9 +25,14 @@ export class EquipmentIndexPage implements OnInit {
   private equipmentServ = inject(EquipmentService);
   private alert = inject(AlertService);
   private toast = inject(ToastService);
-  private navServ = inject(NavService);
   data = signal<any>(null);
   equipment = computed(() => this.data()?.equipment);
+  activeOnly = signal<boolean>(true);
+  filterOptions = signal<any>({
+    activeOnly: this.activeOnly(), 
+  });
+  filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.filterOptions()));
+  displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   constructor() { 
     addIcons({addOutline});
   }

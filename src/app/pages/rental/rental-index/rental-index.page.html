@@ -50,10 +50,15 @@
               }@else{
                 @for(rental of displayRentals(); track rental?.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/rentals', rental?.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/rentals', rental?.uuid]">
-                          {{rental?.id ?? 'Unlinked Rental'}}
+                        <a [routerLink]="['/contracts', rental?.contract_uuid]">
+                          {{rental?.contract?.name ?? 'Unknown Contract'}}
                         </a>
                       </h2>
                       @if(rental?.description && rental?.description != ''){
@@ -62,17 +67,7 @@
                         </p>
                       }
                     </ion-label>
-                    @if(!contractUuid){
-                      <ion-text>
-                        <a [routerLink]="['/contracts', rental?.contract_uuid]">
-                          {{rental?.contract?.name ?? 'Unknown Contract'}}
-                        </a>
-                      </ion-text>
-                    }
                     <ion-buttons slot="end">
-                      <ion-button [routerLink]="['/rentals', rental?.uuid]">
-                        View
-                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>
                           View

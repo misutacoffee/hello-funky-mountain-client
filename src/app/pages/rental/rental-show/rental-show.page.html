@@ -105,16 +105,11 @@
             </ion-button>
             <app-equipment-select-modal 
               trigger="equipment-modal" 
-              (willDismiss)="equipmentSelectDismiss($event)"
+              (willDismiss)="onEquipmentSelectDismiss($event)"
               [equipment]="equipment()"
               [rentalEquipment]="rentalEquipment()"
             ></app-equipment-select-modal>
             <app-caret-down-popover>
-              <ion-item-divider>
-                <ion-label>
-                  Equipment
-                </ion-label>
-              </ion-item-divider>
               <ion-item [routerLink]="['/equipment']" button>
                 View
               </ion-item>
