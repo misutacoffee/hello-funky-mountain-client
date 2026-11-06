@@ -1,11 +1,12 @@
 import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar, NavController } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
 import { InvoiceService } from '../../../services/invoice.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-invoice-create-edit',
@@ -22,7 +23,7 @@ export class InvoiceCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private invoiceServ = inject(InvoiceService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   uuid:any;
   contractUuid:any;
   rentalUuid:any;
@@ -68,7 +69,7 @@ export class InvoiceCreateEditPage implements OnInit {
       const results:any = this.uuid ? await this.invoiceServ.update(invoice) : await this.invoiceServ.store(invoice);
       if(results?.success){
         this.toast.present(results?.message ?? "User account successfully registered.");
-        this.navCtl.back();
+        this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);
@@ -82,7 +83,7 @@ export class InvoiceCreateEditPage implements OnInit {
   }
 
   cancel(){
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

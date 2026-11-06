@@ -54,7 +54,7 @@
           <ion-button (click)="save()" fill="solid" [disabled]="form()?.invalid">
             {{uuid ? 'Update' : 'Create'}}
           </ion-button>
-          <ion-button>
+          <ion-button (click)="cancel()">
             Cancel
           </ion-button>
         </ion-buttons>

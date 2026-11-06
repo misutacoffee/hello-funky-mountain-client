@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar, NavController } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
@@ -9,6 +9,7 @@ import { CaretDownPopoverComponent } from '../../../components/caret-down-popove
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-contract-show',
@@ -26,7 +27,7 @@ export class ContractShowPage implements OnInit {
   private contractServ = inject(ContractService);
   private alert = inject(AlertService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   contract = signal<any>(null);
   rentals = computed(() => this.contract()?.rentals);
   constructor() { }
@@ -46,7 +47,7 @@ export class ContractShowPage implements OnInit {
       const results:any = await this.contractServ.delete(contract?.uuid);
       if(results?.success){
         this.toast.present(results?.message || "Contract successfully deleted.");
-        this.navCtl.back();
+        this.navServ.back();
       }else{
         this.toast.present("An error has occurred.");
       }

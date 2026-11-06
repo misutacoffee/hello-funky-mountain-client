@@ -1,11 +1,12 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar, NavController } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
 import { ToastService } from '../../../services/toast.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-contract-create-edit',
@@ -22,7 +23,7 @@ export class ContractCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private contractServ = inject(ContractService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   uuid:any;
   contract = signal<any>(null);
   form = computed<FormGroup>(() => this.contractServ.buildForm(this.contract()));
@@ -44,7 +45,7 @@ export class ContractCreateEditPage implements OnInit {
       const results:any = this.uuid ? await this.contractServ.update(contract) : await this.contractServ.store(contract);
       if(results?.success){
         this.toast.present(results?.message ?? "User account successfully registered.");
-        this.navCtl.back();
+        this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);
@@ -58,7 +59,7 @@ export class ContractCreateEditPage implements OnInit {
   }
 
   cancel(){
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

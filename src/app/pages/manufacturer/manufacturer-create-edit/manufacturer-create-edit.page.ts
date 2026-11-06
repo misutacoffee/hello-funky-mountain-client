@@ -1,15 +1,15 @@
-import { Component, OnInit, inject, signal, effect, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, 
   IonGrid, IonRow, IonCol, IonList, IonInput, IonItem, IonNote, IonLabel, IonCheckbox, IonIcon, 
-  IonBreadcrumb, IonCard, IonCardContent, IonButtons, IonButton, IonTextarea,
-  NavController, 
- } from '@ionic/angular';
+  IonBreadcrumb, IonCard, IonCardContent, IonButtons, IonButton, IonTextarea, 
+} from '@ionic/angular';
 import { ManufacturerService } from '../../../services/manufacturer.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ToastService } from '../../../services/toast.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-manufacturer-create-edit',
@@ -26,7 +26,7 @@ export class ManufacturerCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private manufacturerServ = inject(ManufacturerService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   uuid:any;
   manufacturer = signal<any>(null);
   form = computed<any>(() => this.manufacturerServ.buildForm(this.manufacturer()));
@@ -41,13 +41,17 @@ export class ManufacturerCreateEditPage implements OnInit {
     this.manufacturer.set(manufacturer);
   }
 
+  cancel(){
+    this.navServ.back();
+  }
+
   async save(){
     if(this.form()?.valid){
       const manufacturer:any = this.form()?.value;
       const results:any = this.uuid ? await this.manufacturerServ.update(manufacturer) : await this.manufacturerServ.store(manufacturer);
       if(results?.success){
         this.toast.present(results?.message ?? "Manufacturer successfully saved to the database.");
-        this.navCtl.back();
+        this.navServ.back();
       }else{
         this.toast.present(results?.message ?? "An error has occurred.");
       }

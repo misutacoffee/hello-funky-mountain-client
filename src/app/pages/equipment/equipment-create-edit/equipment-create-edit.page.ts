@@ -2,7 +2,7 @@ import { Component, OnInit, inject, signal, computed, effect } from '@angular/co
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { IonContent, IonModal, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonList, IonItem, IonSelect, IonSelectOption, IonTextarea, IonBreadcrumb, NavController, IonCheckbox } from '@ionic/angular';
+import { IonContent, IonModal, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon, IonInput, IonLabel, IonList, IonItem, IonSelect, IonSelectOption, IonTextarea, IonBreadcrumb, IonCheckbox } from '@ionic/angular';
 import { EquipmentService } from '../../../services/equipment.service';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ToastService } from '../../../services/toast.service';
@@ -11,8 +11,7 @@ import { addIcons } from 'ionicons';
 import { closeOutline, addOutline } from 'ionicons/icons';
 import { CreateModelModalComponent } from '../../../components/model/create-model-modal/create-model-modal.component';
 import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
-import { ManufacturerService } from '../../../services/manufacturer.service';
-import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -29,11 +28,9 @@ import { ManufacturerModelService } from '../../../services/manufacturer-model.s
 export class EquipmentCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private equipmentServ = inject(EquipmentService);
-  private manufacturerServ = inject(ManufacturerService);
-  private modelServ = inject(ManufacturerModelService);
   private authServ = inject(AuthService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   uuid:any;
   equipmentData = signal<any>(null);
   equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
@@ -143,7 +140,7 @@ export class EquipmentCreateEditPage implements OnInit {
       if(results?.success){
         this.toast.present(results?.message || "Equipment saved successfully.");
         this.errors.set(null);
-        this.navCtl.back();
+        this.navServ.back();
       }else if(results?.error){
         this.toast.present(results?.message || "An error has occurred.");
         this.errors.set(results.error);
@@ -157,7 +154,7 @@ export class EquipmentCreateEditPage implements OnInit {
 
   cancel(){
     // alert if changes
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

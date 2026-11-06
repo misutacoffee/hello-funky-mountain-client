@@ -149,8 +149,8 @@ export class ContractService {
           resolve(results?.error);
           reject(results);
         }
-      })
-    })
+      });
+    });
   }
 
 }

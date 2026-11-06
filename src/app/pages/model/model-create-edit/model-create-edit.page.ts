@@ -5,8 +5,7 @@ import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonBreadcrumb, 
   IonList, IonItem, IonLabel, IonNote, IonText, IonIcon, IonButtons, IonButton, IonInput, 
   IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonCard, IonCardContent,
-  NavController, 
- } from '@ionic/angular';
+} from '@ionic/angular';
 import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
@@ -15,6 +14,7 @@ import { ToastService } from '../../../services/toast.service';
 import { addIcons } from 'ionicons';
 import { addOutline, closeOutline } from 'ionicons/icons';
 import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-model-create-edit',
@@ -32,7 +32,7 @@ export class ModelCreateEditPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private modelServ = inject(ManufacturerModelService);
   private manufacturerServ = inject(ManufacturerService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   private toast = inject(ToastService);
   private location = inject(Location);
   uuid:any;
@@ -114,7 +114,7 @@ export class ModelCreateEditPage implements OnInit {
       const results:any = this.uuid ? await this.modelServ.update(model) : await this.modelServ.store(model);
       if(results?.success){
         this.toast.present(results?.message ?? "Model successfully saved to the database.");
-        this.navCtl.back();
+        this.navServ.back();
       }else{
         this.toast.present(results?.message ?? "An error has occurred.");
       }
@@ -125,7 +125,7 @@ export class ModelCreateEditPage implements OnInit {
 
   async cancel(){
     // check for changes and confirm
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

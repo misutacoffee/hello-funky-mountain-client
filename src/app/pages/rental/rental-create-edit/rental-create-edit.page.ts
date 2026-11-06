@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar, NavController } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
@@ -10,6 +10,7 @@ import { RentalService } from '../../../services/rental.service';
 import { addIcons } from 'ionicons';
 import { addOutline, closeOutline } from 'ionicons/icons';
 import { CreateContractModalComponent } from '../../../components/contract/create-contract-modal/create-contract-modal.component';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -28,7 +29,7 @@ export class RentalCreateEditPage implements OnInit {
   private rentalServ = inject(RentalService);
   private contractServ = inject(ContractService);
   private toast = inject(ToastService);
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   uuid:any;
   contractUuid:any;
   data = signal<any>(null);
@@ -91,7 +92,7 @@ export class RentalCreateEditPage implements OnInit {
       const results:any = this.uuid ? await this.rentalServ.update(contract) : await this.rentalServ.store(contract);
       if(results?.success){
         this.toast.present(results?.message ?? "User account successfully registered.");
-        this.navCtl.back();
+        this.navServ.back();
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);
@@ -105,7 +106,7 @@ export class RentalCreateEditPage implements OnInit {
   }
 
   cancel(){
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

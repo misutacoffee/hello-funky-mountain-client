@@ -117,7 +117,17 @@ export class ManufacturerService {
   }
 
   async delete(uuid:string){
-    // 
+    return new Promise((resolve, reject) => {
+      this.apiServ.delete(`manufacturers/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      })
+    })
   }
 
 }

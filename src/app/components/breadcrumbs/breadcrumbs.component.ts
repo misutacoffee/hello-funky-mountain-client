@@ -1,7 +1,8 @@
 import { Component, OnInit, input, inject, computed } from '@angular/core';
-import { IonBreadcrumbs, IonBreadcrumb, IonIcon, IonButtons, IonButton, IonItem, IonLabel, NavController } from '@ionic/angular';
+import { IonBreadcrumbs, IonBreadcrumb, IonIcon, IonButtons, IonButton, IonItem, IonLabel } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { caretBackOutline } from 'ionicons/icons';
+import { NavService } from '../../services/nav.service';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -12,7 +13,7 @@ import { caretBackOutline } from 'ionicons/icons';
   ],
 })
 export class BreadcrumbsComponent  implements OnInit {
-  private navCtl = inject(NavController);
+  private navServ = inject(NavService);
   breadcrumbs = input<any[]>(['']);
   constructor() { 
     addIcons({caretBackOutline})
@@ -21,7 +22,7 @@ export class BreadcrumbsComponent  implements OnInit {
   ngOnInit() {}
 
   back(){
-    this.navCtl.back();
+    this.navServ.back();
   }
 
 }

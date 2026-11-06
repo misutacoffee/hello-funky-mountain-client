@@ -1,5 +1,4 @@
-import { Service, inject } from '@angular/core';
-import { StorageService } from './storage.service';
+import { Service } from '@angular/core';
 
 @Service()
 export class UserService {
