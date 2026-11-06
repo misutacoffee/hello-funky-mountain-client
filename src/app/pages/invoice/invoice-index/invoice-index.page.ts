@@ -75,7 +75,7 @@ export class InvoiceIndexPage implements OnInit {
       if(results?.success){
         this.toast.present(results?.message || "Rental successfully deleted from the database.");
         const filtered:any = this.invoices()?.filter((m:any) => m?.uuid !== invoice?.uuid);
-        this.data.set({...this.data, rentals: filtered});
+        this.data.set({...this.data, invoices: filtered});
       }
     }
   }

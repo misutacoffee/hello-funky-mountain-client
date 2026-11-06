@@ -44,17 +44,17 @@
               }@else{
                 @for(invoice of displayInvoices(); track invoice?.uuid){
                   <ion-item>
-                    <ion-label>
-                      <h2>
-                        <a [routerLink]="['/invoices', invoice?.uuid]">
-                          {{invoice?.id ?? 'Unlinked Invoice'}}
-                        </a>
-                      </h2>
-                    </ion-label>
-                    <ion-buttons slot="end">
+                    <ion-buttons slot="start">
                       <ion-button [routerLink]="['/invoices', invoice?.uuid]">
                         View
                       </ion-button>
+                    </ion-buttons>
+                    <ion-label>
+                      <a [routerLink]="['/contracts', invoice?.contract_uuid]">
+                        {{invoice?.contract?.name || 'Unknown Contract'}}
+                      </a>
+                    </ion-label>
+                    <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
                           View

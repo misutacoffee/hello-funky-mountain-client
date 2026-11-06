@@ -37,7 +37,7 @@ export class InvoiceService {
       tax: new FormControl(contract?.tax),
       due_date: new FormControl(contract?.due_date),
       paid_date: new FormControl(contract?.paid_date),
-      rental_uuid: new FormControl(contract?.rental_uuid, [Validators.required]),
+      rental_uuid: new FormControl(contract?.rental_uuid),
       contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
       user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
       uuid: new FormControl(contract?.uuid, [Validators.required]),
