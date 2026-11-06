@@ -29,17 +29,12 @@ export class ContractIndexPage implements OnInit {
   contracts = signal<any>(null);
   activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
-    activeOnly: true, 
+    activeOnly: this.activeOnly(), 
   });
   filteredContracts = computed(() => this.contractServ.filterContracts(this.contracts(), this.filterOptions()));
   displayContracts = computed(() => this.filteredContracts()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   constructor() { 
     addIcons({addOutline});
-    effect(() => {
-      this.filterOptions.set({
-        activeOnly: this.activeOnly(), 
-      });
-    });
   }
 
   ngOnInit() {
@@ -56,8 +51,8 @@ export class ContractIndexPage implements OnInit {
       const results:any = await this.contractServ.delete(contract?.uuid);
       if(results?.success){
         this.toast.present(results?.message || "Contract successfully deleted.");
-        const contracts:any = this.contracts()?.filter((c:any) => c?.uuid !== contract?.uuid);
-        this.contracts.set(contracts);
+        const filtered:any = this.contracts()?.filter((c:any) => c?.uuid !== contract?.uuid);
+        this.contracts.set(filtered);
       }else{
         this.toast.present("An error has occurred.");
       }
