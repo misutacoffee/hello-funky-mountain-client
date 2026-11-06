@@ -87,17 +87,17 @@
           <ion-card>
             <ion-card-content>
               <ion-list>
-                @if(!displayEquipment() || displayEquipment()?.length == 0){
+                @if(!equipmentSelection() || equipmentSelection()?.length == 0){
                   <ion-item>
                     <ion-label>
                       No Equipment Available
                     </ion-label>
                   </ion-item>
                 }@else{
-                  @for(equipment of displayEquipment(); track equipment.uuid){
+                  @for(equipment of equipmentSelection(); track equipment.uuid){
                     <ion-item class="cursor-default">
                       <ion-buttons slot="start">
-                        <ion-checkbox color="dark"></ion-checkbox>
+                        <ion-checkbox [checked]="equipment?.isSelected" color="dark"></ion-checkbox>
                       </ion-buttons>
                       <ion-label>
                         <a [routerLink]="['/equipment', equipment?.uuid]">

@@ -14,6 +14,7 @@ import { NavService } from '../../../services/nav.service';
 import { EquipmentService } from '../../../services/equipment.service';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { AlertService } from '../../../services/alert.service';
+import { RentalEquipmentService } from '../../../services/rental-equipment.service';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -32,6 +33,7 @@ export class RentalCreateEditPage implements OnInit {
   private rentalServ = inject(RentalService);
   private contractServ = inject(ContractService);
   private equipmentServ = inject(EquipmentService);
+  private rentalEquipmentServ = inject(RentalEquipmentService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
   private alert = inject(AlertService);
@@ -39,6 +41,7 @@ export class RentalCreateEditPage implements OnInit {
   contractUuid:any;
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental);
+  rentalEquipment = computed(() => this.rental()?.rental_equipment);
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental()));
   errors = signal<any>(null);
   contracts = computed(() => this.data()?.contracts);
@@ -56,6 +59,7 @@ export class RentalCreateEditPage implements OnInit {
   });
   filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
   displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  equipmentSelection = computed(() => this.rentalEquipmentServ.buildSelection(this.displayEquipment(), this.rentalEquipment()));
   constructor() { 
     addIcons({addOutline, closeOutline});
   }

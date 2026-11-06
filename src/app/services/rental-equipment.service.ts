@@ -9,6 +9,17 @@ export class RentalEquipmentService {
   private apiServ = inject(ApiService);
   private authServ = inject(AuthService);
   user = computed(() => this.authServ.user());
+
+  buildSelection(equipment:any, rentalEquipment:any){
+    return equipment?.map((equipment:any) => {
+      const rentalItem = rentalEquipment?.find((re:any) => re?.equipment_uuid == equipment?.uuid);
+      return {
+        ...equipment, 
+        isSelected: rentalItem ? true : false, 
+        rental_equipment: rentalItem || null, 
+      }
+    });
+  }
   
   filterRentals(rentalEquipment:any, filterOptions:any){
     return rentalEquipment
