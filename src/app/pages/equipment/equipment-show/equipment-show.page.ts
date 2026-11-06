@@ -8,6 +8,7 @@ import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumb
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-equipment-show',
@@ -25,6 +26,7 @@ export class EquipmentShowPage implements OnInit {
   private equipmentServ = inject(EquipmentService);
   private alert = inject(AlertService);
   private toast = inject(ToastService);
+  private navServ = inject(NavService);
   uuid:any;
   equipment = signal<any>(null);
   constructor() { }
@@ -38,8 +40,20 @@ export class EquipmentShowPage implements OnInit {
     this.equipment.set(equipment);
   }
 
-  delete(){
-    // 
+  async delete(equipment:any){
+    const ok:any = await this.alert.present(
+      `Delete ${equipment?.name || 'Unknown Equipment'}?`, 
+      "Are you sure you want to delete this equipment? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.equipmentServ.delete(equipment?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Equipment successfully deleted from the database.");
+        this.navServ.back();
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
   }
 
 }

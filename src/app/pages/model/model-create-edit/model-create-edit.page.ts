@@ -108,7 +108,7 @@ export class ModelCreateEditPage implements OnInit {
     // 
   }
 
-  async save(){
+  async onSubmit(){
     if(this.form()?.valid){
       const model:any = this.form()?.value;
       const results:any = this.uuid ? await this.modelServ.update(model) : await this.modelServ.store(model);

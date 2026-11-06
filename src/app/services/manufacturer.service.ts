@@ -126,8 +126,8 @@ export class ManufacturerService {
           resolve(results?.error);
           reject(results);
         }
-      })
-    })
+      });
+    });
   }
 
 }

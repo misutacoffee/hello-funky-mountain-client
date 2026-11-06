@@ -133,7 +133,17 @@ export class ManufacturerModelService {
   }
 
   async delete(uuid:string){
-    // 
+    return new Promise((resolve, reject) => {
+      this.apiServ.delete(`models/${uuid}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (results:any) => {
+          resolve(results?.error);
+          reject(results);
+        }
+      });
+    });
   }
 
 }

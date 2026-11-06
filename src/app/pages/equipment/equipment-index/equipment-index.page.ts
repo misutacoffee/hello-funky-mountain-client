@@ -8,6 +8,9 @@ import { EquipmentService } from '../../../services/equipment.service';
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { AlertService } from '../../../services/alert.service';
+import { ToastService } from '../../../services/toast.service';
+import { NavService } from '../../../services/nav.service';
 
 @Component({
   selector: 'app-equipment-index',
@@ -21,7 +24,11 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 })
 export class EquipmentIndexPage implements OnInit {
   private equipmentServ = inject(EquipmentService);
-  equipment = signal<any>(null);
+  private alert = inject(AlertService);
+  private toast = inject(ToastService);
+  private navServ = inject(NavService);
+  data = signal<any>(null);
+  equipment = computed(() => this.data()?.equipment);
   constructor() { 
     addIcons({addOutline});
   }
@@ -30,12 +37,25 @@ export class EquipmentIndexPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    const equipment:any = await this.equipmentServ.index();
-    this.equipment.set(equipment);
+    const data:any = await this.equipmentServ.index();
+    this.data.set(data);
   }
 
-  async delete(uuid:string){
-    // 
+  async delete(equipment:any){
+    const ok:any = await this.alert.present(
+      `Delete ${equipment?.name || 'Unknown Equipment'}?`, 
+      "Are you sure you want to delete this equipment? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.equipmentServ.delete(equipment?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Equipment successfully deleted from the database.");
+        const filtered = this.equipment()?.filter((e:any) => e?.uuid !== equipment?.uuid);
+        this.data.set({...this.data(), equipment: filtered});
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
   }
 
 }

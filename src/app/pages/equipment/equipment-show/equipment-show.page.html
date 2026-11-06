@@ -25,7 +25,7 @@
               <ion-item [routerLink]="['/equipment', equipment()?.uuid, 'edit']" button>
                 Edit
               </ion-item>
-              <ion-item (click)="delete()" button>
+              <ion-item (click)="delete(equipment())" button>
                 <ion-text color="danger">
                   Delete
                 </ion-text>

@@ -32,28 +32,28 @@
                   </ion-label>
                 </ion-item>
               }@else{
-                @for (item of equipment(); track item.uuid){
+                @for (equipment of equipment(); track equipment.uuid){
                   <ion-item>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/equipment', item.uuid]">
-                          {{ item?.name }}
+                        <a [routerLink]="['/equipment', equipment.uuid]">
+                          {{ equipment?.name }}
                         </a>
                       </h2>
-                      <p>{{ item?.description }}</p>
+                      <p>{{ equipment?.description }}</p>
                     </ion-label>
                     <ion-buttons slot="end">
-                      <ion-button [routerLink]="['/equipment', item.uuid]">
+                      <ion-button [routerLink]="['/equipment', equipment.uuid]">
                         View
                       </ion-button>
                       <app-ellipsis-vertical-popover>
-                        <ion-item [routerLink]="['/equipment', item.uuid]" button>
+                        <ion-item [routerLink]="['/equipment', equipment.uuid]" button>
                           View 
                         </ion-item>
-                        <ion-item [routerLink]="['/equipment', item.uuid, 'edit']" button>
+                        <ion-item [routerLink]="['/equipment', equipment.uuid, 'edit']" button>
                           Edit 
                         </ion-item>
-                        <ion-item (click)="delete(item?.uuid)" button>
+                        <ion-item (click)="delete(equipment)" button>
                           <ion-text color="danger">
                             Delete 
                           </ion-text>

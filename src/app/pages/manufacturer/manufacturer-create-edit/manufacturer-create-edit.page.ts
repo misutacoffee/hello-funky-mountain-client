@@ -45,7 +45,7 @@ export class ManufacturerCreateEditPage implements OnInit {
     this.navServ.back();
   }
 
-  async save(){
+  async onSubmit(){
     if(this.form()?.valid){
       const manufacturer:any = this.form()?.value;
       const results:any = this.uuid ? await this.manufacturerServ.update(manufacturer) : await this.manufacturerServ.store(manufacturer);
