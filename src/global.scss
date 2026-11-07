@@ -9,6 +9,65 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+ // - BEGIN EQUIPMENT RENTAL CARD
+
+ .equipment-card {
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--ion-color-light-shade);
+  border-radius: 10px;
+  background: var(--ion-card-background, #fff);
+
+  .equipment-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .equipment-card-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .equipment-card-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ion-color-light-shade);
+
+    strong {
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+}
+
+.rental-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .equipment-card .equipment-card-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+ // - END EQUIPMENT RENTAL CARD
+
 .cursor-default {
   cursor: default;
 }

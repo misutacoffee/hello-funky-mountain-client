@@ -51,10 +51,10 @@ export class RentalEquipmentService {
     return rentalEquipment
   }
 
-  createNew(){
+  createNew(values:any = null){
     return {
-      rental_uuid: null, 
-      equipment_uuid: null, 
+      rental_uuid: values?.rental_uuid || null, 
+      equipment_uuid: values?.equipment_uuid || null, 
       quantity: null, 
       unit_price: null, 
       total_price: null, 

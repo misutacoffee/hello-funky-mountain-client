@@ -129,11 +129,28 @@
                   </ion-label>
                 </ion-item>
               }@else{
-                @for(equipment of rentalEquipment(); track equipment){
+                @for(rentalEquipment of rentalEquipment(); track rentalEquipment.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/rental-equipment', 'rentalEquipment?.uuid']">
+                        Details
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
-                      {{equipment | json}}
+                      <a [routerLink]="['/equipment', 'rentalEquipment?.equipment_uuid']">
+                        {{rentalEquipment?.equipment?.name || 'Unknown Equipment'}}
+                      </a>
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/rental-equipment', 'rentalEquipment?.uuid']" button>
+                          Details
+                        </ion-item>
+                        <ion-item [routerLink]="['/equipment', 'rentalEquipment?.equipment_uuid']" button>
+                          View
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }

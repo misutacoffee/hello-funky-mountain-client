@@ -11,6 +11,8 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
 import { NavService } from '../../../services/nav.service';
+import { RentalEquipmentService } from '../../../services/rental-equipment.service';
+import { EquipmentService } from '../../../services/equipment.service';
 
 @Component({
   selector: 'app-rental-show',
@@ -25,16 +27,25 @@ import { NavService } from '../../../services/nav.service';
 })
 export class RentalShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
+  private equipmentServ = inject(EquipmentService);
   private rentalServ = inject(RentalService);
+  private rentalEquipmentServ = inject(RentalEquipmentService);
   private alert = inject(AlertService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental || null);
-  equipment = computed(() => this.data()?.equipment || null);
   invoices = computed(() => this.data()?.invoices || null);
   rentalEquipment = computed(() => this.rental()?.rental_equipment || null);
   contract = computed(() => this.rental()?.contract);
+  equipment = computed(() => this.data()?.equipment);
+  equipmentActiveOnly = signal<boolean>(true);
+  equipmentFilterOptions = signal<any>({
+    activeOnly: this.equipmentActiveOnly(), 
+  });
+  filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
+  displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  selectableEquipment = computed(() => this.rentalEquipmentServ.prepareSelectableEquipment(this.displayEquipment(), this.rental()));
   constructor() { }
 
   ngOnInit() {
@@ -48,7 +59,8 @@ export class RentalShowPage implements OnInit {
 
   onEquipmentSelectDismiss(event:any){
     const selectedEquipmentUuids:any = event?.detail?.data;
-    // 
+    const selection:any = this.equipment()?.filter((equipment:any) => selectedEquipmentUuids.includes(equipment?.uuid));
+    const rentalEquipment = selection?.map((equipment:any) => this.rentalEquipmentServ.createNew({rental_uuid: this.rental()?.uuid, equipment_uuid: equipment?.uuid}));
   }
 
   async delete(rental:any){

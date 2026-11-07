@@ -15,6 +15,8 @@ import { EquipmentService } from '../../../services/equipment.service';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { AlertService } from '../../../services/alert.service';
 import { RentalEquipmentService } from '../../../services/rental-equipment.service';
+import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
+import { EquipmentSelectModalComponent } from '../../../components/equipment/equipment-select-modal/equipment-select-modal.component';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -25,7 +27,8 @@ import { RentalEquipmentService } from '../../../services/rental-equipment.servi
     IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonItem, IonTitle, 
     IonCard, IonCardContent, IonList, IonButtons, IonButton, IonIcon, IonLabel, IonNote, IonText, 
     IonInput, IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonBreadcrumb, 
-    CreateContractModalComponent, EllipsisVerticalPopoverComponent, 
+    CreateContractModalComponent, EllipsisVerticalPopoverComponent, CaretDownPopoverComponent, 
+    EquipmentSelectModalComponent, 
   ]
 })
 export class RentalCreateEditPage implements OnInit {
@@ -59,6 +62,8 @@ export class RentalCreateEditPage implements OnInit {
   filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
   displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   selectableEquipment = computed(() => this.rentalEquipmentServ.prepareSelectableEquipment(this.displayEquipment(), this.rental()))
+  // 
+  rentalEquipment = signal<any>(null);
   constructor() { 
     addIcons({addOutline, closeOutline});
   }
@@ -77,6 +82,11 @@ export class RentalCreateEditPage implements OnInit {
       this.contract.set(contract);
       this.form()?.patchValue({contract_uuid: this.contractUuid});
     }
+  }
+
+  onEquipmentSelectModalDismiss(event:any){
+    const selectedEquipmentUuids = event?.detail?.data || [];
+    // 
   }
 
   toggleEquipmentSelect(event:any, equipment:any){
@@ -142,6 +152,22 @@ export class RentalCreateEditPage implements OnInit {
         this.toast.present(results?.message || "Equipment successfully deleted from the database.");
         const filtered = this.equipment()?.filter((e:any) => e?.uuid !== equipment?.uuid);
         this.data.set({...this.data(), equipment: filtered});
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
+  }
+
+  async delete(rental:any){
+    const ok:any = await this.alert.present(
+      `Delete ${rental?.id || 'Unlinked Rental'}?`, 
+      "Are you sure you want to delete this rental? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.rentalServ.delete(rental?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        this.navServ.back();
       }else{
         this.toast.present(results?.error || "An error has occurred.");
       }

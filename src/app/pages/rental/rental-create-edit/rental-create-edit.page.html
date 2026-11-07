@@ -18,102 +18,24 @@
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
-        <ion-item color="transparent" lines="none">
-          <ion-label>
-            <ion-title>
-              Equipment Select
-            </ion-title>
-          </ion-label>
-          <ion-buttons slot="end">
-            <ion-button [routerLink]="['/equipment', 'create']">
-              Create
-            </ion-button>
-          </ion-buttons>
-        </ion-item>
-        <ion-card>
-          <ion-card-content>
-            <ion-list>
-              @if(!selectableEquipment() || selectableEquipment()?.length == 0){
-                <ion-item>
-                  <ion-label>
-                    No Equipment Available
-                  </ion-label>
-                </ion-item>
-              }@else{
-                @for(equipment of selectableEquipment(); track equipment.uuid){
-                  <ion-item class="cursor-default">
-                    <ion-buttons slot="start">
-                      <ion-checkbox 
-                        (ionChange)="toggleEquipmentSelect($event, equipment)" 
-                        [checked]="equipment?.isSelected" 
-                        color="dark"
-                      ></ion-checkbox>
-                    </ion-buttons>
-                    <ion-text class="ion-padding-end">
-                        <a 
-                          [routerLink]="['/equipment', equipment?.uuid]" 
-                          class="text-ellipsis-2"
-                        >{{equipment?.name || 'Unknown Equipment'}}</a>
-                    </ion-text>
-                    <ion-label>
-                        <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]" class="text-ellipsis-2">
-                          {{equipment?.model?.name || 'Unknown Model'}}
-                        </a>
-                    </ion-label>
-                    <ion-note slot="end">
-                      <p>
-                        Qty {{equipment?.rentalEquipment?.quantity || 0}}
-                      </p>
-                    </ion-note>
-                    <ion-note slot="end">
-                      <p>
-                        Price {{equipment?.rentalEquipment?.unit_price || 0}}
-                      </p>
-                    </ion-note>
-                    <ion-note slot="end">
-                      <p>
-                        Total {{equipment?.rentalEquipment?.total_price || 0}}
-                      </p>
-                    </ion-note>
-                    <ion-buttons slot="end">
-                      <app-ellipsis-vertical-popover>
-                        <ion-item [routerLink]="['/equipment', equipment?.uuid]" button>
-                          View
-                        </ion-item>
-                        <ion-item [routerLink]="['/equipment', equipment?.uuid, 'edit']" button>
-                          Edit
-                        </ion-item>
-                        <ion-item (click)="deleteEquipment(equipment)" button>
-                          <ion-text color="danger">
-                            Delete
-                          </ion-text>
-                        </ion-item>
-                      </app-ellipsis-vertical-popover>
-                    </ion-buttons>
-                  </ion-item>
-                }
-              }
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12" size-md="9" size-xl="6">
-        <p>
-          {{selectableEquipment() | json}}
-        </p>
-        <p>
-          {{form()?.getRawValue() | json}}
-        </p>
-        <ion-item color="transparent" lines="none">
-          <ion-label>
-            <ion-title>
-              {{uuid ? 'Edit' : 'Create'}} Rental 
-            </ion-title>
-          </ion-label>
-        </ion-item>
         <form [formGroup]="form()" (ngSubmit)="onSubmit()">
+          <!-- RENTAL -->
+          <ion-item color="transparent" lines="none">
+            <ion-label>
+              <ion-title>
+                {{uuid ? 'Edit' : 'Create'}} Rental 
+              </ion-title>
+            </ion-label>
+            <ion-buttons>
+              <app-caret-down-popover>
+                <ion-item (click)="delete(rental())" button>
+                  <ion-text color="danger">
+                    Delete
+                  </ion-text>
+                </ion-item>
+              </app-caret-down-popover>
+            </ion-buttons>
+          </ion-item>
           <ion-card>
             <ion-card-content>
               <ion-list>
@@ -157,6 +79,52 @@
               </ion-list>
             </ion-card-content>
           </ion-card>
+          <!-- RENTAL EQUIPMENT -->
+          <ion-item color="transparent" lines="none">
+            <ion-label>
+              <ion-title>
+                Rental Equipment
+              </ion-title>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button id="equipment-select-modal">
+                Select
+              </ion-button>
+              <app-equipment-select-modal trigger="equipment-select-modal" [equipment]="equipment()" (willDismiss)="onEquipmentSelectModalDismiss($event)"></app-equipment-select-modal>
+              <app-caret-down-popover>
+                <ion-item [routerLink]="['/equipment']" button>
+                  View
+                </ion-item>
+                <ion-item [routerLink]="['/equipment', 'create']" button>
+                  Create
+                </ion-item>
+              </app-caret-down-popover>
+            </ion-buttons>
+          </ion-item>
+          @if(!rentalEquipment() || rentalEquipment()?.length == 0){
+            <ion-card>
+              <ion-card-content>
+                <ion-item>
+                  <ion-label>
+                    No Equipment Available
+                  </ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          }@else{
+            @for(rentalEquipment of rentalEquipment(); track rentalEquipment.uuid){
+              <ion-card>
+                <ion-card-content>
+                  <ion-item>
+                    <ion-label>
+                      {{rentalEquipment | json}}
+                    </ion-label>
+                  </ion-item>
+                </ion-card-content>
+              </ion-card>
+            }
+          }
+          <!-- SUBMIT -->
           <ion-item color="transparent" lines="none">
             <ion-buttons>
               <ion-button type="submit" [disabled]="form()?.invalid" color="dark" fill="solid">
