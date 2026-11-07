@@ -10,6 +10,32 @@ export class RentalEquipmentService {
   private authServ = inject(AuthService);
   user = computed(() => this.authServ.user());
 
+  prepareSelectableEquipment(equipment:any, rental:any){
+    const existing:any = rental?.rental_equipment;
+    return equipment?.map((equipment:any) => {
+      const match:any = existing?.find((rentalEquipment:any) => 
+        rentalEquipment?.equipment_uuid == equipment?.uuid && 
+        rentalEquipment?.rental_uuid == rental?.uuid
+      );
+      if(match){
+        return {
+          ...equipment, 
+          isSelected: true, 
+          rentalEquipment: match, 
+        }
+      }else{
+        let rentalEquipment:any = this.createNew();
+        rentalEquipment.equipment_uuid = equipment?.uuid || null;
+        rentalEquipment.rental_uuid = rental?.uuid || null;
+        return {
+          ...equipment, 
+          isSelected: false, 
+          rentalEquipment: rentalEquipment, 
+        }
+      }
+    });
+  }
+
   buildSelection(equipment:any, rentalEquipment:any){
     return equipment?.map((equipment:any) => {
       const rentalItem = rentalEquipment?.find((re:any) => re?.equipment_uuid == equipment?.uuid);

@@ -47,7 +47,7 @@ export class RentalShowPage implements OnInit {
   }
 
   onEquipmentSelectDismiss(event:any){
-    const selectedUuids:any = event?.detail?.data;
+    const selectedEquipmentUuids:any = event?.detail?.data;
     // 
   }
 

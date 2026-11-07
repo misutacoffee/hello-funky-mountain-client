@@ -1,6 +1,6 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -41,7 +41,6 @@ export class RentalCreateEditPage implements OnInit {
   contractUuid:any;
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental);
-  rentalEquipment = computed(() => this.rental()?.rental_equipment);
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental()));
   errors = signal<any>(null);
   contracts = computed(() => this.data()?.contracts);
@@ -59,7 +58,7 @@ export class RentalCreateEditPage implements OnInit {
   });
   filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
   displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
-  equipmentSelection = computed(() => this.rentalEquipmentServ.buildSelection(this.displayEquipment(), this.rentalEquipment()));
+  selectableEquipment = computed(() => this.rentalEquipmentServ.prepareSelectableEquipment(this.displayEquipment(), this.rental()))
   constructor() { 
     addIcons({addOutline, closeOutline});
   }
@@ -77,6 +76,13 @@ export class RentalCreateEditPage implements OnInit {
       const contract = this.contracts()?.find((contract:any) => contract?.uuid == this.contractUuid) || null;
       this.contract.set(contract);
       this.form()?.patchValue({contract_uuid: this.contractUuid});
+    }
+  }
+
+  toggleEquipmentSelect(event:any, equipment:any){
+    const isChecked:boolean = event?.detail?.checked;
+    if(isChecked){
+      // create OR add rentalEquipment formGroup, add to formArray
     }
   }
 

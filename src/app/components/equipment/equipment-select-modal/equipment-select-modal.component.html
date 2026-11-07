@@ -11,7 +11,7 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">
+    <ion-content>
       <ion-list>
         @if(!displayEquipment() || displayEquipment()?.length === 0){
           <ion-item>
@@ -32,6 +32,9 @@
                   {{equipment?.name || 'Unknown Equipment'}}
                 </ion-checkbox>
               </ion-label>
+              <ion-text>
+                {{equipment?.model?.name}}
+              </ion-text>
             </ion-item>
           }
         }

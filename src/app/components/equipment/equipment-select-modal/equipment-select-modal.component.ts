@@ -3,6 +3,7 @@ import { IonHeader, IonModal, IonList, IonButtons, IonIcon, IonToolbar, IonTitle
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EquipmentService } from '../../../services/equipment.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-equipment-select-modal',
@@ -11,7 +12,7 @@ import { EquipmentService } from '../../../services/equipment.service';
   imports: [
     IonHeader, IonList, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonLabel, IonItem, FormsModule, ReactiveFormsModule, 
     IonButtons, IonTextarea, IonSelect, IonSelectOption, IonButton, IonIcon, IonInput, IonLabel, IonItem, FormsModule, ReactiveFormsModule, CommonModule, IonModal, 
-    IonCheckbox, IonText, IonNote, 
+    IonCheckbox, IonText, IonNote, RouterLink, 
   ],
 })
 export class EquipmentSelectModalComponent  implements OnInit {

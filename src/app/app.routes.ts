@@ -147,14 +147,14 @@ export const routes: Routes = [
             path: 'create',
             loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
           }, 
-          // {
-          //   path: ':uuid',
-          //   loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
-          // }, 
-          // {
-          //   path: ':uuid/edit',
-          //   loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
-          // },
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/model/model-show/model-show.page').then( m => m.ModelShowPage)
+          }, 
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/model/model-create-edit/model-create-edit.page').then( m => m.ModelCreateEditPage)
+          },
         ]
       }, 
       {
