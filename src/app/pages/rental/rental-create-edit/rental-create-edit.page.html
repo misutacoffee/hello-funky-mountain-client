@@ -49,40 +49,30 @@
                         color="dark"
                       ></ion-checkbox>
                     </ion-buttons>
+                    <ion-text class="ion-padding-end">
+                        <a 
+                          [routerLink]="['/equipment', equipment?.uuid]" 
+                          class="text-ellipsis-2"
+                        >{{equipment?.name || 'Unknown Equipment'}}</a>
+                    </ion-text>
                     <ion-label>
-                      <h2>
-                        <a [routerLink]="['/equipment', equipment?.uuid]" class="text-ellipsis-2">
-                          {{equipment?.name || 'Unknown Equipment'}}
-                        </a>
-                      </h2>
-                      <p>
                         <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]" class="text-ellipsis-2">
                           {{equipment?.model?.name || 'Unknown Model'}}
                         </a>
-                      </p>
                     </ion-label>
                     <ion-note slot="end">
                       <p>
-                        Qty
-                      </p>
-                      <p>
-                        {{equipment?.rentalEquipment?.quantity || 0}}
+                        Qty {{equipment?.rentalEquipment?.quantity || 0}}
                       </p>
                     </ion-note>
                     <ion-note slot="end">
                       <p>
-                        Price
-                      </p>
-                      <p>
-                        {{equipment?.rentalEquipment?.unit_price || 0}}
+                        Price {{equipment?.rentalEquipment?.unit_price || 0}}
                       </p>
                     </ion-note>
                     <ion-note slot="end">
                       <p>
-                        Total
-                      </p>
-                      <p>
-                        {{equipment?.rentalEquipment?.total_price || 0}}
+                        Total {{equipment?.rentalEquipment?.total_price || 0}}
                       </p>
                     </ion-note>
                     <ion-buttons slot="end">
