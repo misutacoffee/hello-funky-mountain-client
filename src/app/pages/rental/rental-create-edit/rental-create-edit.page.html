@@ -101,25 +101,44 @@
               </app-caret-down-popover>
             </ion-buttons>
           </ion-item>
-          @if(!rentalEquipment() || rentalEquipment()?.length == 0){
+          @if(!rentalEquipment || rentalEquipment?.length == 0){
             <ion-card>
               <ion-card-content>
-                <ion-item>
-                  <ion-label>
-                    No Equipment Available
-                  </ion-label>
-                </ion-item>
+                <ion-list>
+                  <ion-item>
+                    <ion-label>
+                      No Rental Equipment Available
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
               </ion-card-content>
             </ion-card>
           }@else{
-            @for(rentalEquipment of rentalEquipment(); track rentalEquipment.uuid){
-              <ion-card>
+            @for(rentalEquipment of rentalEquipment.controls; track $index; let i = $index){
+              @let equipment = getEquipment(rentalEquipment?.get('equipment_uuid')?.value);
+              <ion-card formArrayName="rental_equipment">
+                <ion-card-header>
+                  <ion-card-title>{{equipment?.name || 'Unknown Equipment'}}</ion-card-title>
+                  <ion-card-subtitle>{{equipment?.model?.name || 'Unknown Model'}}</ion-card-subtitle>
+                </ion-card-header>
                 <ion-card-content>
-                  <ion-item>
-                    <ion-label>
-                      {{rentalEquipment | json}}
-                    </ion-label>
-                  </ion-item>
+                  <ion-list [formGroupName]="i">
+                    <ion-item>
+                      <ion-input label="Qty" formControlName="quantity"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Unit" formControlName="unit"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Price" formControlName="price"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Total" formControlName="total"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-textarea label="Note" formControlName="note" autoGrow></ion-textarea>
+                    </ion-item>
+                  </ion-list>
                 </ion-card-content>
               </ion-card>
             }

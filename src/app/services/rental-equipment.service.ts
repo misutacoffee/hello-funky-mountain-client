@@ -2,7 +2,7 @@ import { Service, inject, computed } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { v4 as uuid } from 'uuid';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Service()
 export class RentalEquipmentService {
@@ -56,8 +56,9 @@ export class RentalEquipmentService {
       rental_uuid: values?.rental_uuid || null, 
       equipment_uuid: values?.equipment_uuid || null, 
       quantity: null, 
-      unit_price: null, 
-      total_price: null, 
+      unit: null, 
+      price: null, 
+      total: null, 
       note: null, 
       uuid: uuid(), 
     }
@@ -68,8 +69,9 @@ export class RentalEquipmentService {
       rental_uuid: new FormControl(rentalEquipment?.rental_uuid, [Validators.required]),
       equipment_uuid: new FormControl(rentalEquipment?.equipment_uuid, [Validators.required]),
       quantity: new FormControl(rentalEquipment?.quantity),
-      unit_price: new FormControl(rentalEquipment?.unit_price),
-      total_price: new FormControl(rentalEquipment?.total_price),
+      unit: new FormControl(rentalEquipment?.unit),
+      price: new FormControl(rentalEquipment?.price),
+      total: new FormControl(rentalEquipment?.total),
       note: new FormControl(rentalEquipment?.note),
       uuid: new FormControl(rentalEquipment?.uuid, [Validators.required]),
     });

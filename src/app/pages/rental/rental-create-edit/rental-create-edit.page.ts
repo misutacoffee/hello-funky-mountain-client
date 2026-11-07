@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ContractService } from '../../../services/contract.service';
@@ -28,7 +28,7 @@ import { EquipmentSelectModalComponent } from '../../../components/equipment/equ
     IonCard, IonCardContent, IonList, IonButtons, IonButton, IonIcon, IonLabel, IonNote, IonText, 
     IonInput, IonCheckbox, IonTextarea, IonSelect, IonSelectOption, IonBreadcrumb, 
     CreateContractModalComponent, EllipsisVerticalPopoverComponent, CaretDownPopoverComponent, 
-    EquipmentSelectModalComponent, 
+    EquipmentSelectModalComponent, IonCardHeader, IonCardTitle, IonCardSubtitle, 
   ]
 })
 export class RentalCreateEditPage implements OnInit {
@@ -63,9 +63,11 @@ export class RentalCreateEditPage implements OnInit {
   displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   selectableEquipment = computed(() => this.rentalEquipmentServ.prepareSelectableEquipment(this.displayEquipment(), this.rental()))
   // 
-  rentalEquipment = signal<any>(null);
   constructor() { 
     addIcons({addOutline, closeOutline});
+  }
+  get rentalEquipment():FormArray{
+    return this.form()?.get('rental_equipment') as FormArray;
   }
 
   ngOnInit() {
@@ -84,9 +86,22 @@ export class RentalCreateEditPage implements OnInit {
     }
   }
 
+  async removeRentalEquipment(equipment:any){
+
+  }
+
+  getEquipment(equipmentUuid:any){
+    return this.equipment()?.find((equipment:any) => equipment?.uuid == equipmentUuid) || null;
+  }
+
   onEquipmentSelectModalDismiss(event:any){
     const selectedEquipmentUuids = event?.detail?.data || [];
-    // 
+    const selectedEquipment:any = this.equipment()?.filter((equipment:any) => selectedEquipmentUuids.includes(equipment?.uuid));
+    selectedEquipment?.forEach((equipment:any) => {
+      const rentalEquipment:any = this.rentalEquipmentServ.createNew({rental_uuid: this.rental()?.uuid, equipment_uuid: equipment?.uuid});
+      const formGroup = this.rentalEquipmentServ.buildForm(rentalEquipment);
+      this.rentalEquipment.push(formGroup);
+    })
   }
 
   toggleEquipmentSelect(event:any, equipment:any){
