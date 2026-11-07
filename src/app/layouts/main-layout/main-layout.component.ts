@@ -13,6 +13,7 @@ import { homeOutline } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
 import { NavProfilePopoverComponent } from '../../components/nav-profile-popover/nav-profile-popover.component';
 import { ToastService } from '../../services/toast.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-main-layout',
@@ -29,6 +30,7 @@ export class MainLayoutComponent implements OnInit {
   private authServ = inject(AuthService);
   private router = inject(Router);
   private toast = inject(ToastService);
+  logoutAlertTrigger:string = uuid();
   user = computed(() => this.authServ.user());
   alertButtons = [
     {

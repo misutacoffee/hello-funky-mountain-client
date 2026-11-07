@@ -8,6 +8,12 @@
             <ion-breadcrumb [routerLink]="['../../']">Rentals</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">{{rental()?.id ?? 'Unlinked Rental'}}</ion-breadcrumb>
             <ion-breadcrumb>Edit</ion-breadcrumb>
+          }@else if(contractUuid){
+            <ion-breadcrumb [routerLink]="['../../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../']">Contracts</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">{{contract()?.name ?? 'Unknown Contract'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../']">Rentals</ion-breadcrumb>
+            <ion-breadcrumb>Create</ion-breadcrumb>
           }@else{
             <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">Rentals</ion-breadcrumb>
@@ -53,10 +59,10 @@
                   </ion-select>
                   <ion-buttons slot="end">
                     @if(!contract()){
-                      <ion-button id="contract-modal">
+                      <ion-button [id]="contractModalTrigger">
                         <ion-icon name="add-outline"></ion-icon>
                       </ion-button>
-                      <app-create-contract-modal trigger="contract-modal" (willDismiss)="onContractDismiss($event)"></app-create-contract-modal>
+                      <app-create-contract-modal [trigger]="contractModalTrigger" (willDismiss)="onContractDismiss($event)"></app-create-contract-modal>
                     }@else{
                       <ion-button (click)="deselectContract()">
                         <ion-icon name="close-outline"></ion-icon>
@@ -87,10 +93,10 @@
               </ion-title>
             </ion-label>
             <ion-buttons slot="end">
-              <ion-button id="equipment-select-modal">
+              <ion-button [id]="equipmentModalTrigger">
                 Select
               </ion-button>
-              <app-equipment-select-modal trigger="equipment-select-modal" [equipment]="equipment()" (willDismiss)="onEquipmentSelectModalDismiss($event)"></app-equipment-select-modal>
+              <app-equipment-select-modal [trigger]="equipmentModalTrigger" [equipment]="equipment()" (willDismiss)="onEquipmentSelectModalDismiss($event)"></app-equipment-select-modal>
               <app-caret-down-popover>
                 <ion-item [routerLink]="['/equipment']" button>
                   View

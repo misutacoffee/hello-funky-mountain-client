@@ -17,6 +17,7 @@ import { AlertService } from '../../../services/alert.service';
 import { RentalEquipmentService } from '../../../services/rental-equipment.service';
 import { CaretDownPopoverComponent } from '../../../components/caret-down-popover/caret-down-popover.component';
 import { EquipmentSelectModalComponent } from '../../../components/equipment/equipment-select-modal/equipment-select-modal.component';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-rental-create-edit',
@@ -42,6 +43,8 @@ export class RentalCreateEditPage implements OnInit {
   private alert = inject(AlertService);
   uuid:any;
   contractUuid:any;
+  contractModalTrigger:string = uuid();
+  equipmentModalTrigger:string = uuid();
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental);
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental()));
@@ -135,8 +138,8 @@ export class RentalCreateEditPage implements OnInit {
 
   async onSubmit(){
     if(this.form()?.valid){
-      const contract = this.form()?.value;
-      const results:any = this.uuid ? await this.rentalServ.update(contract) : await this.rentalServ.store(contract);
+      const rental = this.form()?.value;
+      const results:any = this.uuid ? await this.rentalServ.update(rental) : await this.rentalServ.store(rental);
       if(results?.success){
         this.toast.present(results?.message ?? `Rental successfully ${this.uuid ? 'updated' : 'stored'} to the database.`);
         this.navServ.back();

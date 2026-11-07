@@ -54,13 +54,13 @@
                       </ion-button>
                     }@else{
                       <ion-button 
-                        id="manufacturer-modal" 
+                        [id]="manufacturerModalTrigger" 
                         color="dark" fill="clear"
                       >
                         <ion-icon name="add-outline"></ion-icon>
                       </ion-button>
                       <app-create-manufacturer-modal 
-                        trigger="manufacturer-modal" 
+                        [trigger]="manufacturerModalTrigger" 
                         (willDismiss)="onManufacturerDismiss($event)"
                       ></app-create-manufacturer-modal>
                     }
@@ -83,11 +83,11 @@
                         <ion-icon name="close-outline"></ion-icon>
                       </ion-button>
                     }@else{
-                      <ion-button id="model-modal" color="dark" fill="clear">
+                      <ion-button [id]="modelModalTrigger" color="dark" fill="clear">
                         <ion-icon name="add-outline"></ion-icon>
                       </ion-button>
                       <app-create-model-modal 
-                        trigger="model-modal" 
+                        [trigger]="modelModalTrigger" 
                         [manufacturers]="manufacturers()" 
                         [manufacturer]="selectedManufacturer()"
                         (willDismiss)="onModelDismiss($event)"

@@ -7,6 +7,7 @@ import { addOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../services/toast.service';
 import { CreateManufacturerModalComponent } from '../../manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-create-model-modal',
@@ -20,6 +21,7 @@ import { CreateManufacturerModalComponent } from '../../manufacturer/create-manu
 export class CreateModelModalComponent  implements OnInit {
   private modelServ = inject(ManufacturerModelService);
   private toast = inject(ToastService);
+  manufacturerModalTrigger:string = uuid();
   manufacturers = input<any>(null);
   model = signal<any>(this.modelServ.createNew());
   form = computed(() => this.modelServ.buildForm(this.model()));

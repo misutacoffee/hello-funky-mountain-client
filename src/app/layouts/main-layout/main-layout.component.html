@@ -21,10 +21,10 @@
             <ion-item [routerLink]="['settings']" button>
               Settings
             </ion-item>
-            <ion-item id="nav-logout" button>
+            <ion-item [id]="logoutAlertTrigger" button>
               Logout
             </ion-item>
-            <ion-alert trigger="nav-logout" header="Logout?" message="Log out of Equipment Rental?" [buttons]="alertButtons"></ion-alert>
+            <ion-alert [trigger]="logoutAlertTrigger" header="Logout?" message="Log out of Equipment Rental?" [buttons]="alertButtons"></ion-alert>
           </app-nav-profile-popover>
         }@else{
           <ion-button [routerLink]="['/login']">

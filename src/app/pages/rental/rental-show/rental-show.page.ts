@@ -13,6 +13,7 @@ import { ToastService } from '../../../services/toast.service';
 import { NavService } from '../../../services/nav.service';
 import { RentalEquipmentService } from '../../../services/rental-equipment.service';
 import { EquipmentService } from '../../../services/equipment.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-rental-show',
@@ -33,6 +34,7 @@ export class RentalShowPage implements OnInit {
   private alert = inject(AlertService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
+  equipmentModalTrigger:string = uuid();
   data = signal<any>(null);
   rental = computed(() => this.data()?.rental || null);
   invoices = computed(() => this.data()?.invoices || null);

@@ -100,11 +100,11 @@
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button id="equipment-modal">
+            <ion-button [id]="equipmentModalTrigger">
               Select
             </ion-button>
             <app-equipment-select-modal 
-              trigger="equipment-modal" 
+              [trigger]="equipmentModalTrigger" 
               (willDismiss)="onEquipmentSelectDismiss($event)"
               [equipment]="equipment()"
               [rentalEquipment]="rentalEquipment()"

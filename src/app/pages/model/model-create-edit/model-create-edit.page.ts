@@ -15,6 +15,7 @@ import { addIcons } from 'ionicons';
 import { addOutline, closeOutline } from 'ionicons/icons';
 import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
 import { NavService } from '../../../services/nav.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-model-create-edit',
@@ -37,6 +38,7 @@ export class ModelCreateEditPage implements OnInit {
   private location = inject(Location);
   uuid:any;
   manufacturerUuid:any;
+  manufacturerModalTrigger:string = uuid();
   data = signal<any>(null);
   model = computed(() => this.data()?.model);
   manufacturer = signal<any>(null);

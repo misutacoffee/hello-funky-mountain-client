@@ -12,6 +12,7 @@ import { closeOutline, addOutline } from 'ionicons/icons';
 import { CreateModelModalComponent } from '../../../components/model/create-model-modal/create-model-modal.component';
 import { CreateManufacturerModalComponent } from '../../../components/manufacturer/create-manufacturer-modal/create-manufacturer-modal.component';
 import { NavService } from '../../../services/nav.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-equipment-create-edit',
@@ -32,6 +33,8 @@ export class EquipmentCreateEditPage implements OnInit {
   private toast = inject(ToastService);
   private navServ = inject(NavService);
   uuid:any;
+  manufacturerModalTrigger:string = uuid();
+  modelModalTrigger:string = uuid();
   equipmentData = signal<any>(null);
   equipment = computed<any>(() => this.equipmentData()?.equipment ?? this.equipmentServ.createNew());
   manufacturer = computed<any>(() => this.equipment()?.manufacturer ?? null);
