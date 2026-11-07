@@ -50,15 +50,41 @@
                       ></ion-checkbox>
                     </ion-buttons>
                     <ion-label>
-                      <a [routerLink]="['/equipment', equipment?.uuid]">
-                        {{equipment?.name || 'Unknown Equipment'}}
-                      </a>
+                      <h2>
+                        <a [routerLink]="['/equipment', equipment?.uuid]" class="text-ellipsis-2">
+                          {{equipment?.name || 'Unknown Equipment'}}
+                        </a>
+                      </h2>
+                      <p>
+                        <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]" class="text-ellipsis-2">
+                          {{equipment?.model?.name || 'Unknown Model'}}
+                        </a>
+                      </p>
                     </ion-label>
-                    <ion-text>
-                      <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]">
-                        {{equipment?.model?.name || 'Unknown Model'}}
-                      </a>
-                    </ion-text>
+                    <ion-note slot="end">
+                      <p>
+                        Qty
+                      </p>
+                      <p>
+                        {{equipment?.rentalEquipment?.quantity || 0}}
+                      </p>
+                    </ion-note>
+                    <ion-note slot="end">
+                      <p>
+                        Price
+                      </p>
+                      <p>
+                        {{equipment?.rentalEquipment?.unit_price || 0}}
+                      </p>
+                    </ion-note>
+                    <ion-note slot="end">
+                      <p>
+                        Total
+                      </p>
+                      <p>
+                        {{equipment?.rentalEquipment?.total_price || 0}}
+                      </p>
+                    </ion-note>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/equipment', equipment?.uuid]" button>
@@ -84,6 +110,9 @@
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
+        <p>
+          {{selectableEquipment() | json}}
+        </p>
         <p>
           {{form()?.getRawValue() | json}}
         </p>
