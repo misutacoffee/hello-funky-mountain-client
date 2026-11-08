@@ -102,15 +102,6 @@
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button [id]="equipmentModalTrigger">
-              Select
-            </ion-button>
-            <app-equipment-select-modal 
-              [trigger]="equipmentModalTrigger" 
-              (willDismiss)="onEquipmentSelectDismiss($event)"
-              [equipment]="equipment()"
-              [rentalEquipment]="rentalEquipment()"
-            ></app-equipment-select-modal>
             <app-caret-down-popover>
               <ion-item [routerLink]="['/equipment']" button>
                 View
@@ -134,21 +125,21 @@
                 @for(rentalEquipment of rentalEquipment(); track rentalEquipment.uuid){
                   <ion-item>
                     <ion-buttons slot="start">
-                      <ion-button [routerLink]="['/rental-equipment', 'rentalEquipment?.uuid']">
+                      <ion-button [routerLink]="['/rental-equipment', rentalEquipment?.uuid]">
                         Details
                       </ion-button>
                     </ion-buttons>
                     <ion-label>
-                      <a [routerLink]="['/equipment', 'rentalEquipment?.equipment_uuid']">
+                      <a [routerLink]="['/equipment', rentalEquipment?.equipment_uuid]">
                         {{rentalEquipment?.equipment?.name || 'Unknown Equipment'}}
                       </a>
                     </ion-label>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
-                        <ion-item [routerLink]="['/rental-equipment', 'rentalEquipment?.uuid']" button>
+                        <ion-item [routerLink]="['/rental-equipment', rentalEquipment?.uuid]" button>
                           Details
                         </ion-item>
-                        <ion-item [routerLink]="['/equipment', 'rentalEquipment?.equipment_uuid']" button>
+                        <ion-item [routerLink]="['/equipment', rentalEquipment?.equipment_uuid]" button>
                           View
                         </ion-item>
                       </app-ellipsis-vertical-popover>

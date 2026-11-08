@@ -77,12 +77,6 @@ export class RentalShowPage implements OnInit {
     console.log(data);
   }
 
-  onEquipmentSelectDismiss(event:any){
-    const selectedEquipmentUuids:any = event?.detail?.data;
-    const selection:any = this.equipment()?.filter((equipment:any) => selectedEquipmentUuids.includes(equipment?.uuid));
-    const rentalEquipment = selection?.map((equipment:any) => this.rentalEquipmentServ.createNew({rental_uuid: this.rental()?.uuid, equipment_uuid: equipment?.uuid}));
-  }
-
   async delete(rental:any){
     const ok:any = await this.alert.present(
       `Delete ${rental?.id || 'Unlinked Rental'}?`, 
