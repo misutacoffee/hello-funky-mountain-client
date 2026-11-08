@@ -32,11 +32,14 @@
               }@else{
                 @for(contract of displayContracts(); track contract?.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/contracts', contract?.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/contracts', contract?.uuid]">
-                          {{contract?.name ?? 'Unknown Contract'}}
-                        </a>
+                        {{contract?.name ?? 'Unknown Contract'}}
                       </h2>
                       @if(contract?.description && contract?.description != ''){
                         <p>
@@ -45,9 +48,6 @@
                       }
                     </ion-label>
                     <ion-buttons slot="end">
-                      <ion-button [routerLink]="['/contracts', contract?.uuid]">
-                        View
-                      </ion-button>
                       <ion-button [routerLink]="['/contracts', contract?.uuid, 'invoices']">
                         Invoices
                       </ion-button>

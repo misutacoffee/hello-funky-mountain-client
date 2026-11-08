@@ -11,6 +11,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
+        <!-- EQUIPMENT -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -117,6 +118,40 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
+        <!-- RENTALS -->
+         <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              Rentals
+            </ion-title>
+          </ion-label>
+         </ion-item>
+         <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!rentals() || rentals()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Rentals Available
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(rental of rentals(); track rental.uuid){
+                  <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button>
+                        View
+                      </ion-button>
+                    </ion-buttons>
+                    <ion-label>
+                      {{rental?.id || 'Unlinked Rental'}}
+                    </ion-label>
+                  </ion-item>
+                }
+              }
+            </ion-list>
+          </ion-card-content>
+         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

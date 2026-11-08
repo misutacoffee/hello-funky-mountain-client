@@ -13,6 +13,8 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { ManufacturerService } from '../../../services/manufacturer.service';
+import { AlertService } from '../../../services/alert.service';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-model-index',
@@ -29,21 +31,31 @@ export class ModelIndexPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private modelServ = inject(ManufacturerModelService);
   private manufacturerServ = inject(ManufacturerService);
+  private alert = inject(AlertService);
+  private toast = inject(ToastService);
   manufacturerUuid:any;
+
+  data = signal<any>(null);
+
   models = signal<any>(null);
   manufacturer = signal<any>(null);
+  
+  activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
-    activeOnly: true, 
+    activeOnly: this.activeOnly(), 
   });
   filteredModels = computed(() => this.filterModels(this.models(), this.filterOptions()));
   displayModels = computed(() => this.filteredModels()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
-  activeOnly = signal<boolean>(true);
   constructor() { 
     addIcons({addOutline});
     effect(() => {
       this.filterOptions.set({
         activeOnly: this.activeOnly(), 
       });
+      if(this.data()){
+        this.manufacturer.set(this.data()?.manufacturer || null);
+        this.models.set(this.data()?.models || null);
+      }
     });
   }
 
@@ -52,16 +64,8 @@ export class ModelIndexPage implements OnInit {
 
   async ionViewWillEnter(){
     this.manufacturerUuid = this.activatedRoute.snapshot.paramMap.get('manufacturer_uuid') as unknown as string;
-    if(this.manufacturerUuid){
-      const manufacturer:any = await this.modelServ.indexByManufacturer(this.manufacturerUuid);
-      const models:any = manufacturer?.manufacturer_models;
-      this.manufacturer.set(manufacturer);
-      this.models.set(models);
-    }else{
-      const models:any = await this.modelServ.index();
-      this.manufacturer.set(null);
-      this.models.set(models);
-    }
+    const data = this.manufacturerUuid ? await this.modelServ.indexByManufacturer(this.manufacturerUuid) :  await this.modelServ.index();
+    this.data.set(data);
   }
 
   filterModels(models:any, filterOptions:any){
@@ -72,8 +76,18 @@ export class ModelIndexPage implements OnInit {
     return filtered;
   }
 
-  async delete(modelUuid:string){
-    // 
+  async delete(model:any){
+    const ok:any = await this.alert.present(
+      `Delete ${model?.name || 'Unknown Model'}`, 
+      "Are you sure you want to delete this model? This action can not be undone."
+    );
+    if(ok){
+      const results:any = await this.modelServ.delete(model?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Model successfully deleted from the database.");
+        this.models.set(this.models()?.filter((m:any) => m?.uuid !== model?.uuid));
+      }
+    }
   }
 
 }

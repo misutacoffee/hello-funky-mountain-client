@@ -34,18 +34,18 @@
               }@else{
                 @for (equipment of displayEquipment(); track equipment.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/equipment', equipment.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/equipment', equipment.uuid]">
-                          {{ equipment?.name }}
-                        </a>
+                        {{ equipment?.name }}
                       </h2>
                       <p>{{ equipment?.description }}</p>
                     </ion-label>
                     <ion-buttons slot="end">
-                      <ion-button [routerLink]="['/equipment', equipment.uuid]">
-                        View
-                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/equipment', equipment.uuid]" button>
                           View 

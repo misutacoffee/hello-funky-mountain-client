@@ -50,6 +50,7 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
+        <!-- MODELS -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -74,11 +75,14 @@
               }@else{
                 @for(model of models(); track model.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]">
-                          {{model?.name ?? 'Unknown Model'}}
-                        </a>
+                        {{model?.name ?? 'Unknown Model'}}
                       </h2>
                       @if(model?.description && model?.description !== ""){
                         <p>

@@ -28,16 +28,25 @@ export class EquipmentShowPage implements OnInit {
   private toast = inject(ToastService);
   private navServ = inject(NavService);
   uuid:any;
+  data = signal<any>(null);
   equipment = signal<any>(null);
-  constructor() { }
+  rentals = signal<any>(null);
+  constructor() { 
+    effect(() => {
+      if(this.data()){
+        this.equipment.set(this.data()?.equipment);
+        this.rentals.set(this.data()?.rentals);
+      }
+    });
+  }
 
   ngOnInit() {
   }
 
   async ionViewWillEnter() {
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const equipment:any = await this.equipmentServ.show(this.uuid);
-    this.equipment.set(equipment);
+    const data:any = await this.equipmentServ.show(this.uuid);
+    this.data.set(data);
   }
 
   async delete(equipment:any){
