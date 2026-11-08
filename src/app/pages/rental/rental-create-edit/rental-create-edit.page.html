@@ -32,6 +32,17 @@
                 {{uuid ? 'Edit' : 'Create'}} Rental
               </ion-title>
             </ion-label>
+            <ion-buttons slot="end">
+              @if(uuid){
+                <app-caret-down-popover>
+                  <ion-item (click)="delete(rental())" button>
+                    <ion-text color="danger">
+                      Delete
+                    </ion-text>
+                  </ion-item>
+                </app-caret-down-popover>
+              }
+            </ion-buttons>
           </ion-item>
           <ion-card>
             <ion-card-content>
@@ -55,16 +66,16 @@
                   </ion-buttons>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Rental Date" formControlName="rental_date"></ion-input>
+                  <ion-input label="Rental Date" type="date" formControlName="rental_date"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Return Date" formControlName="return_date"></ion-input>
+                  <ion-input label="Return Date" type="date" formControlName="return_date"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Description" formControlName="description"></ion-input>
+                  <ion-textarea label="Description" formControlName="description" autoGrow></ion-textarea>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Note" formControlName="note"></ion-input>
+                  <ion-textarea label="Note" formControlName="note" autoGrow></ion-textarea>
                 </ion-item>
               </ion-list>
             </ion-card-content>

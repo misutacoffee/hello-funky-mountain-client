@@ -88,6 +88,9 @@ export class RentalCreateEditPage implements OnInit {
     this.contractUuid = this.activatedRoute.snapshot.paramMap.get('contract_uuid') as unknown as string;
     const data:any = this.uuid ? await this.rentalServ.edit(this.uuid) : await this.rentalServ.create();
     this.data.set(data);
+    if(!this.uuid && this.contractUuid){
+      this.rental.set({...this.rental(), contract_uuid: this.contractUuid});
+    }
   }
 
   getEquipment(equipmentUuid:any){
@@ -109,7 +112,7 @@ export class RentalCreateEditPage implements OnInit {
     if(contractUuid){
       const contract:any = this.contracts()?.find((contract:any) => contract?.uuid == contractUuid);
       this.selectedContract.set(contract || null);
-      this.form()?.patchValue({contract_uuid: contractUuid || null});
+      this.rental.set({...this.rental(), contract_uuid: contractUuid || null});
     }else{
       this.clearContract();
     }
@@ -117,7 +120,7 @@ export class RentalCreateEditPage implements OnInit {
 
   clearContract(){
       this.selectedContract.set(null);
-      this.form()?.patchValue({contract_uuid: null});
+      this.rental.set({...this.rental(), contract_uuid: null});
   }
 
   async delete(rental:any){
