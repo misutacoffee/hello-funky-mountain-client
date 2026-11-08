@@ -9,6 +9,7 @@ import { CaretDownPopoverComponent } from '../../../components/caret-down-popove
 import { AlertService } from '../../../services/alert.service';
 import { ToastService } from '../../../services/toast.service';
 import { NavService } from '../../../services/nav.service';
+import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 
 @Component({
   selector: 'app-equipment-show',
@@ -18,7 +19,7 @@ import { NavService } from '../../../services/nav.service';
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonGrid, 
     IonRow, IonText, IonCol, IonCard, IonCardContent, IonLabel, IonCardTitle, IonList, IonItem, 
     IonButtons, IonIcon, IonButton, IonNote, RouterLink, IonBreadcrumb, BreadcrumbsComponent, 
-    CaretDownPopoverComponent, 
+    CaretDownPopoverComponent, EllipsisVerticalPopoverComponent, 
   ]
 })
 export class EquipmentShowPage implements OnInit {

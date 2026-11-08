@@ -139,13 +139,20 @@
                 @for(rental of rentals(); track rental.uuid){
                   <ion-item>
                     <ion-buttons slot="start">
-                      <ion-button>
+                      <ion-button [routerLink]="['/rentals', rental?.uuid]">
                         View
                       </ion-button>
                     </ion-buttons>
                     <ion-label>
                       {{rental?.id || 'Unlinked Rental'}}
                     </ion-label>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/rentals', rental?.uuid]" button>
+                          View
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
                   </ion-item>
                 }
               }

@@ -43,8 +43,15 @@
                       <h2>
                         {{ equipment?.name }}
                       </h2>
-                      <p>{{ equipment?.description }}</p>
+                      @if(equipment?.description && equipment?.description != ''){
+                        <p>{{ equipment?.description }}</p>
+                      }
                     </ion-label>
+                    <ion-text>
+                      <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]">
+                        {{equipment?.model?.name || 'Unknown Model'}}
+                      </a>
+                    </ion-text>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/equipment', equipment.uuid]" button>

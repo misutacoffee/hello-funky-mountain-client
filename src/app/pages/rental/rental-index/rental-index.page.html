@@ -57,9 +57,7 @@
                     </ion-buttons>
                     <ion-label>
                       <h2>
-                        <a [routerLink]="['/contracts', rental?.contract_uuid]">
-                          {{rental?.contract?.name ?? 'Unknown Contract'}}
-                        </a>
+                        {{rental?.name || (rental?.id ? `Rental ID#${rental?.id}` : 'Unlinked Rental')}}
                       </h2>
                       @if(rental?.description && rental?.description != ''){
                         <p>
@@ -67,6 +65,11 @@
                         </p>
                       }
                     </ion-label>
+                    <ion-text>
+                      <a [routerLink]="['/contracts', rental?.contract_uuid]">
+                        {{rental?.contract?.name ?? 'Unknown Contract'}}
+                      </a>
+                    </ion-text>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>

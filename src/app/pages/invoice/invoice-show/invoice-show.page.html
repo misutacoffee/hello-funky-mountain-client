@@ -14,11 +14,7 @@
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              @if(invoice()?.id){
-                Invoice {{invoice()?.id}}
-              }@else{
-                Unlinked Invoice
-              }
+              {{invoice()?.id ? `Invoice ID#${invoice()?.id}` : 'Unlinked Invoice'}}
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">

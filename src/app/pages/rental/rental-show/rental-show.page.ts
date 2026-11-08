@@ -74,7 +74,6 @@ export class RentalShowPage implements OnInit {
     const uuid:any = this.activatedRoute.snapshot.paramMap.get('uuid');
     const data = await this.rentalServ.show(uuid);
     this.data.set(data);
-    console.log(data);
   }
 
   async delete(rental:any){

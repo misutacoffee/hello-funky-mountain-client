@@ -15,7 +15,7 @@
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              {{rental()?.id ?? 'Unlinked Rental'}}
+              {{rental()?.name || (rental()?.id ? `Rental ID#${rental()?.id}` : 'Unlinked Rental')}}
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
@@ -43,6 +43,14 @@
                 </ion-label>
                 <ion-text>
                   {{rental()?.id ?? 'Unlinked Rental'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Name
+                </ion-label>
+                <ion-text>
+                  {{rental()?.name || 'N/A'}}
                 </ion-text>
               </ion-item>
               <ion-item>
