@@ -14,33 +14,33 @@ export class InvoiceService {
     return invoices
   }
 
-  createNew(){
+  createNew(values:any = null){
     return {
-      purchase_order_number: null, 
-      invoice_date: null, 
-      amount: null, 
-      tax: null, 
-      due_date: null, 
-      paid_date: null, 
-      rental_uuid: null, 
-      contract_uuid: null, 
+      purchase_order_number: values?.purchase_order_number || null, 
+      invoice_date: values?.invoice_date ||  null, 
+      amount: values?.amount ||  null, 
+      tax: values?.tax ||  null, 
+      due_date: values?.due_date || null, 
+      paid_date: values?.paid_date || null, 
+      rental_uuid: values?.rental_uuid || null, 
+      contract_uuid: values?.contract_uuid || null, 
       user_uuid: this.user()?.uuid || null, 
       uuid: uuid(), 
     }
   }
 
-  buildForm(contract:any){
+  buildForm(invoice:any){
     return new FormGroup({
-      purchase_order_number: new FormControl(contract?.purchase_order_number),
-      invoice_date: new FormControl(contract?.invoice_date),
-      amount: new FormControl(contract?.amount),
-      tax: new FormControl(contract?.tax),
-      due_date: new FormControl(contract?.due_date),
-      paid_date: new FormControl(contract?.paid_date),
-      rental_uuid: new FormControl(contract?.rental_uuid),
-      contract_uuid: new FormControl(contract?.contract_uuid, [Validators.required]),
-      user_uuid: new FormControl(contract?.user_uuid, [Validators.required]),
-      uuid: new FormControl(contract?.uuid, [Validators.required]),
+      purchase_order_number: new FormControl(invoice?.purchase_order_number),
+      invoice_date: new FormControl(invoice?.invoice_date),
+      amount: new FormControl(invoice?.amount),
+      tax: new FormControl(invoice?.tax),
+      due_date: new FormControl(invoice?.due_date),
+      paid_date: new FormControl(invoice?.paid_date),
+      rental_uuid: new FormControl(invoice?.rental_uuid),
+      contract_uuid: new FormControl(invoice?.contract_uuid, Validators.required),
+      user_uuid: new FormControl(invoice?.user_uuid, Validators.required),
+      uuid: new FormControl(invoice?.uuid, Validators.required),
     });
   }
 

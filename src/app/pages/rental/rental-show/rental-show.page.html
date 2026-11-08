@@ -11,6 +11,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="12" size-md="9" size-xl="6">
+        <!-- RENTAL -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -93,6 +94,7 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
+        <!-- RENTAL EQUIPMENT -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -157,6 +159,7 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
+        <!-- INVOICES -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
@@ -181,15 +184,17 @@
               }@else{
                 @for(invoice of invoices(); track invoice.uuid){
                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/invoices', invoice?.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
                     <ion-label>
                       <a [routerLink]="['/invoices', invoice?.uuid]">
                         {{invoice?.id}}
                       </a>
                     </ion-label>
                     <ion-buttons slot="end">
-                      <ion-button [routerLink]="['/invoices', invoice?.uuid]">
-                        View
-                      </ion-button>
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
                           View

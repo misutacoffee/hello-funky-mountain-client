@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
@@ -14,6 +14,7 @@ import { NavService } from '../../../services/nav.service';
 import { RentalEquipmentService } from '../../../services/rental-equipment.service';
 import { EquipmentService } from '../../../services/equipment.service';
 import { v4 as uuid } from 'uuid';
+import { InvoiceService } from '../../../services/invoice.service';
 
 @Component({
   selector: 'app-rental-show',
@@ -27,20 +28,26 @@ import { v4 as uuid } from 'uuid';
   ]
 })
 export class RentalShowPage implements OnInit {
+
   private activatedRoute = inject(ActivatedRoute);
   private equipmentServ = inject(EquipmentService);
   private rentalServ = inject(RentalService);
   private rentalEquipmentServ = inject(RentalEquipmentService);
+  private invoiceServ = inject(InvoiceService);
   private alert = inject(AlertService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
+
   equipmentModalTrigger:string = uuid();
+
   data = signal<any>(null);
-  rental = computed(() => this.data()?.rental || null);
-  invoices = computed(() => this.data()?.invoices || null);
-  rentalEquipment = computed(() => this.rental()?.rental_equipment || null);
-  contract = computed(() => this.rental()?.contract);
-  equipment = computed(() => this.data()?.equipment);
+
+  rental = signal<any>(null);
+  invoices = signal<any>(null);
+  rentalEquipment = signal<any>(null);
+  contract = signal<any>(null);
+  equipment = signal<any>(null);
+
   equipmentActiveOnly = signal<boolean>(true);
   equipmentFilterOptions = signal<any>({
     activeOnly: this.equipmentActiveOnly(), 
@@ -48,7 +55,17 @@ export class RentalShowPage implements OnInit {
   filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.equipmentFilterOptions()));
   displayEquipment = computed(() => this.filteredEquipment()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   selectableEquipment = computed(() => this.rentalEquipmentServ.prepareSelectableEquipment(this.displayEquipment(), this.rental()));
-  constructor() { }
+  constructor() { 
+    effect(() => {
+      if(this.data()){
+        this.rental.set(this.data()?.rental || null);
+        this.invoices.set(this.data()?.invoices || null);
+        this.rentalEquipment.set(this.data()?.rentalEquipment || null);
+        this.contract.set(this.data()?.contract || null);
+        this.equipment.set(this.data()?.equipment || null);
+      }
+    })
+  }
 
   ngOnInit() {
   }
@@ -82,7 +99,18 @@ export class RentalShowPage implements OnInit {
   }
 
   async deleteInvoice(invoice:any){
-    // 
+    const ok:any = await this.alert.present(
+      `Delete ${invoice?.id || 'Unlinked Invoice'}`, 
+      "Are you sure you want to delete this invoice? This action can not be undone."
+    );
+    if(ok){
+      const results:any = await this.invoiceServ.delete(invoice?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Invoice successfully deleted from the database.");
+        const filtered:any = this.invoices()?.filter((m:any) => m?.uuid !== invoice?.uuid);
+        this.invoices.set(filtered);
+      }
+    }
   }
 
 }

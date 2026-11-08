@@ -67,13 +67,13 @@ export class InvoiceIndexPage implements OnInit {
 
   async delete(invoice:any){
     const ok:any = await this.alert.present(
-      `Delete ${invoice?.id || 'Unlinked Rental'}`, 
-      "Are you sure you want to delete this rental? This action can not be undone."
+      `Delete ${invoice?.id || 'Unlinked Invoice'}`, 
+      "Are you sure you want to delete this invoice? This action can not be undone."
     );
     if(ok){
       const results:any = await this.invoiceServ.delete(invoice?.uuid);
       if(results?.success){
-        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        this.toast.present(results?.message || "Invoice successfully deleted from the database.");
         const filtered:any = this.invoices()?.filter((m:any) => m?.uuid !== invoice?.uuid);
         this.data.set({...this.data, invoices: filtered});
       }

@@ -9,15 +9,15 @@
             <ion-breadcrumb [routerLink]="['../']">{{invoice()?.id ?? 'Unlinked Invoice'}}</ion-breadcrumb>
             <ion-breadcrumb>Edit</ion-breadcrumb>
           }@else if(contractUuid){
-            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['../']">Contracts</ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['../']">{{contract()?.name || 'Unknown Contract'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../']">Contracts</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">{{contract()?.name || 'Unknown Contract'}}</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>
             <ion-breadcrumb>Create</ion-breadcrumb>
           }@else if(rentalUuid){
-            <ion-breadcrumb [routerLink]="['../../']">Home</ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['../']">Rentals</ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['../']">{{rental()?.id || 'Unlinked Rental'}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../../']">Home</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../../']">Rentals</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['../../']">{{rental()?.id || 'Unlinked Rental'}}</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['../']">Invoices</ion-breadcrumb>
             <ion-breadcrumb>Create</ion-breadcrumb>
           }@else{
@@ -114,18 +114,6 @@
                 </ion-item>
                 <ion-item>
                   <ion-input label="Paid Date" type="date" formControlName="paid_date"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="Rental UUID" formControlName="rental_uuid"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="Contract UUID" formControlName="contract_uuid"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="UUID" formControlName="uuid"></ion-input>
                 </ion-item>
               </ion-list>
             </ion-card-content>

@@ -14,7 +14,11 @@
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              {{invoice()?.id ?? 'Unlinked Invoice'}}
+              @if(invoice()?.id){
+                Invoice {{invoice()?.id}}
+              }@else{
+                Unlinked Invoice
+              }
             </ion-title>
           </ion-label>
           <ion-buttons slot="end">
@@ -120,11 +124,6 @@
                       <ion-item [routerLink]="['/contracts', contract()?.uuid, 'edit']" button>
                         Edit
                       </ion-item>
-                      <ion-item (click)="deleteContract(contract())">
-                        <ion-text>
-                          Delete
-                        </ion-text>
-                      </ion-item>
                     </app-ellipsis-vertical-popover>
                   </ion-buttons>
                 </ion-item>
@@ -159,11 +158,6 @@
                       </ion-item>
                       <ion-item [routerLink]="['/rentals', rental()?.uuid, 'edit']" button>
                         Edit
-                      </ion-item>
-                      <ion-item (click)="deleteRental(rental())">
-                        <ion-text>
-                          Delete
-                        </ion-text>
                       </ion-item>
                     </app-ellipsis-vertical-popover>
                   </ion-buttons>

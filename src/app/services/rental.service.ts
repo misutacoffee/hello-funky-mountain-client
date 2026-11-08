@@ -18,6 +18,7 @@ export class RentalService {
 
   createNew(){
     return {
+      name: null, 
       rental_date: null, 
       return_date: null, 
       description: null, 
@@ -30,6 +31,7 @@ export class RentalService {
 
   buildForm(rental:any, rentalEquipment:any[] = []){
     return new FormGroup({
+      name: new FormControl(rental?.name),
       rental_date: new FormControl(rental?.rental_date),
       return_date: new FormControl(rental?.return_date),
       description: new FormControl(rental?.description),

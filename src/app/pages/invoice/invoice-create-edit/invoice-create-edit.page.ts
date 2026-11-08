@@ -22,33 +22,49 @@ import { addOutline, closeOutline } from 'ionicons/icons';
   ]
 })
 export class InvoiceCreateEditPage implements OnInit {
+
   private activatedRoute = inject(ActivatedRoute);
   private invoiceServ = inject(InvoiceService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
+
   uuid:any;
   contractUuid:any;
   rentalUuid:any;
+
   data = signal<any>(null);
-  contract = computed(() => this.data()?.contract);
-  invoice = computed(() => this.data()?.invoice);
-  rental = computed(() => this.data()?.rental);
+
+  contract = signal<any>(null);
+  contracts = signal<any>(null);
+  invoice = signal<any>(null);
+  rental = signal<any>(null);
+  rentals = signal<any>(null);
+
   form = computed<FormGroup>(() => this.invoiceServ.buildForm(this.invoice()));
   errors = signal<any>(null);
-  contracts = computed(() => this.data()?.contracts);
-  rentals = computed(() => this.data()?.rentals);
+
   selectedContract = signal<any>(null);
   selectedRental = signal<any>(null);
+
   constructor() { 
     addIcons({addOutline, closeOutline});
     effect(() => {
+      if(this.data()){
+        this.contract.set(this.data()?.contract);
+        this.contracts.set(this.data()?.contracts);
+        this.invoice.set(this.data()?.invoice);
+        this.rental.set(this.data()?.rental);
+        this.rentals.set(this.data()?.rentals);
+      }
       if(this.contract()){
+        this.selectedContract.set(this.contract());
         this.form()?.patchValue({contract_uuid: this.contract()?.uuid || null});
       }
       if(this.rental()){
+        this.selectedRental.set(this.rental());
         this.form()?.patchValue({rental_uuid: this.rental()?.uuid || null});
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -72,26 +88,26 @@ export class InvoiceCreateEditPage implements OnInit {
 
   clearSelectedContract(){
     this.selectedContract.set(null);
-    this.form()?.patchValue({contract_uuid: null});
+    this.invoice.set({...this.invoice(), contract_uuid: null});
   }
 
   clearSelectedRental(){
     this.selectedRental.set(null);
-    this.form()?.patchValue({rental_uuid: null});
+    this.invoice.set({...this.invoice(), rental_uuid: null});
   }
 
   onContractSelectChange(event:any){
     const contractUuid:any = event?.detail?.value;
     const contract = this.contracts()?.find((contract:any) =>contract?.uuid == contractUuid);
     this.selectedContract.set(contract || null);
-    this.form()?.patchValue({contract_uuid: contractUuid || null});
+    this.invoice.set({...this.invoice(), contract_uuid: contractUuid || null});
   }
 
   onRentalSelectChange(event:any){
     const rentalUuid:any = event?.detail?.value;
     const rental = this.contracts()?.find((contract:any) =>contract?.uuid == rentalUuid);
     this.selectedRental.set(rental || null);
-    this.form()?.patchValue({rental_uuid: rentalUuid || null});
+    this.invoice.set({...this.invoice(), rental_uuid: rentalUuid || null});
   }
 
   async onSubmit(){
