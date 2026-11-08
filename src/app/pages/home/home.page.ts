@@ -11,8 +11,6 @@ import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { RouterLink } from '@angular/router';
 import { HomeService } from '../../services/home.service';
-import { TokenService } from '../../services/token.service';
-import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -28,8 +26,6 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
-  private tokenServ = inject(TokenService);
-  private userServ = inject(UserService);
   private authServ = inject(AuthService);
   homeData = signal<any>(null);
   contracts = computed(() => this.homeData()?.contracts || []);
