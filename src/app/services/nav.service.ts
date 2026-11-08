@@ -8,18 +8,19 @@ export class NavService {
   private router = inject(Router);
 
   back(){
-    const currentOrigin = window.location.origin;
-    const previousUrl = document.referrer;
-    if(previousUrl){
-      const previousOrigin = new URL(previousUrl).origin;
-      if(
-        window.history.length > 1 && 
-        previousOrigin === currentOrigin
-      ){
-        this.navCtl.back();
-      }
-    }else{
+    if(window.history.length == 0){
       this.router.navigateByUrl('/');
+    }else{
+      const currentOrigin = window.location.origin;
+      const previousUrl = document.referrer;
+      if(previousUrl){
+        const previousOrigin = new URL(previousUrl).origin;
+        if(previousOrigin === currentOrigin){
+          this.navCtl.back();
+        }
+      }else{
+        this.router.navigateByUrl('/');
+      }
     }
   }
 
