@@ -26,7 +26,7 @@ export class EquipmentSelectModalComponent  implements OnInit {
     activeOnly: this.activeOnly(), 
   });
   rentalEquipment = input<any>();
-  equipment = input<any>();
+  equipment = input.required<any>();
   filteredEquipment = computed(() => this.equipmentServ.filterEquipment(this.equipment(), this.filterOptions()));
   displayEquipment = computed(() => this.equipmentServ.selectEquipment(this.filteredEquipment(), this.rentalEquipment()));
   constructor() { }

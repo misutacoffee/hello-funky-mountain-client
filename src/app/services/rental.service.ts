@@ -28,7 +28,7 @@ export class RentalService {
     }
   }
 
-  buildForm(rental:any){
+  buildForm(rental:any, rentalEquipment:any[] = []){
     return new FormGroup({
       rental_date: new FormControl(rental?.rental_date),
       return_date: new FormControl(rental?.return_date),
@@ -37,7 +37,7 @@ export class RentalService {
       contract_uuid: new FormControl(rental?.contract_uuid, [Validators.required]),
       user_uuid: new FormControl(rental?.user_uuid, [Validators.required]),
       uuid: new FormControl(rental?.uuid, [Validators.required]),
-      rental_equipment: new FormArray([]), 
+      rental_equipment: new FormArray(rentalEquipment?.map((rentalEquipment:any) => this.rentalEquipmentServ.buildForm(rentalEquipment)) || []), 
     });
   }
 

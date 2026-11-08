@@ -12,6 +12,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      <p>{{equipment() | json}}</p>
       <ion-list>
         @if(!displayEquipment() || displayEquipment()?.length === 0){
           <ion-item>
