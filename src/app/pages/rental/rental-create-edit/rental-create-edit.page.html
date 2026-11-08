@@ -66,15 +66,6 @@
                 <ion-item>
                   <ion-input label="Note" formControlName="note"></ion-input>
                 </ion-item>
-                <ion-item>
-                  <ion-input label="Contract UUID" formControlName="contract_uuid"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="User UUID" formControlName="user_uuid"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="UUID" formControlName="uuid"></ion-input>
-                </ion-item>
               </ion-list>
             </ion-card-content>
           </ion-card>
@@ -89,9 +80,53 @@
               <ion-button [id]="equipmentModalTrigger">
                 Select
               </ion-button>
-              <app-equipment-select-modal [trigger]="equipmentModalTrigger" [equipment]="equipment()"></app-equipment-select-modal>
+              <app-equipment-select-modal [trigger]="equipmentModalTrigger" [equipment]="equipment()" (willDismiss)="onEquipmentSelectDismiss($event)"></app-equipment-select-modal>
             </ion-buttons>
           </ion-item>
+          @if(!form()?.get('rental_equipment')?.value || form()?.get('rental_equipment')?.value?.length == 0){
+            <ion-card>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item>
+                    No Equipment Selected
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          }@else{
+            @for(rentalEquipment of rentalEquipmentForm.controls; track $index; let i = $index){
+              @let equipment = getEquipment(rentalEquipment?.get('equipment_uuid')?.value);
+              <ion-card formArrayName="rental_equipment">
+                <ion-card-header>
+                  <ion-card-title>
+                    {{equipment?.name || 'Unknown Equipment'}}
+                  </ion-card-title>
+                  <ion-card-subtitle>
+                    {{equipment?.model?.name || 'Unknown Model'}} {{equipment?.manufacturer?.name || 'Unknown Manufacturer'}}
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-list [formGroupName]="i">
+                    <ion-item>
+                      <ion-input label="Quantity" formControlName="quantity"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Unit" formControlName="unit"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Price" formControlName="price"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Total" formControlName="total"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-input label="Note" formControlName="note"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-card-content>
+              </ion-card>
+            }
+          }
           <!-- SUBMIT -->
           <ion-item color="transparent" lines="none">
             <ion-buttons slot="start">

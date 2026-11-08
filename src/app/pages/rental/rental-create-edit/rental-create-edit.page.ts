@@ -56,7 +56,10 @@ export class RentalCreateEditPage implements OnInit {
   rental = signal<any>(null);
   rentalEquipment = signal<any>(null);
 
-  form = computed(() => this.rentalServ.buildForm(this.rental(), this.rentalEquipment()));
+  form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental(), this.rentalEquipment()));
+  get rentalEquipmentForm():FormArray{
+    return this.form()?.get('rental_equipment') as FormArray;
+  }
 
   selectedContract = signal<any>(null);
 
@@ -87,6 +90,20 @@ export class RentalCreateEditPage implements OnInit {
     this.data.set(data);
   }
 
+  getEquipment(equipmentUuid:any){
+    return this.equipment()?.find((equipment:any) => equipment?.uuid == equipmentUuid);
+  }
+
+  onEquipmentSelectDismiss(event:any){
+    const uuids = event?.detail?.data || [];
+    const selection:any = this.equipment()?.filter((equipment:any) => uuids.includes(equipment?.uuid)) || [];
+    const rentalEquipment:any = selection?.map((equipment:any) => {
+      const match = this.rentalEquipment()?.find((re:any) => re?.equipment_uuid == equipment?.uuid);
+      return match || this.rentalEquipmentServ.createNew({rental_uuid: this.rental()?.uuid, equipment_uuid: equipment?.uuid});
+    });
+    this.rentalEquipment.set(rentalEquipment);
+  }
+
   onContractSelectChange(event:any){
     const contractUuid:any = event?.detail?.value || null;
     if(contractUuid){
@@ -103,6 +120,22 @@ export class RentalCreateEditPage implements OnInit {
       this.form()?.patchValue({contract_uuid: null});
   }
 
+  async delete(rental:any){
+    const ok:any = await this.alert.present(
+      `Delete ${rental?.id || 'Unlinked Rental'}?`, 
+      "Are you sure you want to delete this rental? This action can not be undone.", 
+    );
+    if(ok){
+      const results:any = await this.rentalServ.delete(rental?.uuid);
+      if(results?.success){
+        this.toast.present(results?.message || "Rental successfully deleted from the database.");
+        this.navServ.back();
+      }else{
+        this.toast.present(results?.error || "An error has occurred.");
+      }
+    }
+  }
+
   cancel(){
     this.navServ.back();
   }
@@ -110,7 +143,13 @@ export class RentalCreateEditPage implements OnInit {
   async onSubmit(){
     if(this.form()?.valid){
       const rental:any = this.form()?.value;
-      // 
+      const results:any = this.uuid ? await this.rentalServ.update(rental) : await this.rentalServ.store(rental);
+      if(results?.success){
+        this.toast.present(results?.message || `Rental successfully ${this.uuid ? 'updated' : 'stored'} to the database.`);
+        this.navServ.back();
+      }else{
+        this.toast.present(results?.message || "An error has occurred.");
+      }
     }else{
       this.toast.present("Please complete the form to continue.");
     }
