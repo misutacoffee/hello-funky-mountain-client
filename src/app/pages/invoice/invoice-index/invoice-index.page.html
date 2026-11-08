@@ -27,9 +27,19 @@
             Invoices
           </ion-title>
           <ion-buttons slot="end">
-            <ion-button [routerLink]="['/invoices', 'create']" color="dark">
-              Create
-            </ion-button>
+            @if(contractUuid){
+              <ion-button [routerLink]="['/contracts', contractUuid, 'invoices', 'create']" color="dark">
+                Create
+              </ion-button>
+            }@else if(rentalUuid){
+              <ion-button [routerLink]="['/rentals', rentalUuid, 'invoices', 'create']" color="dark">
+                Create
+              </ion-button>
+            }@else{
+              <ion-button [routerLink]="['/invoices', 'create']" color="dark">
+                Create
+              </ion-button>
+            }
           </ion-buttons>
         </ion-item>
         <ion-card>
