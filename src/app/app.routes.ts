@@ -158,6 +158,27 @@ export const routes: Routes = [
         ]
       }, 
       {
+        path: 'rental-equipment', 
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/rental-equipment/rental-equipment-index/rental-equipment-index.page').then( m => m.RentalEquipmentIndexPage)
+          },
+          {
+            path: 'create',
+            loadComponent: () => import('./pages/rental-equipment/rental-equipment-create-edit/rental-equipment-create-edit.page').then( m => m.RentalEquipmentCreateEditPage)
+          },
+          {
+            path: ':uuid',
+            loadComponent: () => import('./pages/rental-equipment/rental-equipment-show/rental-equipment-show.page').then( m => m.RentalEquipmentShowPage)
+          },
+          {
+            path: ':uuid/edit',
+            loadComponent: () => import('./pages/rental-equipment/rental-equipment-create-edit/rental-equipment-create-edit.page').then( m => m.RentalEquipmentCreateEditPage)
+          },
+        ]
+      }, 
+      {
         path: 'rentals', 
         children: [
           {

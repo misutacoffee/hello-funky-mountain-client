@@ -134,14 +134,22 @@
                   <ion-item>
                     <ion-buttons slot="start">
                       <ion-button [routerLink]="['/rental-equipment', rentalEquipment?.uuid]">
-                        Details
+                        View
                       </ion-button>
                     </ion-buttons>
                     <ion-label>
-                      <a [routerLink]="['/equipment', rentalEquipment?.equipment_uuid]">
-                        {{rentalEquipment?.equipment?.name || 'Unknown Equipment'}}
-                      </a>
+                      <h2>
+                        <a [routerLink]="['/equipment', rentalEquipment?.equipment_uuid]">
+                          {{rentalEquipment?.equipment?.name || 'Unknown Equipment'}}
+                        </a>
+                      </h2>
+                      <p>
+                        {{rentalEquipment?.equipment?.model?.name || 'Unknown Model'}}
+                      </p>
                     </ion-label>
+                    <ion-text>
+                      {{rentalEquipment?.total}}
+                    </ion-text>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rental-equipment', rentalEquipment?.uuid]" button>
