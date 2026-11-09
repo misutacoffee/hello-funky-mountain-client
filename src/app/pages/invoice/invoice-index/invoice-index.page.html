@@ -65,14 +65,14 @@
                       </h2>
                       @if(invoice?.rental){
                         <p>
-                          <a [routerLink]="['/rentals', invoice?.rental?.uuid]">
+                          <a [routerLink]="['/rentals', invoice?.rental?.uuid]" class="ion-color-dark">
                             {{invoice?.rental?.name || (invoice?.rental?.id ? `Rental ID#${invoice?.rental?.id}` : 'Unlinked Rental')}}
                           </a>
                       </p>
                       }
                     </ion-label>
                     <ion-text>
-                      <a [routerLink]="['/contracts', invoice?.contract_uuid]">
+                      <a [routerLink]="['/contracts', invoice?.contract_uuid]" class="ion-color-dark">
                         {{invoice?.contract?.name || 'Unknown Contract'}}
                       </a>
                     </ion-text>

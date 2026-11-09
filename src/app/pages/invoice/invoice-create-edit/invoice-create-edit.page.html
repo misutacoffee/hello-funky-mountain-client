@@ -80,7 +80,7 @@
                     >
                       @for(rental of rentals(); track rental.uuid){
                         <ion-select-option [value]="rental?.uuid">
-                          {{rental?.id || 'Unlinked Rental'}}
+                          {{rental?.name || (rental?.id ? `Rental ID#${rental?.id}` : 'Unlinked Rental')}}
                         </ion-select-option>
                       }
                     </ion-select>

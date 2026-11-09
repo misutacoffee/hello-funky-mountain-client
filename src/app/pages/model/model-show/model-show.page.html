@@ -48,7 +48,7 @@
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <a [routerLink]="['/manufacturers', manufacturer()?.uuid]">
+                  <a [routerLink]="['/manufacturers', manufacturer()?.uuid]" class="ion-color-dark">
                     {{manufacturer()?.name ?? 'Unknown Manufacturer'}}
                   </a>
                 </ion-label>

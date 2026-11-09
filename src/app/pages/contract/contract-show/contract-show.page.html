@@ -117,10 +117,11 @@
             </ion-list>
           </ion-card-content>
         </ion-card>
+        <!-- RENTALS -->
         <ion-item color="transparent" lines="none">
           <ion-label>
             <ion-title>
-              <a [routerLink]="['/contracts', contract()?.uuid, 'rentals']">
+              <a [routerLink]="['/contracts', contract()?.uuid, 'rentals']" class="ion-color-dark">
                 Rentals
               </a>
             </ion-title>
@@ -143,15 +144,15 @@
               }@else{
                 @for(rental of rentals(); track rental.uuid){
                   <ion-item>
-                    <ion-label>
-                      <a [routerLink]="['/rentals', rental?.uuid]">
-                        {{rental?.id || 'Unlinked Rental'}}
-                      </a>
-                    </ion-label>
-                    <ion-buttons slot="end">
+                    <ion-buttons slot="start">
                       <ion-button [routerLink]="['/rentals', rental?.uuid]">
                         View
                       </ion-button>
+                    </ion-buttons>
+                    <ion-label>
+                      {{rental?.name || (rental?.id ? `Rental ID#${rental?.id}` : 'Unlinked Rental')}}
+                    </ion-label>
+                    <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/rentals', rental?.uuid]" button>
                           View
@@ -160,6 +161,83 @@
                           Edit
                         </ion-item>
                         <ion-item (click)="deleteRental(rental)" button>
+                          <ion-text color="danger">
+                            Delete
+                          </ion-text>
+                        </ion-item>
+                      </app-ellipsis-vertical-popover>
+                    </ion-buttons>
+                  </ion-item>
+                }
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <!-- INVOICES -->
+        <ion-item color="transparent" lines="none">
+          <ion-label>
+            <ion-title>
+              <a [routerLink]="['/contracts', contract()?.uuid, 'invoices']" class="ion-color-dark">
+                Invoices
+              </a>
+            </ion-title>
+          </ion-label>
+          <ion-buttons>
+            <ion-button [routerLink]="['/contracts', contract()?.uuid, 'invoices', 'create']">
+              Create
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              @if(!invoices() || invoices()?.length == 0){
+                <ion-item>
+                  <ion-label>
+                    No Invoices Available
+                  </ion-label>
+                </ion-item>
+              }@else{
+                @for(invoice of invoices(); track invoice.uuid){
+                  <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button [routerLink]="['/invoices', invoice?.uuid]">
+                        View
+                      </ion-button>
+                    </ion-buttons>
+                    <ion-label>
+                      <h2>
+                        {{invoice?.id ? `Invoice ID#${invoice?.id}` : 'Unlinked Invoice'}}
+                      </h2>
+                      @if(invoice?.rental){
+                        <p>
+                          <a [routerLink]="['/rentals', invoice?.rental?.uuid]" class="ion-color-dark">
+                            {{invoice?.rental?.name || (invoice?.rental?.id ? `Rental ID#${invoice?.rental?.id}` : 'Unlinked Rental')}}
+                          </a>
+                      </p>
+                      }
+                    </ion-label>
+                    @if(invoice?.paid_date){
+                      <ion-text color="success" class="ion-padding-start">
+                        PAID
+                      </ion-text>
+                    }@else{
+                      <ion-text color="danger" class="ion-padding-start">
+                        UNPAID
+                      </ion-text>
+                    }
+                    <ion-text class="ion-padding-start">
+                      {{invoice?.total || 'N/A'}}
+                    </ion-text>
+                    <ion-buttons slot="end">
+                      <app-ellipsis-vertical-popover>
+                        <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
+                          View
+                        </ion-item>
+                        <ion-item [routerLink]="['/invoices', invoice?.uuid, 'edit']" button>
+                          Edit
+                        </ion-item>
+                        <ion-item (click)="deleteInvoice(invoice)" button>
                           <ion-text color="danger">
                             Delete
                           </ion-text>

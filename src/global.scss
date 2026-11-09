@@ -9,6 +9,38 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+ a.ion-color-dark {
+  color: var(--ion-color-dark);
+}
+
+ a.ion-color-light {
+  color: var(--ion-color-light);
+}
+
+ a.ion-color-primary {
+  color: var(--ion-color-primary);
+}
+
+ a.ion-color-secondary {
+  color: var(--ion-color-secondary);
+}
+
+ a.ion-color-tertiary {
+  color: var(--ion-color-tertiary);
+}
+
+ a.ion-color-success {
+  color: var(--ion-color-success);
+}
+
+ a.ion-color-warning {
+  color: var(--ion-color-warning);
+}
+
+ a.ion-color-danger {
+  color: var(--ion-color-danger);
+}
+
  .page-content {
   --padding-bottom: 80px;
 }

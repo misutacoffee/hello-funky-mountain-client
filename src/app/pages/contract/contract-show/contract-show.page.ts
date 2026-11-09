@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular';
@@ -28,8 +28,11 @@ export class ContractShowPage implements OnInit {
   private alert = inject(AlertService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
-  contract = signal<any>(null);
-  rentals = computed(() => this.contract()?.rentals);
+
+  data = signal<any>(null);
+  contract = computed(() => this.data()?.contract);
+  rentals = computed(() => this.data()?.rentals);
+  invoices = computed(() => this.data()?.invoices);
   constructor() { }
 
   ngOnInit() {
@@ -37,8 +40,9 @@ export class ContractShowPage implements OnInit {
 
   async ionViewWillEnter(){
     const uuid:any = this.activatedRoute.snapshot.paramMap.get('uuid');
-    const contract = await this.contractServ.show(uuid);
-    this.contract.set(contract);
+    const data = await this.contractServ.show(uuid);
+    this.data.set(data);
+    console.log(data);
   }
 
   async delete(contract:any){
@@ -52,6 +56,10 @@ export class ContractShowPage implements OnInit {
         this.toast.present("An error has occurred.");
       }
     }
+  }
+
+  async deleteInvoice(rental:any){
+
   }
 
   async deleteRental(rental:any){

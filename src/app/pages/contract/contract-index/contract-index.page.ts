@@ -26,7 +26,8 @@ export class ContractIndexPage implements OnInit {
   private contractServ = inject(ContractService);
   private toast = inject(ToastService);
   private alert = inject(AlertService);
-  contracts = signal<any>(null);
+  data = signal<any>(null);
+  contracts = computed(() => this.data()?.contracts);
   activeOnly = signal<boolean>(true);
   filterOptions = signal<any>({
     activeOnly: this.activeOnly(), 
@@ -41,8 +42,8 @@ export class ContractIndexPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    const contracts = await this.contractServ.index();
-    this.contracts.set(contracts);
+    const data = await this.contractServ.index();
+    this.data.set(data);
   }
 
   async delete(contract:any){
@@ -52,7 +53,7 @@ export class ContractIndexPage implements OnInit {
       if(results?.success){
         this.toast.present(results?.message || "Contract successfully deleted.");
         const filtered:any = this.contracts()?.filter((c:any) => c?.uuid !== contract?.uuid);
-        this.contracts.set(filtered);
+        this.data.set({...this.data(), contracts: filtered});
       }else{
         this.toast.present("An error has occurred.");
       }

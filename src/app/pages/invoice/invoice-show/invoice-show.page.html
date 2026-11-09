@@ -43,6 +43,14 @@
               </ion-item>
               <ion-item>
                 <ion-label>
+                  Title
+                </ion-label>
+                <ion-text>
+                  {{invoice()?.title || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
                   PO Number
                 </ion-label>
                 <ion-text>
@@ -59,10 +67,10 @@
               </ion-item>
               <ion-item>
                 <ion-label>
-                  Amount
+                  Sub-Total
                 </ion-label>
                 <ion-text>
-                  {{invoice()?.amount || 'N/A'}}
+                  {{invoice()?.sub_total || 'N/A'}}
                 </ion-text>
               </ion-item>
               <ion-item>
@@ -71,6 +79,14 @@
                 </ion-label>
                 <ion-text>
                   {{invoice()?.tax || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Total
+                </ion-label>
+                <ion-text>
+                  {{invoice()?.total || 'N/A'}}
                 </ion-text>
               </ion-item>
               <ion-item>

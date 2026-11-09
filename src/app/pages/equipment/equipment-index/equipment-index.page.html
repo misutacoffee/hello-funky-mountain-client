@@ -48,7 +48,7 @@
                       }
                     </ion-label>
                     <ion-text>
-                      <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]">
+                      <a [routerLink]="['/models', equipment?.manufacturer_model_uuid]" class="ion-color-dark">
                         {{equipment?.model?.name || 'Unknown Model'}}
                       </a>
                     </ion-text>
