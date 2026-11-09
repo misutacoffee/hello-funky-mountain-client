@@ -104,15 +104,15 @@
             <ion-card-content>
               <ion-list>
                 <ion-item>
-                  <ion-label>
-                    <a [routerLink]="['/contracts', contract()?.uuid]">
-                      {{contract()?.name || 'Unknown Contract'}}
-                    </a>
-                  </ion-label>
-                  <ion-buttons slot="end">
+                  <ion-buttons slot="start">
                     <ion-button [routerLink]="['/contracts', contract()?.uuid]">
                       View
                     </ion-button>
+                  </ion-buttons>
+                  <ion-label>
+                    {{contract()?.name || 'Unknown Contract'}}
+                  </ion-label>
+                  <ion-buttons slot="end">
                     <app-ellipsis-vertical-popover>
                       <ion-item [routerLink]="['/contracts', contract()?.uuid]" button>
                         View
@@ -139,15 +139,15 @@
             <ion-card-content>
               <ion-list>
                 <ion-item>
-                  <ion-label>
-                    <a [routerLink]="['/rentals', rental()?.uuid]">
-                      {{rental()?.id || 'Unlinked Rental'}}
-                    </a>
-                  </ion-label>
-                  <ion-buttons slot="end">
+                  <ion-buttons slot="start">
                     <ion-button [routerLink]="['/rentals', rental()?.uuid]">
                       View
                     </ion-button>
+                  </ion-buttons>
+                  <ion-label>
+                    {{rental()?.name || (rental()?.id ? `Rental ID#${rental()?.id}` : 'Unlinked Rental')}}
+                  </ion-label>
+                  <ion-buttons slot="end">
                     <app-ellipsis-vertical-popover>
                       <ion-item [routerLink]="['/rentals', rental()?.uuid]" button>
                         View
