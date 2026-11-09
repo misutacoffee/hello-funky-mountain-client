@@ -60,10 +60,22 @@
                       </ion-button>
                     </ion-buttons>
                     <ion-label>
+                      <h2>
+                        {{invoice?.id ? `Invoice ID#${invoice?.id}` : 'Unlinked Invoice'}}
+                      </h2>
+                      @if(invoice?.rental){
+                        <p>
+                          <a [routerLink]="['/rentals', invoice?.rental?.uuid]">
+                            {{invoice?.rental?.name || (invoice?.rental?.id ? `Rental ID#${invoice?.rental?.id}` : 'Unlinked Rental')}}
+                          </a>
+                      </p>
+                      }
+                    </ion-label>
+                    <ion-text>
                       <a [routerLink]="['/contracts', invoice?.contract_uuid]">
                         {{invoice?.contract?.name || 'Unknown Contract'}}
                       </a>
-                    </ion-label>
+                    </ion-text>
                     <ion-buttons slot="end">
                       <app-ellipsis-vertical-popover>
                         <ion-item [routerLink]="['/invoices', invoice?.uuid]" button>
