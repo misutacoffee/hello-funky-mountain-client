@@ -11,6 +11,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     if(error?.status === 401){
       authServ.clearSession();
       router.navigateByUrl('/login');
+    }else if(error?.status == 403){
+      router.navigateByUrl('/email-verification');
     }
     return throwError(() => error);
   }));
