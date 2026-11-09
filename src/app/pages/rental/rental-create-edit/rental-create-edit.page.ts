@@ -44,6 +44,7 @@ export class RentalCreateEditPage implements OnInit {
   contractModalTrigger:string = uuid();
   equipmentModalTrigger:string = uuid();
 
+  isLoading = signal<boolean>(false);
   data = signal<any>(null);
 
   contract = signal<any>(null);
@@ -62,12 +63,13 @@ export class RentalCreateEditPage implements OnInit {
   constructor() { 
     addIcons({addOutline, closeOutline});
     effect(() => {
-      if(this.data()){
+      if(this.isLoading() && this.data()){
         this.contract.set(this.data()?.contract || null);
         this.contracts.set(this.data()?.contracts || []);
         this.equipment.set(this.data()?.equipment || []);
         this.rental.set(this.data()?.rental || null);
         this.rentalEquipment.set(this.data()?.rentalEquipment || []);
+        this.isLoading.set(false);
       }
       if(this.contract()){
         this.selectedContract.set(this.contract());
@@ -80,6 +82,7 @@ export class RentalCreateEditPage implements OnInit {
   }
 
   async ionViewWillEnter(){
+    this.isLoading.set(true);
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid') as unknown as string;
     this.contractUuid = this.activatedRoute.snapshot.paramMap.get('contract_uuid') as unknown as string;
     const data:any = this.uuid ? await this.rentalServ.edit(this.uuid) : await this.rentalServ.create();
