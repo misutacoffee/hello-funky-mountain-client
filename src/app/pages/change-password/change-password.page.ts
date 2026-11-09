@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
-  IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, 
+  IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonItem,
+  IonLabel, 
  } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { homeOutline } from 'ionicons/icons';
@@ -14,7 +19,7 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./change-password.page.scss'],
   imports: [
     CommonModule, FormsModule, RouterLink, 
-    IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, 
+    IonContent, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonButton, 
   ]
 })
 export class ChangePasswordPage implements OnInit {

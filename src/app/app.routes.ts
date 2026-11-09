@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { GuestLayoutComponent } from './layouts/guest-layout/guest-layout.component';
 
 export const routes: Routes = [
   {
@@ -234,35 +235,41 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/message/message-create-edit/message-create-edit.page').then( m => m.MessageCreateEditPage)
   },
   {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
-  },
-  {
-    path: 'register',
-    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
-  },
-  {
-    path: 'forgot-password',
-    loadComponent: () => import('./pages/forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
-  },
-  {
-    path: 'password-reset',
-    loadComponent: () => import('./pages/password-reset/password-reset.page').then( m => m.PasswordResetPage)
-  },
-  {
-    path: 'change-password',
-    loadComponent: () => import('./pages/change-password/change-password.page').then( m => m.ChangePasswordPage)
-  },
-  {
-    path: 'email-verification',
-    loadComponent: () => import('./pages/auth/email-verification/email-verification.page').then( m => m.EmailVerificationPage)
-  },
-  {
-    path: 'email/verify/:id/:hash',
-    loadComponent: () => import('./pages/auth/verify-email/verify-email.page').then( m => m.VerifyEmailPage)
-  },
-  {
-    path: 'registration-successful',
-    loadComponent: () => import('./pages/auth/registration-successful/registration-successful.page').then( m => m.RegistrationSuccessfulPage)
-  },
+    path: '', 
+    component: GuestLayoutComponent, 
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
+      },
+      {
+        path: 'forgot-password',
+        loadComponent: () => import('./pages/forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
+      },
+      {
+        path: 'password-reset',
+        loadComponent: () => import('./pages/password-reset/password-reset.page').then( m => m.PasswordResetPage)
+      },
+      {
+        path: 'change-password',
+        loadComponent: () => import('./pages/change-password/change-password.page').then( m => m.ChangePasswordPage)
+      },
+      {
+        path: 'email-verification',
+        loadComponent: () => import('./pages/auth/email-verification/email-verification.page').then( m => m.EmailVerificationPage)
+      },
+      {
+        path: 'email/verify/:id/:hash',
+        loadComponent: () => import('./pages/auth/verify-email/verify-email.page').then( m => m.VerifyEmailPage)
+      },
+      {
+        path: 'registration-successful',
+        loadComponent: () => import('./pages/auth/registration-successful/registration-successful.page').then( m => m.RegistrationSuccessfulPage)
+      },
+    ]
+  }, 
 ];

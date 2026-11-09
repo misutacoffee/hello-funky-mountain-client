@@ -12,6 +12,7 @@ import { addOutline } from 'ionicons/icons';
 import { RouterLink } from '@angular/router';
 import { HomeService } from '../../services/home.service';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ import { AuthService } from '../../services/auth.service';
 export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
   private authServ = inject(AuthService);
+  appName = environment.appName;
   homeData = signal<any>(null);
   contracts = computed(() => this.homeData()?.contracts || []);
   equipment = computed(() => this.homeData()?.equipment || []);

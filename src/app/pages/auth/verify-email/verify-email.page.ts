@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonRow, IonTitle, IonToolbar } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../../services/toast.service';
@@ -10,7 +10,7 @@ import { ToastService } from '../../../services/toast.service';
   selector: 'app-verify-email',
   templateUrl: './verify-email.page.html',
   styleUrls: ['./verify-email.page.scss'],
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonCard, IonCardContent, IonList, IonGrid, IonRow, IonCol, IonLabel, IonItem, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class VerifyEmailPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
