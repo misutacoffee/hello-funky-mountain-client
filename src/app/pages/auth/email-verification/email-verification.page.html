@@ -30,35 +30,17 @@
             </ion-title>
           </ion-label>
         </ion-item>
-        <form [formGroup]="form()">
-          <ion-card>
-            <ion-card-content>
-              <ion-list [formGroup]="form()" (ngSubmit)="onSubmit()">
-                <ion-item>
-                  <ion-input label="Email" type="email" formControlName="email"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input label="Password" type="password" formControlName="password"></ion-input>
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-          <ion-item color="transparent" lines="none">
-            <ion-buttons slot="start">
-              <ion-button type="submit" color="dark" fill="solid" [disabled]="form()?.invalid">
-                Login
-              </ion-button>
-              <ion-button [routerLink]="['/forgot-password']">
-                Forgot Password
-              </ion-button>
-            </ion-buttons>
-            <ion-buttons slot="end">
-              <ion-button [routerLink]="['/register']">
-                Register
-              </ion-button>
-            </ion-buttons>
-          </ion-item>
-        </form>
+        <ion-card>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>
+                  Please check your email for a verification link.
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -37,6 +37,19 @@ export class AuthService {
     }
   }
 
+  verifyEmail(id:any, hash:any){
+    return new Promise((resolve, reject) => {
+      this.apiServ.get(`email/verify/${id}/${hash}`).subscribe({
+        next: (results:any) => {
+          resolve(results);
+        }, 
+        error: (error:any) => {
+          reject(error);
+        }
+      });
+    })
+  }
+
   clearSession(){
     this.tokenServ.clearToken();
     this.userServ.clearUser();

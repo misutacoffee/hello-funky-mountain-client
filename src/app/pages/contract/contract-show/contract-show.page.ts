@@ -42,7 +42,6 @@ export class ContractShowPage implements OnInit {
     const uuid:any = this.activatedRoute.snapshot.paramMap.get('uuid');
     const data = await this.contractServ.show(uuid);
     this.data.set(data);
-    console.log(data);
   }
 
   async delete(contract:any){

@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit {
       const results:any = await this.authServ.register(user);
       if(results?.success){
         this.toast.present(results?.message ?? "User account successfully registered.");
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/registration-successful');
       }else if(results?.error){
         const error:any = results?.error;
         this.errors.set(error?.errors);

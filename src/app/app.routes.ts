@@ -257,4 +257,12 @@ export const routes: Routes = [
     path: 'email-verification',
     loadComponent: () => import('./pages/auth/email-verification/email-verification.page').then( m => m.EmailVerificationPage)
   },
+  {
+    path: 'email/verify/:id/:hash',
+    loadComponent: () => import('./pages/auth/verify-email/verify-email.page').then( m => m.VerifyEmailPage)
+  },
+  {
+    path: 'registration-successful',
+    loadComponent: () => import('./pages/auth/registration-successful/registration-successful.page').then( m => m.RegistrationSuccessfulPage)
+  },
 ];
