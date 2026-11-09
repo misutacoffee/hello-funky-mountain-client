@@ -16,10 +16,12 @@ export class InvoiceService {
 
   createNew(values:any = null){
     return {
+      title: values?.title || null, 
       purchase_order_number: values?.purchase_order_number || null, 
       invoice_date: values?.invoice_date ||  null, 
-      amount: values?.amount ||  null, 
+      sub_total: values?.sub_total ||  null, 
       tax: values?.tax ||  null, 
+      total: values?.total ||  null, 
       due_date: values?.due_date || null, 
       paid_date: values?.paid_date || null, 
       rental_uuid: values?.rental_uuid || null, 
@@ -31,10 +33,12 @@ export class InvoiceService {
 
   buildForm(invoice:any){
     return new FormGroup({
+      title: new FormControl(invoice?.title),
       purchase_order_number: new FormControl(invoice?.purchase_order_number),
       invoice_date: new FormControl(invoice?.invoice_date),
-      amount: new FormControl(invoice?.amount),
+      sub_total: new FormControl(invoice?.sub_total),
       tax: new FormControl(invoice?.tax),
+      total: new FormControl(invoice?.total),
       due_date: new FormControl(invoice?.due_date),
       paid_date: new FormControl(invoice?.paid_date),
       rental_uuid: new FormControl(invoice?.rental_uuid),

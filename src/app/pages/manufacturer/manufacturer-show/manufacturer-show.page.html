@@ -66,14 +66,14 @@
         <ion-card>
           <ion-card-content>
             <ion-list>
-              @if(!models() || models()?.length == 0){
+              @if(!displayModels() || displayModels()?.length == 0){
                 <ion-item>
                   <ion-label>
                     No Models Available 
                   </ion-label>
                 </ion-item>
               }@else{
-                @for(model of models(); track model.uuid){
+                @for(model of displayModels(); track model.uuid){
                   <ion-item>
                     <ion-buttons slot="start">
                       <ion-button [routerLink]="['/manufacturers', model.manufacturer_uuid, 'models', model.uuid]">

@@ -14,6 +14,7 @@ import { CaretDownPopoverComponent } from '../../../components/caret-down-popove
 import { addIcons } from 'ionicons';
 import { addOutline } from 'ionicons/icons';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
+import { ManufacturerModelService } from '../../../services/manufacturer-model.service';
 
 @Component({
   selector: 'app-manufacturer-show',
@@ -29,9 +30,16 @@ import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-v
 export class ManufacturerShowPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private manufacturerServ = inject(ManufacturerService);
+  private modelServ = inject(ManufacturerModelService);
   uuid:any;
   manufacturer = signal<any>(null);
   models = computed<any>(() => this.manufacturer()?.models);
+  activeOnly = signal<boolean>(true);
+  filterOptions = signal<any>({
+    activeOnly: this.activeOnly(), 
+  });
+  filteredModels = computed(() => this.modelServ.filterModels(this.models(), this.filterOptions()));
+  displayModels = computed(() => this.filteredModels()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
   constructor() { 
     addIcons({addOutline});
   }
