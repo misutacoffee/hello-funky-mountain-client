@@ -94,10 +94,10 @@
               <ion-button [id]="equipmentModalTrigger">
                 Select
               </ion-button>
-              <app-equipment-select-modal [trigger]="equipmentModalTrigger" [equipment]="equipment()" (willDismiss)="onEquipmentSelectDismiss($event)"></app-equipment-select-modal>
+              <app-equipment-select-modal [trigger]="equipmentModalTrigger" [equipment]="equipment()" [rentalEquipment]="rentalEquipment()" (willDismiss)="onEquipmentSelectDismiss($event)"></app-equipment-select-modal>
             </ion-buttons>
           </ion-item>
-          @if(!form()?.get('rental_equipment')?.value || form()?.get('rental_equipment')?.value?.length == 0){
+          @if(!rentalEquipmentForm || rentalEquipmentForm?.length == 0){
             <ion-card>
               <ion-card-content>
                 <ion-list>

@@ -4,14 +4,12 @@ import { FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular
 import { IonBreadcrumb, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonNote, IonRow, IonSelect, IonSelectOption, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular';
 import { BreadcrumbsComponent } from '../../../components/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ContractService } from '../../../services/contract.service';
 import { ToastService } from '../../../services/toast.service';
 import { RentalService } from '../../../services/rental.service';
 import { addIcons } from 'ionicons';
 import { addOutline, closeOutline } from 'ionicons/icons';
 import { CreateContractModalComponent } from '../../../components/contract/create-contract-modal/create-contract-modal.component';
 import { NavService } from '../../../services/nav.service';
-import { EquipmentService } from '../../../services/equipment.service';
 import { EllipsisVerticalPopoverComponent } from '../../../components/ellipsis-vertical-popover/ellipsis-vertical-popover.component';
 import { AlertService } from '../../../services/alert.service';
 import { RentalEquipmentService } from '../../../services/rental-equipment.service';
@@ -36,8 +34,6 @@ export class RentalCreateEditPage implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
   private rentalServ = inject(RentalService);
-  private contractServ = inject(ContractService);
-  private equipmentServ = inject(EquipmentService);
   private rentalEquipmentServ = inject(RentalEquipmentService);
   private toast = inject(ToastService);
   private navServ = inject(NavService);
@@ -54,7 +50,7 @@ export class RentalCreateEditPage implements OnInit {
   contracts = signal<any>(null);
   equipment = signal<any>(null);
   rental = signal<any>(null);
-  rentalEquipment = signal<any>(null);
+  rentalEquipment = signal<any>([]);
 
   form = computed<FormGroup>(() => this.rentalServ.buildForm(this.rental(), this.rentalEquipment()));
   get rentalEquipmentForm():FormArray{

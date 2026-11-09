@@ -36,7 +36,7 @@ export class RentalIndexPage implements OnInit {
     activeOnly: this.activeOnly(), 
   });
   filteredRentals = computed(() => this.rentalServ.filterRentals(this.rentals(), this.filterOptions()));
-  displayRentals = computed(() => this.filteredRentals()?.sort((a:any, b:any) => a?.name?.localeCompare(b?.name)));
+  displayRentals = computed(() => this.filteredRentals()?.sort((a:any, b:any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()));
   constructor() { 
     addIcons({addOutline});
   }

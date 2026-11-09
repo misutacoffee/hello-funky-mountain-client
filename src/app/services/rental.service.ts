@@ -13,7 +13,8 @@ export class RentalService {
   user = computed(() => this.authServ.user());
   
   filterRentals(rentals:any, filterOptions:any){
-    return rentals
+    let filtered:any = rentals;
+    return filtered
   }
 
   createNew(){
