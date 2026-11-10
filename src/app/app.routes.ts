@@ -212,6 +212,10 @@ export const routes: Routes = [
         path: 'settings',
         loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
       },
+      {
+        path: 'email/verify/:id/:hash',
+        loadComponent: () => import('./pages/auth/verify-email/verify-email.page').then( m => m.VerifyEmailPage)
+      },
     ]
   },
   {
@@ -261,10 +265,6 @@ export const routes: Routes = [
       {
         path: 'email-verification',
         loadComponent: () => import('./pages/auth/email-verification/email-verification.page').then( m => m.EmailVerificationPage)
-      },
-      {
-        path: 'email/verify/:id/:hash',
-        loadComponent: () => import('./pages/auth/verify-email/verify-email.page').then( m => m.VerifyEmailPage)
       },
       {
         path: 'registration-successful',
