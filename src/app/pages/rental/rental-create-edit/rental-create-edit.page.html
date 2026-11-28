@@ -69,7 +69,10 @@
                   </ion-buttons>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Rental Date" type="date" formControlName="rental_date"></ion-input>
+                  <ion-input label="Start Date" type="date" formControlName="start_date"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input label="End Date" type="date" formControlName="end_date"></ion-input>
                 </ion-item>
                 <ion-item>
                   <ion-input label="Return Date" type="date" formControlName="return_date"></ion-input>
@@ -78,7 +81,7 @@
                   <ion-textarea label="Description" formControlName="description" autoGrow></ion-textarea>
                 </ion-item>
                 <ion-item>
-                  <ion-textarea label="Note" formControlName="note" autoGrow></ion-textarea>
+                  <ion-checkbox formControlName="is_complete" color="dark">Is Complete</ion-checkbox>
                 </ion-item>
               </ion-list>
             </ion-card-content>

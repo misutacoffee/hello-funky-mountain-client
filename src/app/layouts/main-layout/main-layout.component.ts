@@ -6,10 +6,11 @@ import {
   IonContent, IonMenu, IonList, IonItem, IonLabel,
   IonIcon, IonRouterOutlet, IonButton,
   IonAlert,
-  IonMenuToggle, 
+  IonMenuToggle,
+  IonText, 
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { homeOutline } from 'ionicons/icons';
+import { homeOutline, menuOutline } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
 import { NavProfilePopoverComponent } from '../../components/nav-profile-popover/nav-profile-popover.component';
 import { ToastService } from '../../services/toast.service';
@@ -23,7 +24,7 @@ import { environment } from '../../../environments/environment';
   imports: [
     CommonModule, RouterLink, NavProfilePopoverComponent, 
     IonApp, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton,
-    IonContent, IonMenu, IonList, IonItem, IonLabel,
+    IonContent, IonMenu, IonList, IonItem, IonLabel, IonText, 
     IonIcon, IonRouterOutlet, IonButton, IonAlert, IonMenuToggle, 
   ],
 })
@@ -46,7 +47,7 @@ export class MainLayoutComponent implements OnInit {
     }
   ]
   constructor() { 
-    addIcons({homeOutline});
+    addIcons({homeOutline, menuOutline});
   }
 
   ngOnInit() {}

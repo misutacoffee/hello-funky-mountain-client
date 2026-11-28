@@ -24,7 +24,9 @@
             <ion-list>
               <ion-item [routerLink]="['/equipment']">
                 <ion-label class="text-ellipsis">
-                  Equipment
+                  <ion-text color="primary">
+                    Equipment
+                  </ion-text>
                 </ion-label>
                 <ion-note slot="end">
                   {{equipment()?.length || 0}}
@@ -32,7 +34,9 @@
               </ion-item>
               <ion-item [routerLink]="['/contracts']">
                 <ion-label class="text-ellipsis">
-                  Contracts
+                  <ion-text color="primary">
+                    Contracts
+                  </ion-text>
                 </ion-label>
                 <ion-note slot="end">
                   {{contracts()?.length || 0}}
@@ -40,7 +44,9 @@
               </ion-item>
               <ion-item [routerLink]="['/invoices']">
                 <ion-label class="text-ellipsis">
-                  Invoices
+                  <ion-text color="primary">
+                    Invoices
+                  </ion-text>
                 </ion-label>
                 <ion-note slot="end">
                   {{invoices()?.length || 0}}
@@ -48,7 +54,9 @@
               </ion-item>
               <ion-item [routerLink]="['/manufacturers']">
                 <ion-label class="text-ellipsis">
-                  Manufacturers
+                  <ion-text color="primary">
+                    Manufacturers
+                  </ion-text>
                 </ion-label>
                 <ion-note slot="end">
                   {{manufacturers()?.length || 0}}
@@ -56,7 +64,9 @@
               </ion-item>
               <ion-item [routerLink]="['/models']">
                 <ion-label class="text-ellipsis">
-                  Models
+                  <ion-text color="primary">
+                    Models
+                  </ion-text>
                 </ion-label>
                 <ion-note slot="end">
                   {{models()?.length || 0}}
@@ -64,7 +74,9 @@
               </ion-item>
               <ion-item [routerLink]="['/settings']">
                 <ion-label class="text-ellipsis">
-                  Settings
+                  <ion-text color="primary">
+                    Settings
+                  </ion-text>
                 </ion-label>
               </ion-item>
             </ion-list>
@@ -79,7 +91,7 @@
                 <ion-list>
                   <ion-item>
                     <ion-label>
-                      <ion-title>
+                      <ion-title color="primary">
                         Welcome to {{appName}}
                       </ion-title>
                     </ion-label>
@@ -161,7 +173,7 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/equipment']" class="ion-color-dark">
+                  <a [routerLink]="['/equipment']">
                     Equipment
                   </a>
                 </ion-card-title>
@@ -178,7 +190,7 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/contracts']" class="ion-color-dark">
+                  <a [routerLink]="['/contracts']">
                     Contracts
                   </a>
                 </ion-card-title>
@@ -195,7 +207,7 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/rentals']" class="ion-color-dark">
+                  <a [routerLink]="['/rentals']">
                     Rentals
                   </a>
                 </ion-card-title>
@@ -212,7 +224,7 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  <a [routerLink]="['/invoices']" class="ion-color-dark">
+                  <a [routerLink]="['/invoices']">
                     Invoices
                   </a>
                 </ion-card-title>

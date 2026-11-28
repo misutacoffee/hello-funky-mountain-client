@@ -69,10 +69,18 @@
               </ion-item>
               <ion-item>
                 <ion-label>
-                  Rental Date
+                  Start Date
                 </ion-label>
                 <ion-text>
-                  {{rental()?.rental_date || 'N/A'}}
+                  {{rental()?.start_date || 'N/A'}}
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  Edn Date
+                </ion-label>
+                <ion-text>
+                  {{rental()?.end_date || 'N/A'}}
                 </ion-text>
               </ion-item>
               <ion-item>
@@ -93,10 +101,10 @@
               </ion-item>
               <ion-item>
                 <ion-label>
-                  Note
+                  Is Complete
                 </ion-label>
                 <ion-text>
-                  {{rental()?.note || 'N/A'}}
+                  {{rental()?.is_complete ? true : false}}
                 </ion-text>
               </ion-item>
             </ion-list>

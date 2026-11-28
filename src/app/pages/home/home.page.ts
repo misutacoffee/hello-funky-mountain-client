@@ -29,14 +29,14 @@ export class HomePage implements OnInit {
   private homeServ = inject(HomeService);
   private authServ = inject(AuthService);
   appName = environment.appName;
-  homeData = signal<any>(null);
-  contracts = computed(() => this.homeData()?.contracts || []);
-  equipment = computed(() => this.homeData()?.equipment || []);
-  invoices = computed(() => this.homeData()?.invoices || []);
-  manufacturers = computed(() => this.homeData()?.manufacturers || []);
-  models = computed(() => this.homeData()?.manufacturerModels || []);
-  rentals = computed(() => this.homeData()?.rentals || []);
-  users = computed(() => this.homeData()?.users || []);
+  data = signal<any>(null);
+  contracts = computed(() => this.data()?.contracts || []);
+  equipment = computed(() => this.data()?.equipment || []);
+  invoices = computed(() => this.data()?.invoices || []);
+  manufacturers = computed(() => this.data()?.manufacturers || []);
+  models = computed(() => this.data()?.manufacturerModels || []);
+  rentals = computed(() => this.data()?.rentals || []);
+  users = computed(() => this.data()?.users || []);
   user = computed(() => this.authServ.user());
   constructor() { 
     addIcons({addOutline})
@@ -46,8 +46,8 @@ export class HomePage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    const homeData = await this.homeServ.getHomeData();
-    this.homeData.set(homeData);
+    const data = await this.homeServ.getHomeData();
+    this.data.set(data);
   }
   
 }

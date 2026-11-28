@@ -20,10 +20,11 @@ export class RentalService {
   createNew(){
     return {
       name: null, 
-      rental_date: null, 
+      start_date: null, 
+      end_date: null, 
       return_date: null, 
       description: null, 
-      note: null, 
+      is_complete: false, 
       contract_uuid: null, 
       user_uuid: this.user()?.uuid || null, 
       uuid: uuid(), 
@@ -33,10 +34,11 @@ export class RentalService {
   buildForm(rental:any, rentalEquipment:any[] = []){
     return new FormGroup({
       name: new FormControl(rental?.name),
-      rental_date: new FormControl(rental?.rental_date),
+      start_date: new FormControl(rental?.start_date),
+      end_date: new FormControl(rental?.end_date),
       return_date: new FormControl(rental?.return_date),
       description: new FormControl(rental?.description),
-      note: new FormControl(rental?.note),
+      is_complete: new FormControl(rental?.is_complete),
       contract_uuid: new FormControl(rental?.contract_uuid, [Validators.required]),
       user_uuid: new FormControl(rental?.user_uuid, [Validators.required]),
       uuid: new FormControl(rental?.uuid, [Validators.required]),
